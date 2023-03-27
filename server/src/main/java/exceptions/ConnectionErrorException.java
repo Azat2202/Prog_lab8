@@ -1,2 +1,4 @@
-package exceptions;public class ConnectionErrorException {
+package exceptions;
+
+public class ConnectionErrorException extends Exception{
 }

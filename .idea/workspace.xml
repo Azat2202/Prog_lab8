@@ -1,25 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="" />
+    <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/AddElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Command.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Executable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Help.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ClientApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/Console.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/ConsoleInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/ConsoleInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/Printable.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/Printable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/ColorForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/ColorForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/CoordinatesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/CoordinatesForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/Form.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/Form.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/FormOfEducationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/FormOfEducationForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/LocationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/LocationForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/NationalityForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/NationalityForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/PersonForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/PersonForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/StudyGroupForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/StudyGroupForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/exceptions/ConnectingException.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/exceptions/ConnectingException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/utilty/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utilty/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/utilty/RuntimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utilty/RuntimeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/utilty/ScannerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utilty/ScannerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/dtp/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/dtp/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/dtp/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/dtp/Response.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/dtp/ResponseStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/dtp/ResponseStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Color.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Coordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Country.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Country.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/FormOfEducation.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/FormOfEducation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/StudyGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/StudyGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.MD" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ServerApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/exceptions/ConnectionErrorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/exceptions/ConnectionErrorException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/exceptions/OpeningServerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/exceptions/OpeningServerException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/CollectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/CommandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/utilty/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utilty/Console.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/utilty/Printable.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utilty/Printable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/utilty/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utilty/RequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/utilty/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utilty/Server.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProjectId" id="2NVj1MExc0x0yqOFdkQz4aRv2MG" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false"
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "18",
+    "last_opened_file_path": "C:/Users/azat2/IdeaProjects/Prog_lab6/server/src/main/java/commands",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.editor"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java\commands" />
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\src\main\java\utilty" />
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java\utilty" />
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java\managers" />
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\src\main\java\exceptions" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="utilty" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Compound.Server+Client">
+    <configuration name="Client" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="ClientApp" />
+      <module name="client" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 6086" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Server" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="ServerApp" />
+      <module name="Server" />
+      <option name="PROGRAM_PARAMETERS" value="6086" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Server+Client" type="CompoundRunConfigurationType">
+      <toRun name="Client" type="Application" />
+      <toRun name="Server" type="Application" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Client" />
+      <item itemvalue="Application.Server" />
+      <item itemvalue="Compound.Server+Client" />
+    </list>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -28,9 +158,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1679755933660</updated>
-      <workItem from="1679755941561" duration="1000" />
+      <workItem from="1679755941561" duration="9558000" />
+      <workItem from="1679767284602" duration="275000" />
+      <workItem from="1679831853787" duration="22046000" />
+      <workItem from="1679861616476" duration="3577000" />
+      <workItem from="1679907502157" duration="2456000" />
+      <workItem from="1679912626727" duration="9094000" />
+      <workItem from="1679935475078" duration="513000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -42,5 +181,22 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.nio.channels.IllegalBlockingModeException" package="java.nio.channels" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

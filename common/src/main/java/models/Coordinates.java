@@ -1,12 +1,13 @@
 package models;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Класс координат
  * @author azat2202
  */
-public class Coordinates implements Validator{
+public class Coordinates implements Validator, Serializable {
     private float x; //Значение поля должно быть больше -206
     private Double y; //Максимальное значение поля: 463, Поле не может быть null
 

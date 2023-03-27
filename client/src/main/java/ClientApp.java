@@ -2,11 +2,12 @@ import java.util.Scanner;
 
 import commandLine.*;
 import commandLine.Console;
+import exceptions.ConnectingException;
 import exceptions.IllegalArguments;
 import utilty.Client;
 import utilty.RuntimeManager;
 
-public class App {
+public class ClientApp {
     private static String host;
     private static int port;
     private static Printable console;
@@ -29,6 +30,14 @@ public class App {
         if (!parseHostPort(args)) return;
         console = new Console();
         Client client = new Client(host, port, 5000, 5, console);
+//        while(true){
+//            try {
+//                client.connectToServer();
+//                break;
+//            } catch (ConnectingException ex){
+//                console.printError("Подключение к серверу не удалось");
+//            }
+//        }
         new RuntimeManager(console, new Scanner(System.in), client).interactiveMode();
     }
 }

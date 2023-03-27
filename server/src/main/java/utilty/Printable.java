@@ -1,4 +1,4 @@
-package commandLine;
+package utilty;
 
 /**
  * Интерфейс объединяющий способы вывода

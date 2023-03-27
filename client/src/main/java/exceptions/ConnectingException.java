@@ -1,2 +1,4 @@
-package PACKAGE_NAME;public class ConnectingException {
+package exceptions;
+
+public class ConnectingException extends Exception{
 }

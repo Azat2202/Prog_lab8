@@ -1,4 +1,4 @@
 package exceptions;
 
-public class OpenningServerException extends Exception{
+public class OpeningServerException extends Exception{
 }

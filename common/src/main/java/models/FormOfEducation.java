@@ -1,10 +1,12 @@
 package models;
 
+import java.io.Serializable;
+
 /**
  * Возможные формы обучения
  * @author azat2202
  */
-public enum FormOfEducation {
+public enum FormOfEducation implements Serializable {
     DISTANCE_EDUCATION,
     FULL_TIME_EDUCATION,
     EVENING_CLASSES;

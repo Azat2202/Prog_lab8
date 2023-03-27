@@ -1,5 +1,7 @@
 package commandLine;
 
+import utilty.ConsoleColors;
+
 /**
  * Класс для вывода в стандартную консоль
  */
@@ -18,6 +20,16 @@ public class Console implements Printable {
     @Override
     public void println(String a) {
         System.out.println(a);
+    }
+
+    @Override
+    public void println(String a, ConsoleColors consoleColors) {
+        this.println(ConsoleColors.toColor(a, consoleColors));
+    }
+
+    @Override
+    public void print(String a, ConsoleColors consoleColors) {
+        this.print(ConsoleColors.toColor(a, consoleColors));
     }
 
     @Override

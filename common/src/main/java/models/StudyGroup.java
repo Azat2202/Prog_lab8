@@ -1,9 +1,12 @@
 package models;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import commandLine.ConsoleColors;
-import managers.CollectionManager;
+import utilty.ConsoleColors;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayDeque;
 import java.util.Date;
 import java.util.Objects;
@@ -25,21 +28,19 @@ interface CoordinatesRange<T, S>{
  * @author azat2202
  */
 @XStreamAlias("StudyGroup")
-public class StudyGroup implements Validator, Comparable<StudyGroup>{
+public class StudyGroup implements Validator, Comparable<StudyGroup>, Serializable {
     private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
-    private java.util.Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private Long studentsCount; //Значение поля должно быть больше 0, Поле не может быть null
     private long expelledStudents; //Значение поля должно быть больше 0
     private long averageMark; //Значение поля должно быть больше 0
     private FormOfEducation formOfEducation; //Поле может быть null
     private Person groupAdmin; //Поле не может быть null
 
-    private static int nextId = 0;
-
     public StudyGroup(String name, Coordinates coordinates, Date creationDate, Long studentsCount, long expelledStudents, long averageMark, FormOfEducation formOfEducation, Person groupAdmin) {
-        this.id = incNextId();
+        this.id = 0;
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = creationDate;
@@ -49,29 +50,6 @@ public class StudyGroup implements Validator, Comparable<StudyGroup>{
         this.formOfEducation = formOfEducation;
         this.groupAdmin = groupAdmin;
     }
-
-    /**
-     * @return возвращает следующий id во избежание их повторения
-     */
-    private static int incNextId(){
-        return nextId++;
-    }
-
-    /**
-     * Обновляет указатель на следующий id
-     * <p>
-     * Требуется, так как xStream с помощью reflection обходит приватность id
-     * @param collection коллекция, в которой получить id.
-     */
-
-    public static void updateId(ArrayDeque<StudyGroup> collection){
-        nextId = collection.
-                stream().filter(Objects::nonNull)
-                .map(StudyGroup::getId)
-                .mapToInt(Integer::intValue)
-                .max().orElse(0) + 1;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -205,13 +183,26 @@ public class StudyGroup implements Validator, Comparable<StudyGroup>{
         return result;
     }
 
+    public static String timeFormatter(Date dateToConvert){
+        if (Objects.isNull(dateToConvert)) return "";
+        LocalDateTime localDateTime = dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+        if (localDateTime == null) return null;
+        if (localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                .equals(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
+            return localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        }
+        return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
     @Override
     public String toString() {
         return "StudyGroup{" + '\n' +
                 ConsoleColors.toColor("id = ", ConsoleColors.CYAN) + id + '\n' +
                 ConsoleColors.toColor("name = ", ConsoleColors.CYAN) + name + '\n' +
                 ConsoleColors.toColor("coordinates = ", ConsoleColors.CYAN) + coordinates + '\n' +
-                ConsoleColors.toColor("creationDate = ", ConsoleColors.CYAN) + CollectionManager.timeFormatter(creationDate) + '\n' +
+                ConsoleColors.toColor("creationDate = ", ConsoleColors.CYAN) + timeFormatter(creationDate) + '\n' +
                 ConsoleColors.toColor("studentsCount = ", ConsoleColors.CYAN) + studentsCount + '\n' +
                 ConsoleColors.toColor("expelledStudents = ", ConsoleColors.CYAN) + expelledStudents + '\n' +
                 ConsoleColors.toColor("averageMark = ", ConsoleColors.CYAN) + averageMark + '\n' +

@@ -1,4 +1,4 @@
-package models.forms;
+package commandLine.forms;
 
 import exceptions.InvalidForm;
 

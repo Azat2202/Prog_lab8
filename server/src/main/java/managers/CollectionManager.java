@@ -9,12 +9,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Класс организующий работу с коллекцией
  */
 public class CollectionManager {
     private final ArrayDeque<StudyGroup> collection = new ArrayDeque<>();
+    private static int nextId = 0;
     /**
      * Дата создания коллекции
      */
@@ -33,6 +35,17 @@ public class CollectionManager {
         return collection;
     }
 
+    public static void updateId(Collection<StudyGroup> collection){
+        nextId = collection.stream()
+                .filter(Objects::nonNull)
+                .map(StudyGroup::getId)
+                .max(Integer::compareTo)
+                .orElse(0);
+    }
+
+    public static int getNextId(){
+        return ++nextId;
+    }
     /**
      * Метод скрывающий дату, если она сегодняшняя
      * @param localDateTime объект {@link LocalDateTime}
@@ -113,7 +126,6 @@ public class CollectionManager {
         this.removeElement(pastElement);
         newElement.setId(id);
         this.addElement(newElement);
-        StudyGroup.updateId(this.getCollection());
     }
 
     /**
@@ -125,9 +137,8 @@ public class CollectionManager {
                 .anyMatch((x) -> x.getId() == id);
     }
 
-    public void addElement(StudyGroup studyGroup) throws InvalidForm{
+    public void addElement(StudyGroup studyGroup){
         this.lastSaveTime = LocalDateTime.now();
-        if (!studyGroup.validate()) throw new InvalidForm();
         collection.add(studyGroup);
     }
 

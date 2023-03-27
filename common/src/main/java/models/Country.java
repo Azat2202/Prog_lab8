@@ -1,9 +1,11 @@
 package models;
 
+import java.io.Serializable;
+
 /**
  * Перечисление стран
  */
-public enum Country {
+public enum Country implements Serializable {
     UNITED_KINGDOM,
     FRANCE,
     CHINA,

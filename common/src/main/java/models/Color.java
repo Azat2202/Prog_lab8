@@ -1,10 +1,12 @@
 package models;
 
+import java.io.Serializable;
+
 /**
  * Перечисление различных цветов
  * @author azat2202
  */
-public enum Color {
+public enum Color implements Serializable {
     GREEN,
     RED,
     ORANGE,

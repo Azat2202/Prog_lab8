@@ -1,10 +1,12 @@
 package managers;
 
+import commands.Command;
+import dtp.Request;
+import dtp.Response;
 import exceptions.CommandRuntimeError;
 import exceptions.ExitObliged;
 import exceptions.IllegalArguments;
 import exceptions.NoSuchCommand;
-import commandLine.commands.Command;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,16 +45,15 @@ public class CommandManager{
 
     /**
      * Выполняет команду
-     * @param name название команды
-     * @param args аргументы команды
+     * @param request - запрос клиента
      * @throws NoSuchCommand такая команда отсутствует
      * @throws IllegalArguments неверные аргументы команды
      * @throws CommandRuntimeError команда выдала ошибку при исполнении
      * @throws ExitObliged команда вызвала выход из программы
      */
-    public void execute(String name, String args) throws NoSuchCommand, IllegalArguments, CommandRuntimeError, ExitObliged {
-        Command command = commands.get(name);
+    public Response execute(Request request) throws NoSuchCommand, IllegalArguments, CommandRuntimeError, ExitObliged {
+        Command command = commands.get(request.getCommandName());
         if (command == null) throw new NoSuchCommand();
-        command.execute(args);
+        return command.execute(request);
     }
 }

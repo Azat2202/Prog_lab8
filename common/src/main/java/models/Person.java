@@ -1,14 +1,15 @@
 package models;
 
-import commandLine.ConsoleColors;
+import utilty.ConsoleColors;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Класс человека
  * @author azat2202
  */
-public class Person implements Validator{
+public class Person implements Validator, Serializable {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private int weight; //Значение поля должно быть больше 0
     private Color eyeColor; //Поле может быть null

@@ -1,4 +1,4 @@
-package models.forms;
+package commandLine.forms;
 
 import exceptions.ExceptionInFileMode;
 import commandLine.*;
@@ -6,6 +6,7 @@ import models.Coordinates;
 import models.FormOfEducation;
 import models.Person;
 import models.StudyGroup;
+import utilty.ConsoleColors;
 
 import java.util.Date;
 

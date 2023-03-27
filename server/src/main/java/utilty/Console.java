@@ -1,4 +1,4 @@
-package commandLine;
+package utilty;
 
 /**
  * Класс для вывода в стандартную консоль
