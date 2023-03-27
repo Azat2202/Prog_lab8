@@ -48,7 +48,7 @@ public class RuntimeManager {
                                 userCommand[1].trim(),
                                 studyGroup));
                         if (newResponse.getStatus() != ResponseStatus.OK){
-                            console.printError("Непредвиденная ошибка, обратитесь по номеру 89173689891");
+                            console.printError(newResponse.getResponse());
                         }
                         else {
                             this.printResponse(newResponse);
@@ -69,7 +69,7 @@ public class RuntimeManager {
         switch (response.getStatus()){
             case OK -> {
                 if ((Objects.isNull(response.getCollection()))) {
-                    console.println(response.getResponse());
+                    console.println(response.getResponse(), ConsoleColors.GREEN);
                 } else {
                     console.println(response.getResponse() + "\n" + response.getCollection().toString());
                 }

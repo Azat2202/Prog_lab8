@@ -29,7 +29,7 @@ public class AddElement extends Command{
     public Response execute(Request request) throws IllegalArguments {
         if (!request.getArgs().isBlank()) throw new IllegalArguments();
         if (Objects.isNull(request.getObject())){
-            return new Response(ResponseStatus.ASK_OBJECT, "Для команды add требуется объект");
+            return new Response(ResponseStatus.ASK_OBJECT, "Для команды " + this.getName() + " требуется объект");
         } else{
             request.getObject().setId(CollectionManager.getNextId());
             collectionManager.addElement(request.getObject());

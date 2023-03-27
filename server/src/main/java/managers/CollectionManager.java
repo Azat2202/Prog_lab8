@@ -121,7 +121,7 @@ public class CollectionManager {
      * @param newElement новый элемент
      * @throws InvalidForm Нет элемента с таким id
      */
-    public void editById(int id, StudyGroup newElement) throws InvalidForm{
+    public void editById(int id, StudyGroup newElement){
         StudyGroup pastElement = this.getById(id);
         this.removeElement(pastElement);
         newElement.setId(id);

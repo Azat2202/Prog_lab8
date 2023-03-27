@@ -14,8 +14,22 @@ public class ServerApp extends Thread {
         CollectionManager collectionManager = new CollectionManager();
         CommandManager commandManager = new CommandManager();
         commandManager.addCommand(List.of(
+                new Help(commandManager),
+                new Info(collectionManager),
+                new Show(collectionManager),
                 new AddElement(collectionManager),
-                new Help(commandManager)
+                new Update(collectionManager),
+                new RemoveById(collectionManager),
+                new Clear(collectionManager),
+//                new Save(fileManager),
+//                new Execute(fileManager, commandManager),
+                new Exit(),
+                new AddIfMax(collectionManager),
+                new RemoveGreater(collectionManager),
+                new History(commandManager),
+                new RemoveAllByAverageMark(collectionManager),
+                new CountByAverageMark(collectionManager),
+                new CountLessThanExpelledStudents(collectionManager)
         ));
         RequestHandler requestHandler = new RequestHandler(commandManager);
         Server server = new Server(PORT, CONNECTION_TIMEOUT, requestHandler);

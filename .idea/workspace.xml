@@ -4,54 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/AddElement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Command.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Executable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Help.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/AddIfMax.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Clear.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/CountByAverageMark.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/CountLessThanExpelledStudents.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Exit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/History.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/RemoveAllByAverageMark.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/RemoveById.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/RemoveGreater.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Show.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Update.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ClientApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/Console.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/ConsoleInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/ConsoleInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/Printable.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/Printable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/ColorForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/ColorForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/CoordinatesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/CoordinatesForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/Form.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/Form.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/FormOfEducationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/FormOfEducationForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/LocationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/LocationForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/NationalityForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/NationalityForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/PersonForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/PersonForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/StudyGroupForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/StudyGroupForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/exceptions/ConnectingException.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/exceptions/ConnectingException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/utilty/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utilty/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/utilty/RuntimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utilty/RuntimeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/utilty/ScannerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utilty/ScannerManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/dtp/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/dtp/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/dtp/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/dtp/Response.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/dtp/ResponseStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/dtp/ResponseStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Color.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Coordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Country.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Country.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/FormOfEducation.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/FormOfEducation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Location.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/StudyGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/StudyGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.MD" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ServerApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/exceptions/ConnectionErrorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/exceptions/ConnectionErrorException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/exceptions/OpeningServerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/exceptions/OpeningServerException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/AddElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/AddElement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/CollectionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/CommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/utilty/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utilty/Console.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/utilty/Printable.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utilty/Printable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/utilty/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utilty/RequestHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/utilty/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utilty/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,8 +137,16 @@
       <workItem from="1679861616476" duration="3577000" />
       <workItem from="1679907502157" duration="2456000" />
       <workItem from="1679912626727" duration="9094000" />
-      <workItem from="1679935475078" duration="513000" />
+      <workItem from="1679935475078" duration="5723000" />
     </task>
+    <task id="LOCAL-00001" summary="added first object and non-object commands">
+      <created>1679936396373</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1679936396373</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,6 +165,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="added first object and non-object commands" />
+    <option name="LAST_COMMIT_MESSAGE" value="added first object and non-object commands" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
