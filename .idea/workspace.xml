@@ -5,26 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/AddIfMax.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Clear.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/CountByAverageMark.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/CountLessThanExpelledStudents.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Exit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/History.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/RemoveAllByAverageMark.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/RemoveById.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/RemoveGreater.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Show.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/commands/Update.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/utilty/RuntimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utilty/RuntimeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ServerApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/AddElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/AddElement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/CollectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/utilty/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utilty/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +119,7 @@
       <workItem from="1679861616476" duration="3577000" />
       <workItem from="1679907502157" duration="2456000" />
       <workItem from="1679912626727" duration="9094000" />
-      <workItem from="1679935475078" duration="5723000" />
+      <workItem from="1679935475078" duration="7494000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>

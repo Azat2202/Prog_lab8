@@ -2,22 +2,22 @@ package utilty;
 
 import dtp.Request;
 import dtp.Response;
-import dtp.ResponseStatus;
-import exceptions.*;
+import exceptions.ConnectionErrorException;
+import exceptions.OpeningServerException;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketException;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
+import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Arrays;
 
 public class Server {
     private int port;
     private int soTimeout;
     private Printable console;
-    private ServerSocket serverSocket;
+    private ServerSocketChannel ss;
+    private SocketChannel socketChannel;
     private RequestHandler requestHandler;
 
     public Server(int port, int soTimeout, RequestHandler handler) {
@@ -31,7 +31,7 @@ public class Server {
         try{
             openServerSocket();
             while (true) {
-                try (Socket clientSocket = connectToClient()) {
+                try (SocketChannel clientSocket = connectToClient()) {
                     if(!processClientRequest(clientSocket)) break;
                 } catch (ConnectionErrorException | SocketTimeoutException exception) {
                     break;
@@ -47,8 +47,9 @@ public class Server {
 
     private void openServerSocket() throws OpeningServerException{
         try {
-            serverSocket = new ServerSocket(port);
-            serverSocket.setSoTimeout(soTimeout);
+            SocketAddress socketAddress = new InetSocketAddress(port);
+            ss = ServerSocketChannel.open();
+            ss.bind(socketAddress);
         } catch (IllegalArgumentException exception) {
             console.printError("Порт '" + port + "' находится за пределами возможных значений!");
             throw new OpeningServerException();
@@ -58,12 +59,12 @@ public class Server {
         }
     }
 
-    private Socket connectToClient() throws ConnectionErrorException, SocketTimeoutException {
+    private SocketChannel connectToClient() throws ConnectionErrorException, SocketTimeoutException {
         try {
             console.println("Прослушивание порта '" + port + "'...");
-            Socket clientSocket = serverSocket.accept();
+            socketChannel = ss.accept();
             console.println("Соединение с клиентом успешно установлено.");
-            return clientSocket;
+            return socketChannel;
         } catch (SocketTimeoutException exception) {
             console.printError("Превышено время ожидания подключения!");
             throw new SocketTimeoutException();
@@ -73,12 +74,12 @@ public class Server {
         }
     }
 
-    private boolean processClientRequest(Socket clientSocket) {
+    private boolean processClientRequest(SocketChannel clientSocket) {
         Request userRequest = null;
         Response responseToUser = null;
         try {
-            ObjectInputStream clientReader = new ObjectInputStream(clientSocket.getInputStream());
-            ObjectOutputStream clientWriter = new ObjectOutputStream(clientSocket.getOutputStream());
+            ObjectInputStream clientReader = new ObjectInputStream(clientSocket.socket().getInputStream());
+            ObjectOutputStream clientWriter = new ObjectOutputStream(clientSocket.socket().getOutputStream());
             do {
                 userRequest = (Request) clientReader.readObject();
                 console.println(userRequest.toString());
@@ -102,14 +103,14 @@ public class Server {
 
     private void stop() {
         class ClosingSocketException extends Exception{}
-        try {
-            if (serverSocket == null) throw new ClosingSocketException();
-            serverSocket.close();
-            console.println("Работа сервера успешно завершена.");
-        } catch (ClosingSocketException exception) {
-            console.printError("Невозможно завершить работу еще не запущенного сервера!");
-        } catch (IOException exception) {
-            console.printError("Произошла ошибка при завершении работы сервера!");
-        }
+            try{
+                if (socketChannel == null) throw new ClosingSocketException();
+                socketChannel.close();
+                ss.close();
+            } catch (ClosingSocketException exception) {
+                console.printError("Невозможно завершить работу еще не запущенного сервера!");
+            } catch (IOException exception) {
+                    console.printError("Произошла ошибка при завершении работы сервера!");
+            }
     }
 }
