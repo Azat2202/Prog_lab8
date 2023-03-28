@@ -12,8 +12,8 @@ import java.util.Objects;
  * Команда 'update'
  * Обновляет значение элемента коллекции, id которого равен заданному
  */
-public class Update extends Command{
-    private CollectionManager collectionManager;
+public class Update extends Command implements CollectionEditor{
+    private final CollectionManager collectionManager;
 
     public Update(CollectionManager collectionManager) {
         super("update", " id {element}: обновить значение элемента коллекции, id которого равен заданному");

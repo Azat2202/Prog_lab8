@@ -1,0 +1,54 @@
+<Array>
+  <StudyGroup>
+    <id>1</id>
+    <name>azat222</name>
+    <coordinates>
+      <x>100.0</x>
+      <y>100.0</y>
+    </coordinates>
+    <creationDate>2023-03-28 20:04:21.120 UTC</creationDate>
+    <studentsCount>1000</studentsCount>
+    <expelledStudents>100</expelledStudents>
+    <averageMark>5</averageMark>
+    <formOfEducation>EVENING_CLASSES</formOfEducation>
+    <groupAdmin>
+      <name>askar</name>
+      <weight>10</weight>
+      <eyeColor>RED</eyeColor>
+      <hairColor>RED</hairColor>
+      <nationality>INDIA</nationality>
+      <location>
+        <x>10.0</x>
+        <y>10</y>
+        <name>itmo</name>
+      </location>
+    </groupAdmin>
+  </StudyGroup>
+  <StudyGroup>
+    <id>2</id>
+    <name>azat222</name>
+    <coordinates>
+      <x>100.0</x>
+      <y>100.0</y>
+    </coordinates>
+    <creationDate>2023-03-28 20:04:42.643 UTC</creationDate>
+    <studentsCount>1000</studentsCount>
+    <expelledStudents>100</expelledStudents>
+    <averageMark>5</averageMark>
+    <formOfEducation>EVENING_CLASSES</formOfEducation>
+    <groupAdmin>
+      <name>askar</name>
+      <weight>10</weight>
+      <eyeColor>RED</eyeColor>
+      <hairColor>RED</hairColor>
+      <nationality>INDIA</nationality>
+      <location>
+        <x>10.0</x>
+        <y>10</y>
+        <name>itmo</name>
+      </location>
+    </groupAdmin>
+  </StudyGroup>
+  <lastInitTime>2023-03-28T23:03:50.4248862</lastInitTime>
+  <lastSaveTime>2023-03-28T23:04:42.6681812</lastSaveTime>
+</Array>

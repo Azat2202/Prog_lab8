@@ -1,5 +1,6 @@
 package managers;
 
+import commands.CollectionEditor;
 import commands.Command;
 import dtp.Request;
 import dtp.Response;
@@ -7,6 +8,7 @@ import exceptions.CommandRuntimeError;
 import exceptions.ExitObliged;
 import exceptions.IllegalArguments;
 import exceptions.NoSuchCommand;
+import utilty.Console;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,6 +26,11 @@ public class CommandManager{
      * Поле для истории команд
      */
     private final List<String> commandHistory = new ArrayList<>();
+    private final FileManager fileManager;
+
+    public CommandManager(FileManager fileManager) {
+        this.fileManager = fileManager;
+    }
 
     public void addCommand(Command command){
         this.commands.put(command.getName(), command);
@@ -54,6 +61,8 @@ public class CommandManager{
     public Response execute(Request request) throws NoSuchCommand, IllegalArguments, CommandRuntimeError, ExitObliged {
         Command command = commands.get(request.getCommandName());
         if (command == null) throw new NoSuchCommand();
-        return command.execute(request);
+        Response response = command.execute(request);
+        if (command instanceof CollectionEditor) fileManager.saveObjects();
+        return response;
     }
 }

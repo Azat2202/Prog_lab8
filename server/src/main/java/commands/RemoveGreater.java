@@ -15,8 +15,8 @@ import java.util.Objects;
  * Команда 'remove_greater'
  * Удаляет из коллекции все элементы, превышающие заданный
  */
-public class RemoveGreater extends Command{
-    private CollectionManager collectionManager;
+public class RemoveGreater extends Command implements CollectionEditor{
+    private final CollectionManager collectionManager;
 
     public RemoveGreater(CollectionManager collectionManager) {
         super("remove_greater", " {element} : удалить из коллекции все элементы, превышающие заданный");

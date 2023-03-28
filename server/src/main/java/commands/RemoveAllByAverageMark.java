@@ -14,8 +14,8 @@ import java.util.Objects;
  * Команда 'remove_all_by_average_mark'
  * Удаляет из коллекции все элементы, значение поля average_mark которого эквивалентно заданному
  */
-public class RemoveAllByAverageMark extends Command{
-    private CollectionManager collectionManager;
+public class RemoveAllByAverageMark extends Command implements CollectionEditor{
+    private final CollectionManager collectionManager;
 
     public RemoveAllByAverageMark(CollectionManager collectionManager) {
         super("remove_all_by_average_mark", "  average_mark : удалить из коллекции все элементы, значение поля average_mark которого эквивалентно заданному");

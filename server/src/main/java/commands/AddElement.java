@@ -12,8 +12,8 @@ import java.util.Objects;
  * Команда 'add'
  * Добавляет новый элемент в коллекцию
  */
-public class AddElement extends Command{
-    private CollectionManager collectionManager;
+public class AddElement extends Command implements CollectionEditor{
+    private final CollectionManager collectionManager;
 
     public AddElement(CollectionManager collectionManager) {
         super("add", " {element}: добавить новый элемент в коллекцию");

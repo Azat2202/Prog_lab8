@@ -1,5 +1,8 @@
+import exceptions.ExitObliged;
 import managers.*;
 
+import utilty.Console;
+import utilty.ConsoleColors;
 import utilty.RequestHandler;
 import utilty.Server;
 import commands.*;
@@ -9,10 +12,20 @@ import java.util.List;
 public class ServerApp extends Thread {
     public static final int PORT = 6086;
     public static final int CONNECTION_TIMEOUT = 60 * 1000;
+    private static final Console console = new Console();
 
     public static void main(String[] args) {
         CollectionManager collectionManager = new CollectionManager();
-        CommandManager commandManager = new CommandManager();
+        FileManager fileManager = new FileManager(console, collectionManager);
+        try{
+            fileManager.findFile();
+            fileManager.createObjects();
+        } catch (ExitObliged e){
+            console.println(ConsoleColors.toColor("До свидания!", ConsoleColors.YELLOW));
+            return;
+        }
+
+        CommandManager commandManager = new CommandManager(fileManager);
         commandManager.addCommand(List.of(
                 new Help(commandManager),
                 new Info(collectionManager),
@@ -21,7 +34,6 @@ public class ServerApp extends Thread {
                 new Update(collectionManager),
                 new RemoveById(collectionManager),
                 new Clear(collectionManager),
-//                new Save(fileManager),
 //                new Execute(fileManager, commandManager),
                 new Exit(),
                 new AddIfMax(collectionManager),

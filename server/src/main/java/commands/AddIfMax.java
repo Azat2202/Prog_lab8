@@ -13,8 +13,8 @@ import java.util.Objects;
  * Команда 'add_if_max'
  * Добавляет элемент в коллекцию если он больше максмального
  */
-public class AddIfMax extends Command{
-    private CollectionManager collectionManager;
+public class AddIfMax extends Command implements CollectionEditor{
+    private final CollectionManager collectionManager;
 
     public AddIfMax(CollectionManager collectionManager) {
         super("add_if_max", " {element}: добавить элемент в коллекцию если он больше максмального");

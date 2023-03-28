@@ -10,7 +10,7 @@ import managers.CollectionManager;
  * Команда 'clear'
  * Очищает коллекцию
  */
-public class Clear extends Command {
+public class Clear extends Command implements CollectionEditor{
     private CollectionManager collectionManager;
 
     public Clear(CollectionManager collectionManager) {

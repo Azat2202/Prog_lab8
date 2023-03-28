@@ -4,6 +4,7 @@ import models.StudyGroup;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Response implements Serializable {
@@ -23,7 +24,9 @@ public class Response implements Serializable {
     public Response(ResponseStatus status, String response, Collection<StudyGroup> collection) {
         this.status = status;
         this.response = response.trim();
-        this.collection = collection;
+        this.collection = collection.stream()
+                .sorted(Comparator.comparing(StudyGroup::getId))
+                .toList();
     }
 
     public ResponseStatus getStatus() {

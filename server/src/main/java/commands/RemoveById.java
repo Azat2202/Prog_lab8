@@ -10,8 +10,8 @@ import managers.CollectionManager;
  * Команда 'remove_by_id'
  * Удаляет элемент из коллекции по его id
  */
-public class RemoveById extends Command {
-    private CollectionManager collectionManager;
+public class RemoveById extends Command implements CollectionEditor{
+    private final CollectionManager collectionManager;
 
     public RemoveById(CollectionManager collectionManager) {
         super("remove_by_id", " id: удалить элемент из коллекции по его id");

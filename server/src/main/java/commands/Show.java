@@ -31,8 +31,8 @@ public class Show extends Command{
         if (!request.getArgs().isBlank()) throw new IllegalArguments();
         Collection<StudyGroup> collection = collectionManager.getCollection();
         if (collection == null || collection.isEmpty()) {
-            return new Response(ResponseStatus.ERROR,"Коллекцмя еще не инициализирована");
+            return new Response(ResponseStatus.ERROR,"Коллекция еще не инициализирована");
         }
-        return new Response(ResponseStatus.OK, collection.toString());
+        return new Response(ResponseStatus.OK, "Коллекция: ", collection);
     }
 }
