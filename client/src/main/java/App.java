@@ -6,7 +6,7 @@ import utilty.RuntimeManager;
 
 import java.util.Scanner;
 
-public class ClientApp {
+public class App {
     private static String host;
     private static int port;
     private static Printable console;
