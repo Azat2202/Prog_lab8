@@ -9,8 +9,6 @@ import exceptions.IllegalArguments;
 import exceptions.NoSuchCommand;
 import managers.CommandManager;
 
-import java.util.NoSuchElementException;
-
 public class RequestHandler {
     private CommandManager commandManager;
 

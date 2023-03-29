@@ -5,5 +5,6 @@ public enum ResponseStatus {
     ASK_OBJECT,
     EXIT,
     ERROR,
-    WRONG_ARGUMENTS
+    WRONG_ARGUMENTS,
+    EXECUTE_SCRIPT
 }

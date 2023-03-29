@@ -34,7 +34,7 @@ public class ServerApp extends Thread {
                 new Update(collectionManager),
                 new RemoveById(collectionManager),
                 new Clear(collectionManager),
-//                new Execute(fileManager, commandManager),
+                new ExecuteScript(),
                 new Exit(),
                 new AddIfMax(collectionManager),
                 new RemoveGreater(collectionManager),
