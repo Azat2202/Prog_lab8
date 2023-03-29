@@ -141,7 +141,7 @@ public class StudyGroup implements Validator, Comparable<StudyGroup>, Serializab
      */
     @Override
     public boolean validate() {
-        if (this.id == null || this.id <= 0) return false;
+        if (this.id == null || this.id < 0) return false;
         if (this.name == null || this.name.isEmpty()) return false;
         if (this.coordinates == null) return false;
         if (this.creationDate == null) return false;

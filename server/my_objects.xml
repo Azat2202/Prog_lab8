@@ -6,7 +6,7 @@
       <x>100.0</x>
       <y>100.0</y>
     </coordinates>
-    <creationDate>2023-03-28 20:04:21.120 UTC</creationDate>
+    <creationDate>2023-03-29 17:59:21.195 UTC</creationDate>
     <studentsCount>1000</studentsCount>
     <expelledStudents>100</expelledStudents>
     <averageMark>5</averageMark>
@@ -31,7 +31,7 @@
       <x>100.0</x>
       <y>100.0</y>
     </coordinates>
-    <creationDate>2023-03-28 20:04:42.643 UTC</creationDate>
+    <creationDate>2023-03-29 17:59:22.891 UTC</creationDate>
     <studentsCount>1000</studentsCount>
     <expelledStudents>100</expelledStudents>
     <averageMark>5</averageMark>
@@ -49,6 +49,31 @@
       </location>
     </groupAdmin>
   </StudyGroup>
-  <lastInitTime>2023-03-29T16:56:29.6054376</lastInitTime>
-  <lastSaveTime>2023-03-29T16:56:31.1287819</lastSaveTime>
+  <StudyGroup>
+    <id>3</id>
+    <name>azat222</name>
+    <coordinates>
+      <x>100.0</x>
+      <y>100.0</y>
+    </coordinates>
+    <creationDate>2023-03-29 17:59:24.106 UTC</creationDate>
+    <studentsCount>1000</studentsCount>
+    <expelledStudents>100</expelledStudents>
+    <averageMark>5</averageMark>
+    <formOfEducation>EVENING_CLASSES</formOfEducation>
+    <groupAdmin>
+      <name>askar</name>
+      <weight>10</weight>
+      <eyeColor>RED</eyeColor>
+      <hairColor>RED</hairColor>
+      <nationality>INDIA</nationality>
+      <location>
+        <x>10.0</x>
+        <y>10</y>
+        <name>itmo</name>
+      </location>
+    </groupAdmin>
+  </StudyGroup>
+  <lastInitTime>2023-03-29T20:58:02.3486765</lastInitTime>
+  <lastSaveTime>2023-03-29T20:59:24.1100593</lastSaveTime>
 </Array>

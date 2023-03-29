@@ -1,20 +1,22 @@
 package utilty;
 
+import commandLine.Console;
+import commandLine.Printable;
 import commandLine.forms.StudyGroupForm;
 import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
-import exceptions.CommandRuntimeError;
+import exceptions.ExceptionInFileMode;
 import exceptions.ExitObliged;
-import exceptions.IllegalArguments;
-import exceptions.NoSuchCommand;
-import commandLine.*;
+import exceptions.InvalidForm;
 import models.StudyGroup;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Scanner;
 
 /**
  * Класс обработки пользовательского ввода
@@ -44,6 +46,7 @@ public class RuntimeManager {
                 switch (response.getStatus()){
                     case ASK_OBJECT -> {
                         StudyGroup studyGroup = new StudyGroupForm(console).build();
+                        if(!studyGroup.validate()) throw new InvalidForm();
                         Response newResponse = client.sendAndAskResponse(
                                 new Request(
                                 userCommand[0].trim(),
@@ -57,9 +60,15 @@ public class RuntimeManager {
                         }
                     }
                     case EXIT -> throw new ExitObliged();
-                    case EXECUTE_SCRIPT -> this.fileExecution(response.getResponse());
+                    case EXECUTE_SCRIPT -> {
+                        Console.setFileMode(true);
+                        this.fileExecution(response.getResponse());
+                        Console.setFileMode(false);
+                    }
                     default -> {}
                 }
+            } catch (InvalidForm err){
+                console.printError("Поля не валидны! Объект не создан");
             } catch (NoSuchElementException exception) {
                 console.printError("Пользовательский ввод не обнаружен!");
             } catch (ExitObliged exitObliged){
@@ -73,7 +82,7 @@ public class RuntimeManager {
         switch (response.getStatus()){
             case OK -> {
                 if ((Objects.isNull(response.getCollection()))) {
-                    console.println(response.getResponse(), ConsoleColors.GREEN);
+                    console.println(response.getResponse());
                 } else {
                     console.println(response.getResponse() + "\n" + response.getCollection().toString());
                 }
@@ -92,10 +101,10 @@ public class RuntimeManager {
         else console.println(ConsoleColors.toColor("Путь получен успешно", ConsoleColors.PURPLE));
         args = args.trim();
         try {
-            Console.setFileMode(true);
             ExecuteFileManager.pushFile(args);
             for (String line = ExecuteFileManager.readLine(); line != null; line = ExecuteFileManager.readLine()) {
                 String[] userCommand = (line + " ").split(" ", 2);
+                userCommand[1] = userCommand[1].trim();
                 if (userCommand[0].isBlank()) return;
                 if (userCommand[0].equals("execute_script")){
                     if(ExecuteFileManager.fileRepeat(userCommand[1])){
@@ -108,8 +117,15 @@ public class RuntimeManager {
                 this.printResponse(response);
                 switch (response.getStatus()){
                     case ASK_OBJECT -> {
-                        StudyGroup studyGroup = new StudyGroupForm(console).build();
-                        Response newResponse = client.sendAndAskResponse(
+                        StudyGroup studyGroup;
+                        try{
+                            studyGroup = new StudyGroupForm(console).build();
+                            if (!studyGroup.validate()) throw new ExceptionInFileMode();
+                        } catch (ExceptionInFileMode err){
+                            console.printError("Поля в файле не валидны! Объект не создан");
+                            continue;
+                        }
+                       Response newResponse = client.sendAndAskResponse(
                                 new Request(
                                         userCommand[0].trim(),
                                         userCommand[1].trim(),
@@ -122,10 +138,8 @@ public class RuntimeManager {
                         }
                     }
                     case EXIT -> throw new ExitObliged();
+                    case EXECUTE_SCRIPT -> this.fileExecution(response.getResponse());
                     default -> {}
-                }
-                if (userCommand[0].equals("execute_script")){
-                    ExecuteFileManager.popFile();
                 }
             }
             ExecuteFileManager.popFile();
@@ -134,6 +148,5 @@ public class RuntimeManager {
         } catch (IOException e) {
             console.printError("Ошибка ввода вывода");
         }
-        Console.setFileMode(false);
     }
 }

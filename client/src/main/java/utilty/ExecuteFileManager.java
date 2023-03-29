@@ -19,7 +19,7 @@ public class ExecuteFileManager implements UserInput {
     }
 
     public static File getFile() {
-        return new File(pathQueue.getLast());
+        return new File(pathQueue.getFirst());
     }
 
     public static String readLine() throws IOException {

@@ -10,11 +10,16 @@ import commands.*;
 import java.util.List;
 
 public class ServerApp extends Thread {
-    public static final int PORT = 6086;
+    public static int PORT = 6086;
     public static final int CONNECTION_TIMEOUT = 60 * 1000;
     private static final Console console = new Console();
 
     public static void main(String[] args) {
+        if(args.length != 0){
+            try{
+                PORT = Integer.parseInt(args[0]);
+            } catch (NumberFormatException ignored) {}
+        }
         CollectionManager collectionManager = new CollectionManager();
         FileManager fileManager = new FileManager(console, collectionManager);
         try{
