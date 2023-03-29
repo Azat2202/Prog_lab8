@@ -5,25 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
+      <change afterPath="$PROJECT_DIR$/server/log4j2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/utilty/BlankConsole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/log4j2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/a" beforeDir="false" afterPath="$PROJECT_DIR$/client/a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/adding_script" beforeDir="false" afterPath="$PROJECT_DIR$/client/adding_script" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/ExecuteFileManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/ColorForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/ColorForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/CoordinatesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/CoordinatesForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/FormOfEducationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/FormOfEducationForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/LocationForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/LocationForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/NationalityForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/NationalityForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/PersonForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/PersonForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/StudyGroupForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/commandLine/forms/StudyGroupForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/utilty/ExecuteFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utilty/ExecuteFileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/utilty/RuntimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utilty/RuntimeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/StudyGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/StudyGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/my_objects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/my_objects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/ServerApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/CommandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/utilty/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utilty/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +62,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;18&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/azat2/IdeaProjects/Prog_lab6&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/azat2/IdeaProjects/Prog_lab6/server/src/main/resources&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
@@ -82,26 +72,27 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\resources" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java\commands" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\src\main\java\utilty" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java\utilty" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java\managers" />
-      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\src\main\java\exceptions" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="utilty" />
+      <recent name="" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Server">
     <configuration name="Client" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="ClientApp" />
+      <option name="MAIN_CLASS_NAME" value="App" />
       <module name="client" />
-      <option name="PROGRAM_PARAMETERS" value="localhost 6086" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 1084" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -112,7 +103,7 @@
       <envs>
         <env name="file_path" value="C:\Users\azat2\IdeaProjects\Prog_lab6\server\my_objects.xml" />
       </envs>
-      <option name="MAIN_CLASS_NAME" value="ServerApp" />
+      <option name="MAIN_CLASS_NAME" value="App" />
       <module name="Server" />
       <option name="PROGRAM_PARAMETERS" value="1084" />
       <method v="2">
@@ -120,7 +111,7 @@
       </method>
     </configuration>
     <configuration name="ServerHelios" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="ServerApp" />
+      <option name="MAIN_CLASS_NAME" value="App" />
       <module name="Server" />
       <target name="s368796@helios.cs.ifmo.ru:2222" />
       <method v="2">
@@ -132,12 +123,22 @@
       <toRun name="Server" type="Application" />
       <method v="2" />
     </configuration>
+    <configuration name="server-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/server/target/server-1.0-SNAPSHOT.jar" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Application.Client" />
       <item itemvalue="Application.ServerHelios" />
       <item itemvalue="Application.Server" />
       <item itemvalue="Compound.Server+Client" />
+      <item itemvalue="JAR Application.server-1.0-SNAPSHOT.jar" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JAR Application.server-1.0-SNAPSHOT.jar" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -162,7 +163,9 @@
       <workItem from="1680094854215" duration="3237000" />
       <workItem from="1680105170772" duration="110000" />
       <workItem from="1680105701524" duration="2222000" />
-      <workItem from="1680108623831" duration="5496000" />
+      <workItem from="1680108623831" duration="8111000" />
+      <workItem from="1680116931452" duration="634000" />
+      <workItem from="1680123089947" duration="1363000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>

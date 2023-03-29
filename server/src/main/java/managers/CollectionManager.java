@@ -2,6 +2,8 @@ package managers;
 
 import exceptions.InvalidForm;
 import models.StudyGroup;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -26,6 +28,8 @@ public class CollectionManager {
      */
     private LocalDateTime lastSaveTime;
 
+    static final Logger collectionManagerLogger = LogManager.getLogger(CollectionManager.class);
+
     public CollectionManager() {
         this.lastInitTime = LocalDateTime.now();
         this.lastSaveTime = null;
@@ -41,6 +45,7 @@ public class CollectionManager {
                 .map(StudyGroup::getId)
                 .max(Integer::compareTo)
                 .orElse(0);
+        collectionManagerLogger.info("Обновлен айди на " + nextId);
     }
 
     public static int getNextId(){
@@ -98,6 +103,7 @@ public class CollectionManager {
     public void clear(){
         this.collection.clear();
         lastInitTime = LocalDateTime.now();
+        collectionManagerLogger.info("Коллекция очищена");
     }
 
     public StudyGroup getLast() {
@@ -126,6 +132,7 @@ public class CollectionManager {
         this.removeElement(pastElement);
         newElement.setId(id);
         this.addElement(newElement);
+        collectionManagerLogger.info("Объект с айди " + id + " изменен", newElement);
     }
 
     /**
@@ -140,6 +147,7 @@ public class CollectionManager {
     public void addElement(StudyGroup studyGroup){
         this.lastSaveTime = LocalDateTime.now();
         collection.add(studyGroup);
+        collectionManagerLogger.info("Добавлен объект в коллекцию", studyGroup);
     }
 
     public void addElements(Collection<StudyGroup> collection) throws InvalidForm{
