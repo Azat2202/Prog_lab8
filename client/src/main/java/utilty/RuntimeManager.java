@@ -138,7 +138,10 @@ public class RuntimeManager {
                         }
                     }
                     case EXIT -> throw new ExitObliged();
-                    case EXECUTE_SCRIPT -> this.fileExecution(response.getResponse());
+                    case EXECUTE_SCRIPT -> {
+                        this.fileExecution(response.getResponse());
+                        ExecuteFileManager.popRecursion();
+                    }
                     default -> {}
                 }
             }

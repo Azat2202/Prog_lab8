@@ -45,10 +45,13 @@ public class Client {
                 if (request.isEmpty()) return new Response(ResponseStatus.WRONG_ARGUMENTS, "Запрос пустой!");
                 serverWriter.writeObject(request);
                 serverWriter.flush();
-                return (Response) serverReader.readObject();
+                Response response = (Response) serverReader.readObject();
+                this.disconnectFromServer();
+                reconnectionAttempts = 0;
+                return response;
             } catch (IOException e) {
                 if (reconnectionAttempts == 0){
-                    console.println("Установка подключения к серверу", ConsoleColors.GREEN);
+                    // console.println("Установка подключения к серверу", ConsoleColors.GREEN);
                     connectToServer();
                     reconnectionAttempts++;
                     continue;
@@ -77,14 +80,24 @@ public class Client {
         try{
             if(reconnectionAttempts > 0) console.println("Попытка повторного подключения", ConsoleColors.CYAN);
             this.socket = new Socket(host, port);
-            console.println("Подключение успешно восстановлено", ConsoleColors.GREEN);
+            //console.println("Подключение успешно восстановлено", ConsoleColors.GREEN);
             this.serverWriter = new ObjectOutputStream(socket.getOutputStream());
             this.serverReader = new ObjectInputStream(socket.getInputStream());
-            console.println("Обмен пакетами разрешен");
+            //console.println("Обмен пакетами разрешен");
         } catch (IllegalArgumentException e){
             console.printError("Адрес сервера введен некорректно");
         } catch (IOException e) {
             console.printError("Произошла ошибка при соединении с сервером");
+        }
+    }
+
+    public void disconnectFromServer(){
+        try {
+            this.socket.close();
+            serverWriter.close();
+            serverReader.close();
+        } catch (IOException e) {
+            console.printError("Не подключен к серверу");
         }
     }
 }

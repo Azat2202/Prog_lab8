@@ -28,7 +28,15 @@ public class ExecuteFileManager implements UserInput {
     public static void popFile() throws IOException {
         fileReaders.getFirst().close();
         fileReaders.pop();
-        pathQueue.pop();
+        if(pathQueue.size() >= 1) {
+            pathQueue.pop();
+        }
+    }
+
+    public static void popRecursion(){
+        if(pathQueue.size() >= 1) {
+            pathQueue.pop();
+        }
     }
 
     public static boolean fileRepeat(String path){

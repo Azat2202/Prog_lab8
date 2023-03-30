@@ -1,3 +1,4 @@
+import commandLine.BlankConsole;
 import commandLine.Console;
 import commandLine.Printable;
 import exceptions.IllegalArguments;
@@ -9,7 +10,7 @@ import java.util.Scanner;
 public class App {
     private static String host;
     private static int port;
-    private static Printable console;
+    private static Printable console = new BlankConsole();
 
     public static boolean parseHostPort(String[] args){
         try{

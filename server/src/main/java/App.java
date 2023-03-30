@@ -5,6 +5,7 @@ import utilty.*;
 import commands.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -56,7 +57,7 @@ public class App extends Thread {
         App.rootLogger.debug("Создан объект менеджера команд");
         RequestHandler requestHandler = new RequestHandler(commandManager);
         App.rootLogger.debug("Создан объект обработчика запросов");
-        Server server = new Server(PORT, CONNECTION_TIMEOUT, requestHandler);
+        Server server = new Server(PORT, CONNECTION_TIMEOUT, requestHandler, fileManager);
         App.rootLogger.debug("Создан объект сервера");
         server.run();
     }

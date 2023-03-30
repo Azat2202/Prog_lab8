@@ -4,6 +4,7 @@ import dtp.Request;
 import dtp.Response;
 import exceptions.ConnectionErrorException;
 import exceptions.OpeningServerException;
+import managers.FileManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +14,7 @@ import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.util.Scanner;
 
 
 public class Server {
@@ -25,11 +27,17 @@ public class Server {
 
     static final Logger serverLogger = LogManager.getLogger(Server.class);
 
-    public Server(int port, int soTimeout, RequestHandler handler) {
+    BufferedInputStream bf = new BufferedInputStream(System.in);
+
+    BufferedReader scanner = new BufferedReader(new InputStreamReader(bf));
+    private FileManager fileManager;
+
+    public Server(int port, int soTimeout, RequestHandler handler, FileManager fileManager) {
         this.port = port;
         this.soTimeout = soTimeout;
         this.console = new BlankConsole();
         this.requestHandler = handler;
+        this.fileManager = fileManager;
     }
 
     public void run(){
@@ -37,11 +45,18 @@ public class Server {
             openServerSocket();
             serverLogger.info("Создано соединение с клиентом");
             while (true) {
+                try {
+                    if (scanner.ready()) {
+                        String line = scanner.readLine();
+                        if (line.equals("save") || line.equals("s")) {
+                            fileManager.saveObjects();
+                            serverLogger.info("Коллекция сохранена");
+                        }
+                    }
+                } catch (IOException ignored) {}
                 try (SocketChannel clientSocket = connectToClient()) {
                     if(!processClientRequest(clientSocket)) break;
-                } catch (ConnectionErrorException | SocketTimeoutException exception) {
-                    serverLogger.fatal("Проблема с соединением");
-                    break;
+                } catch (ConnectionErrorException | SocketTimeoutException ignored) {
                 } catch (IOException exception) {
                     console.printError("Произошла ошибка при попытке завершить соединение с клиентом!");
                     serverLogger.error("Произошла ошибка при попытке завершить соединение с клиентом!");
@@ -76,15 +91,14 @@ public class Server {
 
     private SocketChannel connectToClient() throws ConnectionErrorException, SocketTimeoutException {
         try {
-            console.println("Прослушивание порта '" + port + "'...");
-            serverLogger.info("Прослушивание порта '" + port + "'...");
-            socketChannel = ss.accept();
+//            console.println("Прослушивание порта '" + port + "'...");
+//            serverLogger.info("Прослушивание порта '" + port + "'...");
+            ss.socket().setSoTimeout(100);
+            socketChannel = ss.socket().accept().getChannel();
             console.println("Соединение с клиентом успешно установлено.");
             serverLogger.info("Соединение с клиентом успешно установлено.");
             return socketChannel;
         } catch (SocketTimeoutException exception) {
-            console.printError("Превышено время ожидания подключения!");
-            serverLogger.error("Превышено время ожидания подключения!");
             throw new SocketTimeoutException();
         } catch (IOException exception) {
             serverLogger.fatal("Произошла ошибка при соединении с клиентом!");
