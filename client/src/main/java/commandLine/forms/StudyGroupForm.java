@@ -6,8 +6,8 @@ import models.Coordinates;
 import models.FormOfEducation;
 import models.Person;
 import models.StudyGroup;
-import utilty.ConsoleColors;
-import utilty.ExecuteFileManager;
+import utility.ConsoleColors;
+import utility.ExecuteFileManager;
 
 import java.util.Date;
 

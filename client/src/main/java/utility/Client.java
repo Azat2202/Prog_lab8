@@ -1,21 +1,12 @@
-package utilty;
+package utility;
 
 import commandLine.Printable;
 import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
-import exceptions.ConnectingException;
-import models.Coordinates;
-import models.FormOfEducation;
-import models.StudyGroup;
 
 import java.io.*;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
-import java.util.Date;
 import java.util.Objects;
 
 public class Client {

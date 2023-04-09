@@ -1,4 +1,4 @@
-package utilty;
+package utility;
 
 import commandLine.Console;
 import commandLine.Printable;

@@ -1,4 +1,4 @@
-package utilty;
+package utility;
 
 /**
  * Интерфейс объединяющий способы вывода

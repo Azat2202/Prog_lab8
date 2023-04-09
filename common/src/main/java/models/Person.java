@@ -1,6 +1,6 @@
 package models;
 
-import utilty.ConsoleColors;
+import utility.ConsoleColors;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package utilty;
+package utility;
 
 public class BlankConsole implements Printable{
     @Override

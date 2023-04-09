@@ -1,4 +1,4 @@
-package utilty;
+package utility;
 
 /**
  * Класс для раскрашивания вывода в консоль

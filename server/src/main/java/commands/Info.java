@@ -5,7 +5,7 @@ import dtp.Response;
 import dtp.ResponseStatus;
 import exceptions.IllegalArguments;
 import managers.CollectionManager;
-import utilty.ConsoleColors;
+import utility.ConsoleColors;
 
 /**
  * Команда 'info'

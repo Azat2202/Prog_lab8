@@ -1,13 +1,12 @@
 package models;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import utilty.ConsoleColors;
+import utility.ConsoleColors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayDeque;
 import java.util.Date;
 import java.util.Objects;
 

@@ -2,8 +2,8 @@ import commandLine.BlankConsole;
 import commandLine.Console;
 import commandLine.Printable;
 import exceptions.IllegalArguments;
-import utilty.Client;
-import utilty.RuntimeManager;
+import utility.Client;
+import utility.RuntimeManager;
 
 import java.util.Scanner;
 

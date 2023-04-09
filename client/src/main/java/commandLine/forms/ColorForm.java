@@ -3,8 +3,8 @@ package commandLine.forms;
 import commandLine.*;
 import exceptions.ExceptionInFileMode;
 import models.Color;
-import utilty.ConsoleColors;
-import utilty.ExecuteFileManager;
+import utility.ConsoleColors;
+import utility.ExecuteFileManager;
 
 import java.util.Locale;
 

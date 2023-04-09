@@ -1,4 +1,4 @@
-package utilty;
+package utility;
 
 import dtp.Request;
 import dtp.Response;
@@ -9,14 +9,19 @@ import exceptions.IllegalArguments;
 import exceptions.NoSuchCommand;
 import managers.CommandManager;
 
-public class RequestHandler {
-    private CommandManager commandManager;
+import java.util.concurrent.RecursiveTask;
 
-    public RequestHandler(CommandManager commandManager) {
+public class RequestHandler extends RecursiveTask<Response> {
+    private CommandManager commandManager;
+    private Request request;
+
+    public RequestHandler(CommandManager commandManager, Request request) {
         this.commandManager = commandManager;
+        this.request = request;
     }
 
-    public Response handle(Request request) {
+    @Override
+    public Response compute() {
         try {
             commandManager.addToHistory(request.getCommandName());
             return commandManager.execute(request);

@@ -1,9 +1,9 @@
-package utilty;
+package utility;
 
-import dtp.Request;
-import dtp.Response;
 import exceptions.ConnectionErrorException;
 import exceptions.OpeningServerException;
+import managers.CommandManager;
+import managers.ConnectionManager;
 import managers.FileManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +14,6 @@ import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Scanner;
 
 
 public class Server {
@@ -23,7 +22,7 @@ public class Server {
     private Printable console;
     private ServerSocketChannel ss;
     private SocketChannel socketChannel;
-    private RequestHandler requestHandler;
+    private CommandManager commandManager;
 
     static final Logger serverLogger = LogManager.getLogger(Server.class);
 
@@ -32,11 +31,11 @@ public class Server {
     BufferedReader scanner = new BufferedReader(new InputStreamReader(bf));
     private FileManager fileManager;
 
-    public Server(int port, int soTimeout, RequestHandler handler, FileManager fileManager) {
+    public Server(int port, int soTimeout, CommandManager commandManager, FileManager fileManager) {
         this.port = port;
         this.soTimeout = soTimeout;
         this.console = new BlankConsole();
-        this.requestHandler = handler;
+        this.commandManager = commandManager;
         this.fileManager = fileManager;
     }
 
@@ -55,7 +54,7 @@ public class Server {
                     }
                 } catch (IOException ignored) {}
                 try (SocketChannel clientSocket = connectToClient()) {
-                    if(!processClientRequest(clientSocket)) break;
+                    if(!new ConnectionManager(commandManager).processClientRequest(clientSocket)) break;
                 } catch (ConnectionErrorException | SocketTimeoutException ignored) {
                 } catch (IOException exception) {
                     console.printError("Произошла ошибка при попытке завершить соединение с клиентом!");
@@ -106,39 +105,7 @@ public class Server {
         }
     }
 
-    private boolean processClientRequest(SocketChannel clientSocket) {
-        Request userRequest = null;
-        Response responseToUser = null;
-        try {
-            ObjectInputStream clientReader = new ObjectInputStream(clientSocket.socket().getInputStream());
-            ObjectOutputStream clientWriter = new ObjectOutputStream(clientSocket.socket().getOutputStream());
-            serverLogger.info("Открыты потоки ввода вывода");
-            do {
-                userRequest = (Request) clientReader.readObject();
-                serverLogger.info("Получен реквест с командой" + userRequest.getCommandName(), userRequest);
-                console.println(userRequest.toString());
-                responseToUser = requestHandler.handle(userRequest);
-                clientWriter.writeObject(responseToUser);
-                serverLogger.info("Отправлен ответ", responseToUser);
-                clientWriter.flush();
-            } while (true);
-        } catch (ClassNotFoundException exception) {
-            console.printError("Произошла ошибка при чтении полученных данных!");
-            serverLogger.fatal("Произошла ошибка при чтении полученных данных!");
-        } catch (InvalidClassException | NotSerializableException exception) {
-            console.printError("Произошла ошибка при отправке данных на клиент!");
-            serverLogger.error("Произошла ошибка при отправке данных на клиент!");
-        } catch (IOException exception) {
-            if (userRequest == null) {
-                console.printError("Непредвиденный разрыв соединения с клиентом!");
-                serverLogger.error("Непредвиденный разрыв соединения с клиентом!");
-            } else {
-                console.println("Клиент успешно отключен от сервера!");
-                serverLogger.info("Клиент успешно отключен от сервера!");
-            }
-        }
-        return true;
-    }
+
 
     private void stop() {
         class ClosingSocketException extends Exception{}

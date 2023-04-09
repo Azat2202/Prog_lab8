@@ -1,6 +1,6 @@
 package commandLine;
 
-import utilty.ConsoleColors;
+import utility.ConsoleColors;
 
 /**
  * Интерфейс объединяющий способы вывода

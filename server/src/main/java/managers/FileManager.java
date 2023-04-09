@@ -8,10 +8,8 @@ import exceptions.InvalidForm;
 import models.StudyGroup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utilty.Console;
-import utilty.ConsoleColors;
-import utilty.Printable;
-import utilty.Server;
+import utility.ConsoleColors;
+import utility.Printable;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

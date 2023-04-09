@@ -1,9 +1,8 @@
-package utilty;
+package utility;
 
 import commandLine.UserInput;
 
 import java.io.*;
-import java.net.URI;
 import java.util.ArrayDeque;
 
 /**

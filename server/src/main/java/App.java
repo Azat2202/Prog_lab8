@@ -1,11 +1,10 @@
 import exceptions.ExitObliged;
 import managers.*;
 
-import utilty.*;
+import utility.*;
 import commands.*;
 
 import java.util.List;
-import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,6 +46,7 @@ public class App extends Thread {
                 new Clear(collectionManager),
                 new ExecuteScript(),
                 new Exit(),
+                new Sleep(),
                 new AddIfMax(collectionManager),
                 new RemoveGreater(collectionManager),
                 new History(commandManager),
@@ -55,9 +55,8 @@ public class App extends Thread {
                 new CountLessThanExpelledStudents(collectionManager)
         ));
         App.rootLogger.debug("Создан объект менеджера команд");
-        RequestHandler requestHandler = new RequestHandler(commandManager);
         App.rootLogger.debug("Создан объект обработчика запросов");
-        Server server = new Server(PORT, CONNECTION_TIMEOUT, requestHandler, fileManager);
+        Server server = new Server(PORT, CONNECTION_TIMEOUT, commandManager, fileManager);
         App.rootLogger.debug("Создан объект сервера");
         server.run();
     }
