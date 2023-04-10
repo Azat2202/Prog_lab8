@@ -16,10 +16,10 @@
 
 ### Необходимо реализовать многопоточную обработку запросов.
 
-- Для многопоточного чтения запросов использовать Fixed thread pool
-- Для многопотчной обработки полученного запроса использовать ForkJoinPool
-- Для многопоточной отправки ответа использовать Cached thread pool
-- Для синхронизации доступа к коллекции использовать синхронизацию чтения и записи с помощью synchronized
+- [Для многопоточного чтения запросов использовать Fixed thread pool](server/src/main/java/utility/Server.java?plain=1#61)
+- [Для многопотчной обработки полученного запроса использовать ForkJoinPool](server/src/main/java/managers/ConnectionManager.java?plain=1#38)
+- [Для многопоточной отправки ответа использовать Cached thread pool](server/src/main/java/managers/ConnectionManager.java?plain=1#41)
+- [Для синхронизации доступа к коллекции использовать синхронизацию чтения и записи с помощью synchronized](server/src/main/java/managers/CommandManager.java?plain=1#70)
 
 ###Порядок выполнения работы:
 
