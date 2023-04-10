@@ -37,19 +37,21 @@ public class App extends Thread {
 
         CommandManager commandManager = new CommandManager(fileManager);
         commandManager.addCommand(List.of(
+                new History(commandManager),
                 new Help(commandManager),
+                new ExecuteScript(),
+                new Exit(),
+                new Sleep(),
+                new Ping(),
+                new Register(),
                 new Info(collectionManager),
                 new Show(collectionManager),
                 new AddElement(collectionManager),
                 new Update(collectionManager),
                 new RemoveById(collectionManager),
                 new Clear(collectionManager),
-                new ExecuteScript(),
-                new Exit(),
-                new Sleep(),
                 new AddIfMax(collectionManager),
                 new RemoveGreater(collectionManager),
-                new History(commandManager),
                 new RemoveAllByAverageMark(collectionManager),
                 new CountByAverageMark(collectionManager),
                 new CountLessThanExpelledStudents(collectionManager)

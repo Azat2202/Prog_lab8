@@ -4,18 +4,19 @@ import commandLine.Printable;
 import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
+import dtp.User;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Objects;
 
 public class Client {
-    private String host;
-    private int port;
-    private int reconnectionTimeout;
+    private final String host;
+    private final int port;
+    private final int reconnectionTimeout;
     private int reconnectionAttempts;
-    private int maxReconnectionAttempts;
-    private Printable console;
+    private final int maxReconnectionAttempts;
+    private final Printable console;
     private Socket socket;
     private ObjectOutputStream serverWriter;
     private ObjectInputStream serverReader;
@@ -71,10 +72,8 @@ public class Client {
         try{
             if(reconnectionAttempts > 0) console.println("Попытка повторного подключения", ConsoleColors.CYAN);
             this.socket = new Socket(host, port);
-            //console.println("Подключение успешно восстановлено", ConsoleColors.GREEN);
             this.serverWriter = new ObjectOutputStream(socket.getOutputStream());
             this.serverReader = new ObjectInputStream(socket.getInputStream());
-            //console.println("Обмен пакетами разрешен");
         } catch (IllegalArgumentException e){
             console.printError("Адрес сервера введен некорректно");
         } catch (IOException e) {

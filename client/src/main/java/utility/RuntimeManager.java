@@ -3,12 +3,15 @@ package utility;
 import commandLine.Console;
 import commandLine.Printable;
 import commandLine.forms.StudyGroupForm;
+import commandLine.forms.UserForm;
 import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
+import dtp.User;
 import exceptions.ExceptionInFileMode;
 import exceptions.ExitObliged;
 import exceptions.InvalidForm;
+import exceptions.LoginDuringExecuteFail;
 import models.StudyGroup;
 
 import java.io.File;
@@ -26,6 +29,7 @@ public class RuntimeManager {
     private final Printable console;
     private final Scanner userScanner;
     private final Client client;
+    private User user = null;
 
     public RuntimeManager(Printable console, Scanner userScanner, Client client) {
         this.console = console;
@@ -39,9 +43,23 @@ public class RuntimeManager {
     public void interactiveMode(){
         while (true) {
             try{
+//                if (Objects.isNull(user)) {
+//                    Response response;
+//                    do {
+//                        UserForm userForm = new UserForm(console);
+//                        user = new UserForm(console).build();
+//                        if (!userScanner.hasNext()) throw new ExitObliged();
+//                        if (userForm.askIfLogin()) {
+//                            response = client.sendAndAskResponse(new Request("ping", "", user));
+//                        } else {
+//                            response = client.sendAndAskResponse(new Request("register", "", user));
+//                        }
+//                    } while (response.getStatus() != ResponseStatus.OK);
+//                    console.println("Вы успешно залогинились");
+//                }
                 if (!userScanner.hasNext()) throw new ExitObliged();
                 String[] userCommand = (userScanner.nextLine().trim() + " ").split(" ", 2); // прибавляем пробел, чтобы split выдал два элемента в массиве
-                Response response = client.sendAndAskResponse(new Request(userCommand[0].trim(), userCommand[1].trim()));
+                Response response = client.sendAndAskResponse(new Request(userCommand[0].trim(), userCommand[1].trim(), user));
                 this.printResponse(response);
                 switch (response.getStatus()){
                     case ASK_OBJECT -> {
@@ -51,6 +69,7 @@ public class RuntimeManager {
                                 new Request(
                                 userCommand[0].trim(),
                                 userCommand[1].trim(),
+                                user,
                                 studyGroup));
                         if (newResponse.getStatus() != ResponseStatus.OK){
                             console.printError(newResponse.getResponse());
@@ -65,6 +84,10 @@ public class RuntimeManager {
                         this.fileExecution(response.getResponse());
                         Console.setFileMode(false);
                     }
+                    case LOGIN_FAILED -> {
+                        console.printError("Ошибка с вашим аккаунтом. Зайдите в него снова");
+                        this.user = null;
+                    }
                     default -> {}
                 }
             } catch (InvalidForm err){
@@ -74,6 +97,8 @@ public class RuntimeManager {
             } catch (ExitObliged exitObliged){
                 console.println(ConsoleColors.toColor("До свидания!", ConsoleColors.YELLOW));
                 return;
+            } catch (LoginDuringExecuteFail e) {
+                console.printError("Во время исполнения скрипта произошла ошибка с вашим аккаунтом. Пожалуйста, войдите в него снова");
             }
         }
     }
@@ -93,7 +118,7 @@ public class RuntimeManager {
         }
     }
 
-    private void fileExecution(String args) throws ExitObliged{
+    private void fileExecution(String args) throws ExitObliged, LoginDuringExecuteFail {
         if (args == null || args.isEmpty()) {
             console.printError("Путь не распознан");
             return;
@@ -113,7 +138,7 @@ public class RuntimeManager {
                     }
                 }
                 console.println(ConsoleColors.toColor("Выполнение команды " + userCommand[0], ConsoleColors.YELLOW));
-                Response response = client.sendAndAskResponse(new Request(userCommand[0].trim(), userCommand[1].trim()));
+                Response response = client.sendAndAskResponse(new Request(userCommand[0].trim(), userCommand[1].trim(), user));
                 this.printResponse(response);
                 switch (response.getStatus()){
                     case ASK_OBJECT -> {
@@ -129,6 +154,7 @@ public class RuntimeManager {
                                 new Request(
                                         userCommand[0].trim(),
                                         userCommand[1].trim(),
+                                        user,
                                         studyGroup));
                         if (newResponse.getStatus() != ResponseStatus.OK){
                             console.printError(newResponse.getResponse());
@@ -141,6 +167,11 @@ public class RuntimeManager {
                     case EXECUTE_SCRIPT -> {
                         this.fileExecution(response.getResponse());
                         ExecuteFileManager.popRecursion();
+                    }
+                    case LOGIN_FAILED -> {
+                        console.printError("Ошибка с вашим аккаунтом. Зайдите в него снова");
+                        this.user = null;
+                        throw new LoginDuringExecuteFail();
                     }
                     default -> {}
                 }
