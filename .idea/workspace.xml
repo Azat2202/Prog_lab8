@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/Sleep.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/Sleep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/CommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/ConnectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/ConnectionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/utility/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utility/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.MD" beforeDir="false" afterPath="$PROJECT_DIR$/README.MD" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +207,7 @@
       <workItem from="1681072314795" duration="167000" />
       <workItem from="1681062895716" duration="14434000" />
       <workItem from="1681142197042" duration="2384000" />
-      <workItem from="1681145609495" duration="902000" />
+      <workItem from="1681145609495" duration="3574000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>

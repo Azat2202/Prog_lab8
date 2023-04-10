@@ -1,8 +1,9 @@
 package commands;
 
-import dtp.*;
+import dtp.Request;
+import dtp.Response;
+import dtp.ResponseStatus;
 import exceptions.IllegalArguments;
-import managers.CommandManager;
 
 /**
  * Команда 'sleep'
