@@ -23,8 +23,9 @@ public class Sleep extends Command {
         if (request.getArgs().isBlank()) throw new IllegalArguments();
         if (request.getArgs().isBlank()) throw new IllegalArguments();
         try {
-            Thread.sleep(Integer.parseInt(request.getArgs().trim())*1000L);
-            return new Response(ResponseStatus.OK,"Объект удален успешно");
+            Integer seconds = Math.toIntExact(Integer.parseInt(request.getArgs().trim()));
+            Thread.sleep(seconds * 1000L);
+            return new Response(ResponseStatus.OK,"Вы поспали " + seconds + " секунд");
         } catch (NumberFormatException exception) {
             return new Response(ResponseStatus.WRONG_ARGUMENTS,"id должно быть числом типа int");
         } catch (InterruptedException e) {

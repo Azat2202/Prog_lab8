@@ -11,18 +11,21 @@ import java.io.*;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.*;
 
-public class ConnectionManager {
+public class ConnectionManager implements Runnable{
     private CommandManager commandManager;
     private ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
     private ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
+    private SocketChannel clientSocket;
 
     static final Logger connectionManagerLogger = LogManager.getLogger(Server.class);
 
-    public ConnectionManager(CommandManager commandManager) {
+    public ConnectionManager(CommandManager commandManager, SocketChannel clientSocket) {
         this.commandManager = commandManager;
+        this.clientSocket = clientSocket;
     }
 
-    public boolean processClientRequest(SocketChannel clientSocket){
+    @Override
+    public void run(){
         Request userRequest = null;
         Response responseToUser = null;
         try {
@@ -31,7 +34,7 @@ public class ConnectionManager {
             connectionManagerLogger.info("Открыты потоки ввода вывода");
             do {
                 userRequest = (Request) clientReader.readObject();
-                connectionManagerLogger.info("Получен запрос с командой" + userRequest.getCommandName(), userRequest);
+                connectionManagerLogger.info("Получен запрос с командой " + userRequest.getCommandName(), userRequest);
                 responseToUser = forkJoinPool.invoke(new RequestHandler(commandManager, userRequest));
                 connectionManagerLogger.debug(forkJoinPool.toString());
                 Response finalResponseToUser = responseToUser;
@@ -69,6 +72,5 @@ public class ConnectionManager {
             }
 
         }
-        return true;
     }
 }
