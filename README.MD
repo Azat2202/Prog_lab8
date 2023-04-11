@@ -21,7 +21,7 @@
 - [Для многопоточного чтения запросов использовать Fixed thread pool](server/src/main/java/utility/Server.java?plain=1#L61)
 - [Для многопотчной обработки полученного запроса использовать ForkJoinPool](server/src/main/java/managers/ConnectionManager.java?plain=1#L38)
 - [Для многопоточной отправки ответа использовать Cached thread pool](server/src/main/java/managers/ConnectionManager.java?plain=1#L41)
-- [Для синхронизации доступа к коллекции использовать синхронизацию чтения и записи с помощью synchronized](server/src/main/java/managers/CommandManager.java?plain=1#L70)
+- Для синхронизации доступа к коллекции использовать синхронизацию чтения и записи с помощью synchronized
 
 ###Порядок выполнения работы:
 

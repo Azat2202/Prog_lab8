@@ -20,7 +20,6 @@ public class Ping extends Command {
      */
     @Override
     public Response execute(Request request) throws IllegalArguments {
-        if (!request.getArgs().isBlank()) throw new IllegalArguments();
         return new Response(ResponseStatus.OK, "pong");
     }
 }

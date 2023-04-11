@@ -10,6 +10,7 @@ import exceptions.IllegalArguments;
  * Регистрирует пользователя
  */
 public class Register extends Command {
+
     public Register() {
         super("register", ": Зарагестрировать пользователя");
     }
@@ -21,8 +22,7 @@ public class Register extends Command {
      */
     @Override
     public Response execute(Request request) throws IllegalArguments {
-        if (request.getArgs().isBlank()) throw new IllegalArguments();
-        System.out.println(request.getUser());
+        this.commandLogger.debug("получен юзер: " + request.getUser());
         return new Response(ResponseStatus.OK,"Вы успешно зарегистрированы!");
     }
 }

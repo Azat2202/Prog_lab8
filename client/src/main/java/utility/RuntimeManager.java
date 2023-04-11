@@ -43,20 +43,20 @@ public class RuntimeManager {
     public void interactiveMode(){
         while (true) {
             try{
-//                if (Objects.isNull(user)) {
-//                    Response response;
-//                    do {
-//                        UserForm userForm = new UserForm(console);
-//                        user = new UserForm(console).build();
-//                        if (!userScanner.hasNext()) throw new ExitObliged();
-//                        if (userForm.askIfLogin()) {
-//                            response = client.sendAndAskResponse(new Request("ping", "", user));
-//                        } else {
-//                            response = client.sendAndAskResponse(new Request("register", "", user));
-//                        }
-//                    } while (response.getStatus() != ResponseStatus.OK);
-//                    console.println("Вы успешно залогинились");
-//                }
+                if (Objects.isNull(user)) {
+                    Response response;
+                    do {
+                        UserForm userForm = new UserForm(console);
+                        boolean isLogin = userForm.askIfLogin();
+                        user = new UserForm(console).build();
+                        if (isLogin) {
+                            response = client.sendAndAskResponse(new Request("ping", "", user));
+                        } else {
+                            response = client.sendAndAskResponse(new Request("register", "", user));
+                        }
+                    } while (response.getStatus() != ResponseStatus.OK);
+                    console.println("Вы успешно зашли в аккаунт");
+                }
                 if (!userScanner.hasNext()) throw new ExitObliged();
                 String[] userCommand = (userScanner.nextLine().trim() + " ").split(" ", 2); // прибавляем пробел, чтобы split выдал два элемента в массиве
                 Response response = client.sendAndAskResponse(new Request(userCommand[0].trim(), userCommand[1].trim(), user));
@@ -94,6 +94,8 @@ public class RuntimeManager {
                 console.printError("Поля не валидны! Объект не создан");
             } catch (NoSuchElementException exception) {
                 console.printError("Пользовательский ввод не обнаружен!");
+                console.println(ConsoleColors.toColor("До свидания!", ConsoleColors.YELLOW));
+                return;
             } catch (ExitObliged exitObliged){
                 console.println(ConsoleColors.toColor("До свидания!", ConsoleColors.YELLOW));
                 return;

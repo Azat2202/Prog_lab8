@@ -1,5 +1,9 @@
 package commands;
 
+import managers.CommandManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 
 /**
@@ -9,6 +13,7 @@ public abstract class Command implements Executable {
     private final String name;
     private final String description;
 
+    protected Logger commandLogger = LogManager.getLogger(this.getClass());
     public Command(String name, String description) {
         this.name = name;
         this.description = description;

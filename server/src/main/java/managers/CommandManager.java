@@ -67,7 +67,7 @@ public class CommandManager{
      * @throws CommandRuntimeError команда выдала ошибку при исполнении
      * @throws ExitObliged команда вызвала выход из программы
      */
-    public synchronized Response execute(Request request) throws NoSuchCommand, IllegalArguments, CommandRuntimeError, ExitObliged {
+    public Response execute(Request request) throws NoSuchCommand, IllegalArguments, CommandRuntimeError, ExitObliged {
         Command command = commands.get(request.getCommandName());
         if (command == null) {
             commandManagerLogger.fatal("Нет такой команды" + request.getCommandName());

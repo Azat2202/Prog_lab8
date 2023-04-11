@@ -7,6 +7,12 @@ import models.*;
 import utility.ConsoleColors;
 import utility.ExecuteFileManager;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * Форма для создания юзера
  */
@@ -37,8 +43,8 @@ public class UserForm extends Form<User>{
     }
 
     public boolean askIfLogin(){
-        console.print("У вас уже есть аккаунт? [yn]  ");
         for(;;) {
+            console.print("У вас уже есть аккаунт? [yn]  ");
             String input = scanner.nextLine().trim().toLowerCase();
             switch (input){
                 case "y", "yes", "да", "д" -> {
@@ -58,7 +64,7 @@ public class UserForm extends Form<User>{
             console.println(ConsoleColors.toColor("Введите ваш логин", ConsoleColors.GREEN));
             login = scanner.nextLine().trim();
             if (login.isEmpty()){
-                console.printError("Имя не может быть пустым");
+                console.printError("Логин не может быть пустым");
                 if (Console.isFileMode()) throw new ExceptionInFileMode();
             }
             else{
@@ -71,9 +77,11 @@ public class UserForm extends Form<User>{
         String pass;
         while (true){
             console.println(ConsoleColors.toColor("Введите пароль", ConsoleColors.GREEN));
-            pass = scanner.nextLine().trim();
+            pass = (Objects.isNull(System.console()))
+                    ? scanner.nextLine().trim()
+                    : new String(System.console().readPassword());
             if (pass.isEmpty()){
-                console.printError("Имя не может быть пустым");
+                console.printError("Пароль не может быть пустым");
                 if (Console.isFileMode()) throw new ExceptionInFileMode();
             }
             else{
