@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteTargetsManager">
+    <targets>
+      <target name="s368796@helios.cs.ifmo.ru:2222" type="ssh/sftp" uuid="3d3d3820-bffb-4622-aad3-9e7b6843247f">
+        <config>
+          <option name="projectRootOnTarget" value="/home/studs/s368796/Prog_lab6" />
+          <option name="serverName" value="s368796@helios.cs.ifmo.ru:2222 agent" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="homePath" value="/usr/local/" />
+            <option name="javaVersionString" value="17.0.2" />
+          </config>
+        </ContributedStateBase>
+      </target>
+    </targets>
+  </component>
+</project>
