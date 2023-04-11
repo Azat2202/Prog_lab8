@@ -150,13 +150,6 @@ public class CollectionManager {
         collectionManagerLogger.info("Добавлен объект в коллекцию", studyGroup);
     }
 
-    public void addElements(Collection<StudyGroup> collection) throws InvalidForm{
-        if (collection == null) return;
-        for (StudyGroup studyGroup:collection){
-            this.addElement(studyGroup);
-        }
-    }
-
     public void removeElement(StudyGroup studyGroup){
         collection.remove(studyGroup);
     }
