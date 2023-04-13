@@ -2,6 +2,7 @@ package managers;
 
 import dtp.Request;
 import dtp.Response;
+import dtp.ResponseStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.RequestHandler;
@@ -13,15 +14,17 @@ import java.util.concurrent.*;
 
 public class ConnectionManager implements Runnable{
     private CommandManager commandManager;
+    private DatabaseManager databaseManager;
     private ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
     private ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
     private SocketChannel clientSocket;
 
     static final Logger connectionManagerLogger = LogManager.getLogger(Server.class);
 
-    public ConnectionManager(CommandManager commandManager, SocketChannel clientSocket) {
+    public ConnectionManager(CommandManager commandManager, SocketChannel clientSocket, DatabaseManager databaseManager) {
         this.commandManager = commandManager;
         this.clientSocket = clientSocket;
+        this.databaseManager = databaseManager;
     }
 
     @Override
@@ -35,7 +38,15 @@ public class ConnectionManager implements Runnable{
             do {
                 userRequest = (Request) clientReader.readObject();
                 connectionManagerLogger.info("Получен запрос с командой " + userRequest.getCommandName(), userRequest);
-                responseToUser = forkJoinPool.invoke(new RequestHandler(commandManager, userRequest));
+                if(!databaseManager.confirmUser(userRequest.getUser())
+                        && !userRequest.getCommandName().equals("register")
+                        && !userRequest.getCommandName().equals("login")){
+                    connectionManagerLogger.info("Юзер не одобрен");
+                    responseToUser = new Response(ResponseStatus.LOGIN_FAILED, "Неверный пользователь!");
+                } else{
+                    connectionManagerLogger.info("Юзер одобрен");
+                    responseToUser = forkJoinPool.invoke(new RequestHandler(commandManager, userRequest));
+                }
                 connectionManagerLogger.debug(forkJoinPool.toString());
                 Response finalResponseToUser = responseToUser;
                 cachedThreadPool.submit(() -> {

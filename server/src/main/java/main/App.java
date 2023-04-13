@@ -47,7 +47,7 @@ public class App extends Thread {
 
         DatabaseManager databaseManager = new DatabaseManager();
 
-        CommandManager commandManager = new CommandManager(fileManager);
+        CommandManager commandManager = new CommandManager(fileManager, databaseManager);
         commandManager.addCommand(List.of(
                 new History(commandManager),
                 new Help(commandManager),
@@ -55,7 +55,7 @@ public class App extends Thread {
                 new Exit(),
                 new Sleep(),
                 new Ping(),
-                new Register(),
+                new Register(databaseManager),
                 new Info(collectionManager),
                 new Show(collectionManager),
                 new AddElement(collectionManager),

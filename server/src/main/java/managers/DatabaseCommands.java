@@ -2,9 +2,6 @@ package managers;
 
 public class DatabaseCommands {
     public static String allTablesCreation = """
-            DROP TYPE IF EXISTS FORM_OF_EDUCATION;
-            DROP TYPE IF EXISTS COLOR;
-            DROP TYPE IF EXISTS COUNTRY;
             CREATE TYPE FORM_OF_EDUCATION AS ENUM(
                 'DISTANCE_EDUCATION',
                 'FULL_TIME_EDUCATION',
@@ -46,8 +43,13 @@ public class DatabaseCommands {
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
                 login TEXT,
-                password TEXT
+                password TEXT,
+                salt TEXT
             );
             """;
+    public static String addUser = """
+            INSERT INTO users(login, password, salt) VALUES (?, ?, ?);""";
 
+    public static String getUser = """
+            SELECT * FROM users WHERE (login = ?);""";
 }
