@@ -31,11 +31,13 @@ public class CommandManager{
      */
     private final List<String> commandHistory = new ArrayList<>();
     private final FileManager fileManager;
+    private final DatabaseManager databaseManager;
 
     static final Logger commandManagerLogger = LogManager.getLogger(CommandManager.class);
 
-    public CommandManager(FileManager fileManager) {
+    public CommandManager(FileManager fileManager, DatabaseManager databaseManager) {
         this.fileManager = fileManager;
+        this.databaseManager = databaseManager;
     }
 
     public void addCommand(Command command){
@@ -76,7 +78,7 @@ public class CommandManager{
         Response response = command.execute(request);
         commandManagerLogger.info("Выполнение команды ", response);
         if (command instanceof CollectionEditor) {
-            commandManagerLogger.info("Файл обновлен");
+            commandManagerLogger.info("Коллекция сохранена");
             fileManager.saveObjects();
         }
         return response;

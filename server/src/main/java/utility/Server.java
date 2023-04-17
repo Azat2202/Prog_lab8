@@ -1,23 +1,25 @@
 package utility;
 
+import main.App;
 import exceptions.ConnectionErrorException;
 import exceptions.OpeningServerException;
 import managers.CommandManager;
 import managers.ConnectionManager;
+import managers.DatabaseManager;
 import managers.FileManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.net.SocketTimeoutException;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 
 public class Server {
@@ -32,16 +34,18 @@ public class Server {
 
     BufferedInputStream bf = new BufferedInputStream(System.in);
     BufferedReader scanner = new BufferedReader(new InputStreamReader(bf));
-    private FileManager fileManager;
+    private final FileManager fileManager;
+    private final DatabaseManager databaseManager;
 
-    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(2);
+    private final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(2);
 
-    public Server(int port, int soTimeout, CommandManager commandManager, FileManager fileManager) {
-        this.port = port;
-        this.soTimeout = soTimeout;
+    public Server(CommandManager commandManager, FileManager fileManager, DatabaseManager databaseManager) {
+        this.port = App.PORT;
+        this.soTimeout = App.CONNECTION_TIMEOUT;
         this.console = new BlankConsole();
         this.commandManager = commandManager;
         this.fileManager = fileManager;
+        this.databaseManager = databaseManager;
     }
 
     public void run(){
@@ -58,7 +62,7 @@ public class Server {
                     }
                 } catch (IOException ignored) {}
                 try{
-                    fixedThreadPool.execute(new ConnectionManager(commandManager, connectToClient()));
+                    fixedThreadPool.execute(new ConnectionManager(commandManager, connectToClient(), databaseManager));
                 } catch (ConnectionErrorException  ignored){}
             }
         } catch (OpeningServerException e) {

@@ -45,9 +45,7 @@ public class App extends Thread {
             return;
         }
 
-        DatabaseManager databaseManager = new DatabaseManager();
-
-        CommandManager commandManager = new CommandManager(fileManager, databaseManager);
+        CommandManager commandManager = new CommandManager(fileManager, DatabaseHandler.getDatabaseManager());
         commandManager.addCommand(List.of(
                 new History(commandManager),
                 new Help(commandManager),
@@ -55,7 +53,7 @@ public class App extends Thread {
                 new Exit(),
                 new Sleep(),
                 new Ping(),
-                new Register(databaseManager),
+                new Register(DatabaseHandler.getDatabaseManager()),
                 new Info(collectionManager),
                 new Show(collectionManager),
                 new AddElement(collectionManager),
@@ -68,10 +66,7 @@ public class App extends Thread {
                 new CountByAverageMark(collectionManager),
                 new CountLessThanExpelledStudents(collectionManager)
         ));
-        App.rootLogger.debug("Создан объект менеджера команд");
-        App.rootLogger.debug("Создан объект обработчика запросов");
-        Server server = new Server(PORT, CONNECTION_TIMEOUT, commandManager, fileManager);
-        App.rootLogger.debug("Создан объект сервера");
+        Server server = new Server(commandManager, fileManager, DatabaseHandler.getDatabaseManager());
         server.run();
     }
 }

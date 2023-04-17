@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.Random;
 
 import dtp.User;
+import exceptions.ExitObliged;
 import main.App;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,9 +47,9 @@ public class DatabaseManager {
         } catch (SQLException | IOException e) {
             try{
                 connection = DriverManager.getConnection(App.DATABASE_URL_HELIOS, info);
-                databaseLogger.info("Успешно подключен к базе данных");
             } catch (SQLException ex) {
                 databaseLogger.fatal("Невозможно подключиться к базе данных");
+                System.exit(1);
             }
         }
     }

@@ -20,7 +20,6 @@ import java.nio.charset.StandardCharsets;
  */
 public class FileManager {
     private String text;
-    private final Printable console;
     private final CollectionManager collectionManager;
     private final XStream xStream = new XStream();
 
@@ -33,7 +32,6 @@ public class FileManager {
      * @param collectionManager Работа с коллекцией
      */
     public FileManager(Printable console, CollectionManager collectionManager) {
-        this.console = console;
         this.collectionManager = collectionManager;
 
         this.xStream.alias("StudyGroup", StudyGroup.class);
@@ -50,13 +48,9 @@ public class FileManager {
     public void findFile() throws ExitObliged{
         String file_path = System.getenv("file_path");
         if (file_path == null || file_path.isEmpty()) {
-            console.printError("Путь должен быть в переменных окружения в переменной 'file_path'");
             fileManagerLogger.fatal("Нет пути в переменных окружения");
             throw new ExitObliged();
         }
-        else console.println(ConsoleColors.toColor("Путь получен успешно", ConsoleColors.PURPLE));
-        fileManagerLogger.info("Путь получен успешно");
-
         File file = new File(file_path);
         BufferedInputStream bis;
         FileInputStream fis;
@@ -64,26 +58,21 @@ public class FileManager {
         try {
             fis = new FileInputStream(file);
             bis = new BufferedInputStream(fis);
-            fileManagerLogger.info("Отрыто соединение с файлом");
             while (bis.available() > 0) {
                 stringBuilder.append((char) bis.read());
             }
             fis.close();
             bis.close();
-            fileManagerLogger.info("Файл прочитан");
             if (stringBuilder.isEmpty()) {
-                console.printError("Файл пустой");
                 fileManagerLogger.info("Файл пустой");
                 this.text = "</Array>";
                 return;
             }
             this.text = stringBuilder.toString();
         } catch (FileNotFoundException fnfe) {
-            console.printError("Такого файла не найдено");
             fileManagerLogger.fatal("Такого файла не найдено");
             throw new ExitObliged();
         } catch (IOException ioe) {
-            console.printError("Ошибка ввода/вывода" + ioe);
             fileManagerLogger.fatal("Ошибка ввода/вывода" + ioe);
             throw new ExitObliged();
         }
@@ -100,28 +89,20 @@ public class FileManager {
             xstream.alias("Array", CollectionManager.class);
             xstream.addPermission(AnyTypePermission.ANY);
             xstream.addImplicitCollection(CollectionManager.class, "collection");
-            fileManagerLogger.info("Сконфигурирован xstream для чтения из файла");
             CollectionManager collectionManagerWithObjects = (CollectionManager) xstream.fromXML(this.text);
-            fileManagerLogger.info("Прочитан файл", collectionManagerWithObjects.getCollection());
             for(StudyGroup s : collectionManagerWithObjects.getCollection()){
                 if (this.collectionManager.checkExist(s.getId())){
-                    console.printError("В файле повторяются айди!");
-                    fileManagerLogger.fatal("В файле повторяются айди!");
                     throw new ExitObliged();
                 }
                 if (!s.validate()) throw new InvalidForm();
                 this.collectionManager.addElement(s);
-                fileManagerLogger.info("Добавлен объект", s);
             }
         } catch (InvalidForm invalidForm) {
-            console.printError("Объекты в файле не валидны");
             fileManagerLogger.fatal("Объекты в файле не валидны");
             throw new ExitObliged();
         } catch (StreamException streamException){
-            console.println("Файл пустой");
             fileManagerLogger.error("Файл пустой");
         }
-        console.println("Получены объекты:\n" + collectionManager.getCollection().toString());
         CollectionManager.updateId(collectionManager.getCollection());
     }
 
@@ -131,11 +112,9 @@ public class FileManager {
     public void saveObjects(){
         String file_path = System.getenv("file_path");
         if (file_path == null || file_path.isEmpty()) {
-            console.printError("Путь должен быть в переменных окружения в перменной 'file_path'");
             fileManagerLogger.fatal("Отсутствует путь в переменных окружения");
         }
         else {
-            console.println(ConsoleColors.toColor("Путь получен успешно", ConsoleColors.PURPLE));
             fileManagerLogger.info(ConsoleColors.toColor("Путь получен успешно", ConsoleColors.PURPLE));
         }
 
@@ -146,10 +125,8 @@ public class FileManager {
             out.close();
             fileManagerLogger.info("Файл записан");
         } catch (FileNotFoundException e) {
-            console.printError("Файл не существует");
             fileManagerLogger.error("Файл не существует");
         }catch (IOException e){
-            console.printError("Ошибка ввода вывода");
             fileManagerLogger.error("Ошибка ввода вывода");
         }
     }

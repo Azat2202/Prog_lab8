@@ -46,7 +46,7 @@ public class RuntimeManager {
                 if (Objects.isNull(user)) {
                     Response response = null;
                     do {
-                        if(Objects.isNull(response)) console.println("Этот логин уже занят, попробуйте снова!");
+                        if(!Objects.isNull(response)) console.println("Этот логин уже занят, попробуйте снова!");
                         UserForm userForm = new UserForm(console);
                         boolean isLogin = userForm.askIfLogin();
                         user = new UserForm(console).build();
