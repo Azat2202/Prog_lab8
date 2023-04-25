@@ -33,19 +33,8 @@ public class App extends Thread {
         }
 
         CollectionManager collectionManager = new CollectionManager();
-        FileManager fileManager = new FileManager(console, collectionManager);
-        try{
-            App.rootLogger.info("Создание объектов");
-            fileManager.findFile();
-            fileManager.createObjects();
-            App.rootLogger.info("Создание объектов успешно завершено");
-        } catch (ExitObliged e){
-            console.println(ConsoleColors.toColor("До свидания!", ConsoleColors.YELLOW));
-            App.rootLogger.error("Ошибка во времени создания объектов");
-            return;
-        }
 
-        CommandManager commandManager = new CommandManager(fileManager, DatabaseHandler.getDatabaseManager());
+        CommandManager commandManager = new CommandManager(DatabaseHandler.getDatabaseManager());
         commandManager.addCommand(List.of(
                 new History(commandManager),
                 new Help(commandManager),
@@ -66,7 +55,7 @@ public class App extends Thread {
                 new CountByAverageMark(collectionManager),
                 new CountLessThanExpelledStudents(collectionManager)
         ));
-        Server server = new Server(commandManager, fileManager, DatabaseHandler.getDatabaseManager());
+        Server server = new Server(commandManager, DatabaseHandler.getDatabaseManager());
         server.run();
     }
 }

@@ -6,7 +6,6 @@ import exceptions.OpeningServerException;
 import managers.CommandManager;
 import managers.ConnectionManager;
 import managers.DatabaseManager;
-import managers.FileManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,17 +33,15 @@ public class Server {
 
     BufferedInputStream bf = new BufferedInputStream(System.in);
     BufferedReader scanner = new BufferedReader(new InputStreamReader(bf));
-    private final FileManager fileManager;
     private final DatabaseManager databaseManager;
 
     private final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(2);
 
-    public Server(CommandManager commandManager, FileManager fileManager, DatabaseManager databaseManager) {
+    public Server(CommandManager commandManager, DatabaseManager databaseManager) {
         this.port = App.PORT;
         this.soTimeout = App.CONNECTION_TIMEOUT;
         this.console = new BlankConsole();
         this.commandManager = commandManager;
-        this.fileManager = fileManager;
         this.databaseManager = databaseManager;
     }
 
@@ -56,7 +53,6 @@ public class Server {
                     if (scanner.ready()) {
                         String line = scanner.readLine();
                         if (line.equals("save") || line.equals("s")) {
-                            fileManager.saveObjects();
                             serverLogger.info("Коллекция сохранена");
                         }
                     }

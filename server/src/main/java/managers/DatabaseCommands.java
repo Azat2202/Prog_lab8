@@ -1,7 +1,7 @@
 package managers;
 
 public class DatabaseCommands {
-    public static String allTablesCreation = """
+    public static final String allTablesCreation = """
             CREATE TYPE FORM_OF_EDUCATION AS ENUM(
                 'DISTANCE_EDUCATION',
                 'FULL_TIME_EDUCATION',
@@ -38,7 +38,8 @@ public class DatabaseCommands {
                 person_nationality COUNTRY,
                 person_location_x BIGINT NOT NULL,
                 person_location_y BIGINT NOT NULL,
-                person_location_name TEXT NOT NULL
+                person_location_name TEXT NOT NULL,
+                owner_login TEXT NOT NULL
             );
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
@@ -47,9 +48,15 @@ public class DatabaseCommands {
                 salt TEXT
             );
             """;
-    public static String addUser = """
+    public static final String addUser = """
             INSERT INTO users(login, password, salt) VALUES (?, ?, ?);""";
 
-    public static String getUser = """
+    public static final String getUser = """
             SELECT * FROM users WHERE (login = ?);""";
+
+    public static final String addObject = """
+            INSERT INTO studygroup(group_name, cord_x, cord_y, creation_date, students_count, expelled_students, average_mark, form_of_education, person_name, person_weight, person_eye_color, person_hair_color, person_nationality, person_location_x, person_location_y, person_location_name, owner_login)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            RETURNING id;
+            """;
 }

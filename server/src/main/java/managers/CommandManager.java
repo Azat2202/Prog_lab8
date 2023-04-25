@@ -30,13 +30,11 @@ public class CommandManager{
      * Поле для истории команд
      */
     private final List<String> commandHistory = new ArrayList<>();
-    private final FileManager fileManager;
     private final DatabaseManager databaseManager;
 
     static final Logger commandManagerLogger = LogManager.getLogger(CommandManager.class);
 
-    public CommandManager(FileManager fileManager, DatabaseManager databaseManager) {
-        this.fileManager = fileManager;
+    public CommandManager(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
     }
 
@@ -77,10 +75,6 @@ public class CommandManager{
         }
         Response response = command.execute(request);
         commandManagerLogger.info("Выполнение команды ", response);
-        if (command instanceof CollectionEditor) {
-            commandManagerLogger.info("Коллекция сохранена");
-            fileManager.saveObjects();
-        }
         return response;
     }
 }

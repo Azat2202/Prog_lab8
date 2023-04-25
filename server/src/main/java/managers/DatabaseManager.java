@@ -2,7 +2,6 @@ package managers;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -10,8 +9,8 @@ import java.util.Properties;
 import java.util.Random;
 
 import dtp.User;
-import exceptions.ExitObliged;
 import main.App;
+import models.StudyGroup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -101,6 +100,42 @@ public class DatabaseManager {
         ps.setString(1, login);
         ResultSet resultSet = ps.executeQuery();
         return resultSet.next();
+    }
+
+    // Метод возвращает -1 при ошибке добавления объекта
+    public int addObject(StudyGroup studyGroup, User user){
+        try {
+            PreparedStatement ps = connection.prepareStatement(DatabaseCommands.addObject);
+            ps.setString(1, studyGroup.getName());
+            ps.setFloat(2, studyGroup.getCoordinates().getX());
+            ps.setDouble(3, studyGroup.getCoordinates().getY());
+            ps.setDate(4, new Date(studyGroup.getCreationDate().getTime()));
+            ps.setLong(5, studyGroup.getStudentsCount());
+            ps.setLong(6, studyGroup.getExpelledStudents());
+            ps.setLong(7, studyGroup.getAverageMark());
+            ps.setObject(8, studyGroup.getFormOfEducation(), Types.OTHER);
+            ps.setString(9, studyGroup.getGroupAdmin().getName());
+            ps.setInt(10, studyGroup.getGroupAdmin().getWeight());
+            ps.setObject(11, studyGroup.getGroupAdmin().getEyeColor(), Types.OTHER);
+            ps.setObject(12, studyGroup.getGroupAdmin().getHairColor(), Types.OTHER);
+            ps.setObject(13, studyGroup.getGroupAdmin().getNationality(), Types.OTHER);
+            ps.setDouble(14, studyGroup.getGroupAdmin().getLocation().getX());
+            ps.setDouble(15, studyGroup.getGroupAdmin().getLocation().getY());
+            ps.setString(16, studyGroup.getGroupAdmin().getLocation().getName());
+            ps.setString(17, user.name());
+            ResultSet resultSet = ps.executeQuery();
+
+            if (!resultSet.next()) {
+                databaseLogger.info("Объект не добавлен в таблицу");
+                return -1;
+            }
+            databaseLogger.info("Объект добавлен в таблицу");
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            databaseLogger.info("Объект не добавлен в таблицу");
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     private String generateRandomString() {
