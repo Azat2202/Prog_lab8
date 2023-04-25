@@ -49,6 +49,17 @@ public class StudyGroup implements Validator, Comparable<StudyGroup>, Serializab
         this.formOfEducation = formOfEducation;
         this.groupAdmin = groupAdmin;
     }
+    public StudyGroup(int id, String name, Coordinates coordinates, Date creationDate, Long studentsCount, long expelledStudents, long averageMark, FormOfEducation formOfEducation, Person groupAdmin) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.studentsCount = studentsCount;
+        this.expelledStudents = expelledStudents;
+        this.averageMark = averageMark;
+        this.formOfEducation = formOfEducation;
+        this.groupAdmin = groupAdmin;
+    }
     public Integer getId() {
         return id;
     }

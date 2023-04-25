@@ -4,6 +4,7 @@ import exceptions.InvalidForm;
 import models.StudyGroup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utility.DatabaseHandler;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -18,7 +19,6 @@ import java.util.Objects;
  */
 public class CollectionManager {
     private final ArrayDeque<StudyGroup> collection = new ArrayDeque<>();
-    private static int nextId = 0;
     /**
      * Дата создания коллекции
      */
@@ -33,23 +33,11 @@ public class CollectionManager {
     public CollectionManager() {
         this.lastInitTime = LocalDateTime.now();
         this.lastSaveTime = null;
+        collection.addAll(DatabaseHandler.getDatabaseManager().loadCollection());
     }
 
     public ArrayDeque<StudyGroup> getCollection() {
         return collection;
-    }
-
-    public static void updateId(Collection<StudyGroup> collection){
-        nextId = collection.stream()
-                .filter(Objects::nonNull)
-                .map(StudyGroup::getId)
-                .max(Integer::compareTo)
-                .orElse(0);
-        collectionManagerLogger.info("Обновлен айди на " + nextId);
-    }
-
-    public static int getNextId(){
-        return ++nextId;
     }
     /**
      * Метод скрывающий дату, если она сегодняшняя

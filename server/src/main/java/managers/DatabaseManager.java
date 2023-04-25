@@ -5,12 +5,13 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.ArrayDeque;
 import java.util.Properties;
 import java.util.Random;
 
 import dtp.User;
 import main.App;
-import models.StudyGroup;
+import models.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,6 +31,7 @@ public class DatabaseManager {
             this.connect();
             this.createMainBase();
         } catch (SQLException e) {
+//            e.printStackTrace();
             databaseLogger.warn("Ошибка при исполнени изначального запроса либо таблицы уже созданы");
         } catch (NoSuchAlgorithmException e) {
             databaseLogger.fatal("Такого алгоритма нет!");
@@ -109,7 +111,7 @@ public class DatabaseManager {
             ps.setString(1, studyGroup.getName());
             ps.setFloat(2, studyGroup.getCoordinates().getX());
             ps.setDouble(3, studyGroup.getCoordinates().getY());
-            ps.setDate(4, new Date(studyGroup.getCreationDate().getTime()));
+            ps.setTimestamp(4, new java.sql.Timestamp(studyGroup.getCreationDate().getTime()));
             ps.setLong(5, studyGroup.getStudentsCount());
             ps.setLong(6, studyGroup.getExpelledStudents());
             ps.setLong(7, studyGroup.getAverageMark());
@@ -135,6 +137,46 @@ public class DatabaseManager {
             databaseLogger.info("Объект не добавлен в таблицу");
             e.printStackTrace();
             return -1;
+        }
+    }
+
+    public ArrayDeque<StudyGroup> loadCollection(){
+        try {
+            PreparedStatement ps = connection.prepareStatement(DatabaseCommands.getAllObjects);
+            ResultSet resultSet = ps.executeQuery();
+            ArrayDeque<StudyGroup> collection = new ArrayDeque<>();
+            while (resultSet.next()){
+                collection.add(new StudyGroup(
+                        resultSet.getInt("id"),
+                        resultSet.getString("group_name"),
+                        new Coordinates(
+                                resultSet.getFloat("cord_x"),
+                            resultSet.getDouble("cord_y")
+                        ),
+                        resultSet.getTimestamp("creation_date"),
+                        resultSet.getLong("students_count"),
+                        resultSet.getLong("expelled_students"),
+                        resultSet.getLong("average_mark"),
+                        FormOfEducation.valueOf(resultSet.getString("form_of_education")),
+                        new Person(
+                            resultSet.getString("person_name"),
+                            resultSet.getInt("person_weight"),
+                            Color.valueOf(resultSet.getString("person_eye_color")),
+                            Color.valueOf(resultSet.getString("person_hair_color")),
+                            Country.valueOf(resultSet.getString("person_nationality")),
+                            new Location(
+                                    resultSet.getDouble("person_location_x"),
+                                    resultSet.getLong("person_location_y"),
+                                    resultSet.getString("person_location_name")
+                            )
+                        )
+                ));
+            }
+            databaseLogger.info("Коллекция успешно загружена из таблицы");
+            return collection;
+        } catch (SQLException e) {
+            databaseLogger.warn("Коллекция пуста либо возникла ошибка при исполнении запроса");
+            return new ArrayDeque<>();
         }
     }
 

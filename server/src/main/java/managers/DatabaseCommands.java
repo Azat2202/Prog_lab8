@@ -26,7 +26,7 @@ public class DatabaseCommands {
                 group_name TEXT NOT NULL ,
                 cord_x NUMERIC NOT NULL,
                 cord_y NUMERIC NOT NULL ,
-                creation_date DATE NOT NULL ,
+                creation_date TIMESTAMP NOT NULL ,
                 students_count BIGINT NOT NULL ,
                 expelled_students BIGINT NOT NULL ,
                 average_mark BIGINT NOT NULL ,
@@ -58,5 +58,9 @@ public class DatabaseCommands {
             INSERT INTO studygroup(group_name, cord_x, cord_y, creation_date, students_count, expelled_students, average_mark, form_of_education, person_name, person_weight, person_eye_color, person_hair_color, person_nationality, person_location_x, person_location_y, person_location_name, owner_login)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             RETURNING id;
+            """;
+
+    public static final String getAllObjects = """
+            SELECT * FROM studygroup;
             """;
 }
