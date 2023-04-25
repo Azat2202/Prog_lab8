@@ -79,11 +79,18 @@ public class DatabaseManager {
         try {
             String login = inputUser.name();
             PreparedStatement getUser = connection.prepareStatement(DatabaseCommands.getUser);
+            getUser.setString(1, login);
             ResultSet resultSet = getUser.executeQuery();
-            String salt = resultSet.getString("salt");
-            String toCheckPass = this.getSHA512Hash(PEPPER + resultSet.getString("password") + salt);
-            return inputUser.password().equals(toCheckPass);
+            if(resultSet.next()) {
+                String salt = resultSet.getString("salt");
+                String toCheckPass = this.getSHA512Hash(PEPPER + inputUser.password() + salt);
+                return toCheckPass.equals(resultSet.getString("password"));
+            }
+            else {
+                return false;
+            }
         } catch (SQLException e) {
+            e.printStackTrace();
             databaseLogger.fatal("Неверная команда sql!");
             return false;
         }

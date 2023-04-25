@@ -3,6 +3,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+/server/dbconfig.cfg
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

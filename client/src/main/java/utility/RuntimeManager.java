@@ -45,10 +45,15 @@ public class RuntimeManager {
             try{
                 if (Objects.isNull(user)) {
                     Response response = null;
+                    boolean isLogin = true;
                     do {
-                        if(!Objects.isNull(response)) console.println("Этот логин уже занят, попробуйте снова!");
+                        if(!Objects.isNull(response)) {
+                            console.println( (isLogin)
+                                    ? "Такой связки логин-пароль нет, попробуйте снова"
+                                    : "Этот логин уже занят, попробуйте снова!");
+                        }
                         UserForm userForm = new UserForm(console);
-                        boolean isLogin = userForm.askIfLogin();
+                        isLogin = userForm.askIfLogin();
                         user = new UserForm(console).build();
                         if (isLogin) {
                             response = client.sendAndAskResponse(new Request("ping", "", user));

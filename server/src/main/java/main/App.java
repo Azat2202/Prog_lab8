@@ -16,9 +16,9 @@ public class App extends Thread {
     public static int PORT = 6086;
     public static final int CONNECTION_TIMEOUT = 60 * 1000;
 
-    public static final String DATABASE_URL = "jdbc:postgresql://localhost:5432/studs";
-    public static final String DATABASE_URL_HELIOS = "jdbc:postgresql://pg:5432/studs";
-    public static final String DATABASE_CONFIG_PATH = "E:\\IdeaProjects\\Prog_lab7\\server\\dblogin.cfg";
+    public static final String DATABASE_URL = "jdbc:postgresql://localhost:1256/studs";
+    public static final String DATABASE_URL_HELIOS = "jdbc:postgresql://pg:1256/studs";
+    public static final String DATABASE_CONFIG_PATH = "C:\\Users\\R1300-W-12-Stud\\IdeaProjects\\Prog_lab7\\server\\dbconfig.cfg";
 
     //--------------------------------------------------------------------------------------------------
 
