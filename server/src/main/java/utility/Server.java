@@ -30,7 +30,7 @@ public class Server {
     private CommandManager commandManager;
 
     static final Logger serverLogger = LogManager.getLogger(Server.class);
-    static final Logger rootLogger = LogManager.getRootLogger();
+    static final Logger rootLogger = LogManager.getLogger(App.class);
 
     BufferedInputStream bf = new BufferedInputStream(System.in);
     BufferedReader scanner = new BufferedReader(new InputStreamReader(bf));

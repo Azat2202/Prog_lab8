@@ -144,6 +144,13 @@ public class CollectionManager {
 
     public void removeElements(Collection<StudyGroup> collection){this.collection.removeAll(collection);}
 
+    public void reloadFromDatabase(){
+        collection.clear();
+        this.lastInitTime = LocalDateTime.now();
+        this.lastSaveTime = LocalDateTime.now();
+        collection.addAll(DatabaseHandler.getDatabaseManager().loadCollection());
+    }
+
     @Override
     public String toString() {
         if (collection.isEmpty()) return "Коллекция пуста!";

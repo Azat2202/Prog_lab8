@@ -6,6 +6,7 @@ import dtp.ResponseStatus;
 import exceptions.IllegalArguments;
 import managers.CollectionManager;
 import models.StudyGroup;
+import utility.DatabaseHandler;
 
 import java.util.Objects;
 
@@ -23,7 +24,7 @@ public class AddIfMax extends Command implements CollectionEditor{
 
     /**
      * Исполнить команду
-     * @param args аргументы команды
+     * @param request аргументы команды
      * @throws IllegalArguments неверные аргументы команды
      */
     @Override
@@ -37,8 +38,11 @@ public class AddIfMax extends Command implements CollectionEditor{
                 .max(StudyGroup::compareTo)
                 .orElse(null)) >= 1)
         {
+            int new_id = DatabaseHandler.getDatabaseManager().addObject(request.getObject(), request.getUser());
+            if(new_id == -1) return new Response(ResponseStatus.ERROR, "Объект добавить не удалось");
+            request.getObject().setId(new_id);
             collectionManager.addElement(request.getObject());
-            return new Response(ResponseStatus.OK,"Объект успешно добавлен");
+            return new Response(ResponseStatus.OK, "Объект успешно добавлен");
         }
         return new Response(ResponseStatus.ERROR,"Элемент меньше максимального");
     }

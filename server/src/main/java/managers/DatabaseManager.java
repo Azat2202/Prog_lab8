@@ -26,7 +26,7 @@ public class DatabaseManager {
 
     public DatabaseManager(){
         try {
-            md = MessageDigest.getInstance("SHA-512");
+            md = MessageDigest.getInstance(App.HASHING_ALGORITHM);
 
             this.connect();
             this.createMainBase();
@@ -46,9 +46,12 @@ public class DatabaseManager {
             databaseLogger.info("Успешно подключен к базе данных");
         } catch (SQLException | IOException e) {
             try{
+
                 connection = DriverManager.getConnection(App.DATABASE_URL_HELIOS, info);
             } catch (SQLException ex) {
                 databaseLogger.fatal("Невозможно подключиться к базе данных");
+                databaseLogger.debug(e);
+                databaseLogger.debug(ex);
                 System.exit(1);
             }
         }
@@ -90,8 +93,8 @@ public class DatabaseManager {
                 return false;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             databaseLogger.fatal("Неверная команда sql!");
+            databaseLogger.debug(e);
             return false;
         }
     }
@@ -134,8 +137,22 @@ public class DatabaseManager {
             return resultSet.getInt(1);
         } catch (SQLException e) {
             databaseLogger.info("Объект не добавлен в таблицу");
-            e.printStackTrace();
+            databaseLogger.debug(e);
             return -1;
+        }
+    }
+
+    public boolean deleteAllObjects(User user){
+        try {
+            PreparedStatement ps = connection.prepareStatement(DatabaseCommands.deleteAllObjects);
+            ps.setString(1, user.name());
+            ps.executeUpdate();
+            databaseLogger.warn("Удалены все строки таблицы studygroup принадлежащие " + user.name());
+            return true;
+        } catch (SQLException e) {
+            databaseLogger.error("Удалить строки таблицы studygroup не удалось!");
+            databaseLogger.debug(e);
+            return false;
         }
     }
 

@@ -3,8 +3,10 @@ package commands;
 import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
+import dtp.User;
 import exceptions.IllegalArguments;
 import managers.CollectionManager;
+import utility.DatabaseHandler;
 
 /**
  * Команда 'clear'
@@ -26,7 +28,10 @@ public class Clear extends Command implements CollectionEditor{
     @Override
     public Response execute(Request request) throws IllegalArguments {
         if (!request.getArgs().isBlank()) throw new IllegalArguments();
-        collectionManager.clear();
-        return new Response(ResponseStatus.OK,"Элементы удалены");
+        if(DatabaseHandler.getDatabaseManager().deleteAllObjects(request.getUser())) {
+            collectionManager.reloadFromDatabase();
+            return new Response(ResponseStatus.OK, "Ваши элементы удалены");
+        }
+        return new Response(ResponseStatus.ERROR, "Элементы коллекции удалить не удалось");
     }
 }
