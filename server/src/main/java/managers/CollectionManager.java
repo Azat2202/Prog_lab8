@@ -9,10 +9,7 @@ import utility.DatabaseHandler;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayDeque;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Класс организующий работу с коллекцией
@@ -144,11 +141,9 @@ public class CollectionManager {
 
     public void removeElements(Collection<StudyGroup> collection){this.collection.removeAll(collection);}
 
-    public void reloadFromDatabase(){
-        collection.clear();
-        this.lastInitTime = LocalDateTime.now();
-        this.lastSaveTime = LocalDateTime.now();
-        collection.addAll(DatabaseHandler.getDatabaseManager().loadCollection());
+    public void removeElements(ArrayList<Integer> deletedIds){
+        deletedIds
+                .forEach((id) -> this.collection.remove(this.getById(id)));
     }
 
     @Override

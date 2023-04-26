@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
 
@@ -142,17 +143,35 @@ public class DatabaseManager {
         }
     }
 
-    public boolean deleteAllObjects(User user){
-        try {
-            PreparedStatement ps = connection.prepareStatement(DatabaseCommands.deleteAllObjects);
+    public boolean deleteObject(int id, User user){
+        try{
+            PreparedStatement ps = connection.prepareStatement(DatabaseCommands.deleteUserObject);
             ps.setString(1, user.name());
-            ps.executeUpdate();
+            ps.setInt(2, id);
+            ResultSet resultSet = ps.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            databaseLogger.error("Объект удалить не удалось");
+            databaseLogger.debug(e);
+            return false;
+        }
+    }
+
+    public ArrayList<Integer> deleteAllObjects(User user){
+        try {
+            PreparedStatement ps = connection.prepareStatement(DatabaseCommands.deleteUserOwnedObjects);
+            ps.setString(1, user.name());
+            ResultSet resultSet = ps.executeQuery();
+            ArrayList<Integer> deletedIds = new ArrayList<>();
+            while (resultSet.next()){
+                deletedIds.add(resultSet.getInt("id"));
+            }
             databaseLogger.warn("Удалены все строки таблицы studygroup принадлежащие " + user.name());
-            return true;
+            return deletedIds;
         } catch (SQLException e) {
             databaseLogger.error("Удалить строки таблицы studygroup не удалось!");
             databaseLogger.debug(e);
-            return false;
+            return null;
         }
     }
 

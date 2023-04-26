@@ -8,6 +8,9 @@ import exceptions.IllegalArguments;
 import managers.CollectionManager;
 import utility.DatabaseHandler;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 /**
  * Команда 'clear'
  * Очищает коллекцию
@@ -28,8 +31,9 @@ public class Clear extends Command implements CollectionEditor{
     @Override
     public Response execute(Request request) throws IllegalArguments {
         if (!request.getArgs().isBlank()) throw new IllegalArguments();
-        if(DatabaseHandler.getDatabaseManager().deleteAllObjects(request.getUser())) {
-            collectionManager.reloadFromDatabase();
+        ArrayList<Integer> deletedIds = DatabaseHandler.getDatabaseManager().deleteAllObjects(request.getUser());
+        if(!Objects.isNull(deletedIds)) {
+            collectionManager.removeElements(deletedIds);
             return new Response(ResponseStatus.OK, "Ваши элементы удалены");
         }
         return new Response(ResponseStatus.ERROR, "Элементы коллекции удалить не удалось");

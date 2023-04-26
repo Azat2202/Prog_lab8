@@ -7,6 +7,7 @@ import exceptions.ExceptionInFileMode;
 import exceptions.IllegalArguments;
 import managers.CollectionManager;
 import models.StudyGroup;
+import utility.DatabaseHandler;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -41,6 +42,7 @@ public class RemoveGreater extends Command implements CollectionEditor{
             Collection<StudyGroup> toRemove = collectionManager.getCollection().stream()
                     .filter(Objects::nonNull)
                     .filter(studyGroup -> studyGroup.compareTo(request.getObject()) >= 1)
+                    .filter((obj) -> DatabaseHandler.getDatabaseManager().deleteObject(obj.getId(), request.getUser()))
                     .toList();
             collectionManager.removeElements(toRemove);
             return new Response(ResponseStatus.OK,"Удалены элементы большие чем заданный");

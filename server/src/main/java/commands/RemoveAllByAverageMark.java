@@ -6,8 +6,10 @@ import dtp.ResponseStatus;
 import exceptions.IllegalArguments;
 import managers.CollectionManager;
 import models.StudyGroup;
+import utility.DatabaseHandler;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -32,9 +34,10 @@ public class RemoveAllByAverageMark extends Command implements CollectionEditor{
         if (request.getArgs().isBlank()) throw new IllegalArguments();
         try {
             long averageMark = Long.parseLong(request.getArgs().trim());
-            Collection<StudyGroup> toRemove = collectionManager.getCollection().stream()
+            List<StudyGroup> toRemove = collectionManager.getCollection().stream()
                     .filter(Objects::nonNull)
                     .filter(studyGroup -> studyGroup.getAverageMark() == averageMark)
+                    .filter((obj) -> DatabaseHandler.getDatabaseManager().deleteObject(obj.getId(), request.getUser()))
                     .toList();
             collectionManager.removeElements(toRemove);
             return new Response(ResponseStatus.OK,"Удалены элементы с таким average_mark");

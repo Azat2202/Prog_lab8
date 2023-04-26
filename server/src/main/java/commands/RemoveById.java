@@ -3,8 +3,10 @@ package commands;
 import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
+import dtp.User;
 import exceptions.IllegalArguments;
 import managers.CollectionManager;
+import utility.DatabaseHandler;
 
 /**
  * Команда 'remove_by_id'
@@ -31,8 +33,12 @@ public class RemoveById extends Command implements CollectionEditor{
         try {
             int id = Integer.parseInt(request.getArgs().trim());
             if (!collectionManager.checkExist(id)) throw new NoSuchId();
-            collectionManager.removeElement(collectionManager.getById(id));
-            return new Response(ResponseStatus.OK,"Объект удален успешно");
+            if (DatabaseHandler.getDatabaseManager().deleteObject(id, request.getUser())) {
+                collectionManager.removeElement(collectionManager.getById(id));
+                return new Response(ResponseStatus.OK,"Объект удален успешно");
+            } else{
+                return new Response(ResponseStatus.ERROR, "Выбранный объект не удален. Скорее всего он вам не принадлежит");
+            }
         } catch (NoSuchId err) {
             return new Response(ResponseStatus.ERROR,"В коллекции нет элемента с таким id");
         } catch (NumberFormatException exception) {
