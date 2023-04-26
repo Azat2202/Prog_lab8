@@ -1,9 +1,9 @@
 package managers;
 
-import commands.CollectionEditor;
 import commands.Command;
 import dtp.Request;
 import dtp.Response;
+import dtp.User;
 import exceptions.CommandRuntimeError;
 import exceptions.ExitObliged;
 import exceptions.IllegalArguments;
@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+record HistoryCommand(String username, String command){}
+
 /**
  * Командный менеджер.
  * Реализует паттерн программирования Command
@@ -29,7 +31,7 @@ public class CommandManager{
     /**
      * Поле для истории команд
      */
-    private final List<String> commandHistory = new ArrayList<>();
+    private final List<HistoryCommand> commandHistory = new ArrayList<>();
     private final DatabaseManager databaseManager;
 
     static final Logger commandManagerLogger = LogManager.getLogger(CommandManager.class);
@@ -49,12 +51,17 @@ public class CommandManager{
         return commands.values();
     }
 
-    public void addToHistory(String line){
+    public void addToHistory(User user, String line){
         if(line.isBlank()) return;
-        this.commandHistory.add(line);
+        this.commandHistory.add(new HistoryCommand(user.name(), line));
     }
 
-    public List<String> getCommandHistory(){return commandHistory;}
+    public List<String> getCommandHistory(User user){
+        return commandHistory.stream()
+                .filter(historyCommand -> historyCommand.username().equals(user.name()))
+                .map(HistoryCommand::command)
+                .toList();
+    }
 
     /**
      * Выполняет команду

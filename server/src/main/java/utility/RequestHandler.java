@@ -23,7 +23,7 @@ public class RequestHandler extends RecursiveTask<Response> {
     @Override
     public Response compute() {
         try {
-            commandManager.addToHistory(request.getCommandName());
+            commandManager.addToHistory(request.getUser(), request.getCommandName());
             return commandManager.execute(request);
         } catch (IllegalArguments e) {
             return new Response(ResponseStatus.WRONG_ARGUMENTS,

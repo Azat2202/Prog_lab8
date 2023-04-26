@@ -28,7 +28,7 @@ public class History extends Command{
     @Override
     public Response execute(Request request) throws IllegalArguments {
         if (!request.getArgs().isBlank()) throw new IllegalArguments();
-        List<String> history= commandManager.getCommandHistory();
+        List<String> history= commandManager.getCommandHistory(request.getUser());
         return new Response(ResponseStatus.OK,
                 String.join("\n",
                 history.subList(Math.max(history.size() - 5, 0), history.size())));
