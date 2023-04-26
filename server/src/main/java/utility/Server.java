@@ -30,6 +30,7 @@ public class Server {
     private CommandManager commandManager;
 
     static final Logger serverLogger = LogManager.getLogger(Server.class);
+    static final Logger rootLogger = LogManager.getRootLogger();
 
     BufferedInputStream bf = new BufferedInputStream(System.in);
     BufferedReader scanner = new BufferedReader(new InputStreamReader(bf));
@@ -48,6 +49,9 @@ public class Server {
     public void run(){
         try{
             openServerSocket();
+            rootLogger.info("--------------------------------------------------------------------");
+            rootLogger.info("-----------------СЕРВЕР УСПЕШНО ЗАПУЩЕН-----------------------------");
+            rootLogger.info("--------------------------------------------------------------------");
             for(;;){
                 try {
                     if (scanner.ready()) {
@@ -62,38 +66,29 @@ public class Server {
                 } catch (ConnectionErrorException  ignored){}
             }
         } catch (OpeningServerException e) {
-            console.printError("Сервер не может быть запущен");
             serverLogger.fatal("Сервер не может быть запущен");
         }
         stop();
-        serverLogger.info("Соединение закрыто");
     }
 
     private void openServerSocket() throws OpeningServerException{
         try {
             SocketAddress socketAddress = new InetSocketAddress(port);
-            serverLogger.debug("Создан сокет");
             ss = ServerSocketChannel.open();
-            serverLogger.debug("Создан канал");
             ss.bind(socketAddress);
-            serverLogger.debug("Открыт канал сокет");
         } catch (IllegalArgumentException exception) {
-            console.printError("Порт '" + port + "' находится за пределами возможных значений!");
             serverLogger.error("Порт находится за пределами возможных значений");
             throw new OpeningServerException();
         } catch (IOException exception) {
-            serverLogger.error("Произошла ошибка при попытке использовать порт");
-            console.printError("Произошла ошибка при попытке использовать порт '" + port + "'!");
+            serverLogger.error("Произошла ошибка при попытке использовать порт " + port);
             throw new OpeningServerException();
         }
     }
 
     private SocketChannel connectToClient() throws ConnectionErrorException{
         try {
-            console.println("Прослушивание порта '" + port + "'...");
             serverLogger.info("Прослушивание порта '" + port + "'...");
             socketChannel = ss.socket().accept().getChannel();
-            console.println("Соединение с клиентом успешно установлено.");
             serverLogger.info("Соединение с клиентом успешно установлено.");
             return socketChannel;
         } catch (IOException exception) {
@@ -112,10 +107,8 @@ public class Server {
                 ss.close();
                 serverLogger.info("все соединения закрыты");
             } catch (ClosingSocketException exception) {
-                console.printError("Невозможно завершить работу еще не запущенного сервера!");
                 serverLogger.fatal("Невозможно завершить работу еще не запущенного сервера!");
             } catch (IOException exception) {
-                    console.printError("Произошла ошибка при завершении работы сервера!");
                     serverLogger.fatal("Произошла ошибка при завершении работы сервера!");
             }
     }

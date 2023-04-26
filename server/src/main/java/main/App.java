@@ -26,6 +26,9 @@ public class App extends Thread {
     static final Logger rootLogger = LogManager.getRootLogger();
 
     public static void main(String[] args) {
+        rootLogger.info("--------------------------------------------------------------------");
+        rootLogger.info("----------------------ЗАПУСК СЕРВЕРА--------------------------------");
+        rootLogger.info("--------------------------------------------------------------------");
         if(args.length != 0){
             try{
                 PORT = Integer.parseInt(args[0]);

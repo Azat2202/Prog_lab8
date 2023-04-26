@@ -19,7 +19,7 @@ public class ConnectionManager implements Runnable{
     private ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
     private SocketChannel clientSocket;
 
-    static final Logger connectionManagerLogger = LogManager.getLogger(Server.class);
+    static final Logger connectionManagerLogger = LogManager.getLogger(ConnectionManager.class);
 
     public ConnectionManager(CommandManager commandManager, SocketChannel clientSocket, DatabaseManager databaseManager) {
         this.commandManager = commandManager;
@@ -34,17 +34,14 @@ public class ConnectionManager implements Runnable{
         try {
             ObjectInputStream clientReader = new ObjectInputStream(clientSocket.socket().getInputStream());
             ObjectOutputStream clientWriter = new ObjectOutputStream(clientSocket.socket().getOutputStream());
-            connectionManagerLogger.info("Открыты потоки ввода вывода");
             do {
                 userRequest = (Request) clientReader.readObject();
                 connectionManagerLogger.info("Получен запрос с командой " + userRequest.getCommandName(), userRequest);
                 if(!databaseManager.confirmUser(userRequest.getUser())
-                        && !userRequest.getCommandName().equals("register")
-                        && !userRequest.getCommandName().equals("login")){
+                        && !userRequest.getCommandName().equals("register")){
                     connectionManagerLogger.info("Юзер не одобрен");
                     responseToUser = new Response(ResponseStatus.LOGIN_FAILED, "Неверный пользователь!");
                 } else{
-                    connectionManagerLogger.info("Юзер одобрен");
                     responseToUser = forkJoinPool.invoke(new RequestHandler(commandManager, userRequest));
                 }
                 connectionManagerLogger.debug(forkJoinPool.toString());
@@ -54,10 +51,9 @@ public class ConnectionManager implements Runnable{
                         connectionManagerLogger.debug(this.cachedThreadPool.toString());
                         clientWriter.writeObject(finalResponseToUser);
                         clientWriter.flush();
-                        connectionManagerLogger.info("Ответ успешно отправлен");
 
                     } catch (IOException e) {
-                        connectionManagerLogger.fatal("Не удалось отправить ответ");
+                        connectionManagerLogger.error("Не удалось отправить ответ");
                     }
                 }).get();
             } while (true);
@@ -77,7 +73,6 @@ public class ConnectionManager implements Runnable{
             try {
                 cachedThreadPool.shutdown();
                 clientSocket.close();
-                connectionManagerLogger.info("Клиент успешно отключен");
             } catch (IOException e) {
                 connectionManagerLogger.error("Невозмоюно закрыть соединение ");
             }

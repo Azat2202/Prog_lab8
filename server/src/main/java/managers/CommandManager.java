@@ -40,12 +40,10 @@ public class CommandManager{
 
     public void addCommand(Command command){
         this.commands.put(command.getName(), command);
-        commandManagerLogger.info("Добавлена команда", command);
     }
     public void addCommand(Collection<Command> commands){
         this.commands.putAll(commands.stream()
                 .collect(Collectors.toMap(Command::getName, s -> s)));
-        commandManagerLogger.info("Добавлены комманды", commands);
     }
     public Collection<Command> getCommands(){
         return commands.values();
@@ -54,7 +52,6 @@ public class CommandManager{
     public void addToHistory(String line){
         if(line.isBlank()) return;
         this.commandHistory.add(line);
-        commandManagerLogger.info("Добавлена команда в историю" + line, line);
     }
 
     public List<String> getCommandHistory(){return commandHistory;}

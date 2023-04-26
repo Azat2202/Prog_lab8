@@ -31,7 +31,6 @@ public class DatabaseManager {
             this.connect();
             this.createMainBase();
         } catch (SQLException e) {
-//            e.printStackTrace();
             databaseLogger.warn("Ошибка при исполнени изначального запроса либо таблицы уже созданы");
         } catch (NoSuchAlgorithmException e) {
             databaseLogger.fatal("Такого алгоритма нет!");
