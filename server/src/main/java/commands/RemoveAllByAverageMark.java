@@ -37,6 +37,7 @@ public class RemoveAllByAverageMark extends Command implements CollectionEditor{
             List<StudyGroup> toRemove = collectionManager.getCollection().stream()
                     .filter(Objects::nonNull)
                     .filter(studyGroup -> studyGroup.getAverageMark() == averageMark)
+                    .filter(studyGroup -> studyGroup.getUserLogin().equals(request.getUser().name()))
                     .filter((obj) -> DatabaseHandler.getDatabaseManager().deleteObject(obj.getId(), request.getUser()))
                     .toList();
             collectionManager.removeElements(toRemove);

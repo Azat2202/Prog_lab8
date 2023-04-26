@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/History.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/CommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/utility/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utility/RequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/StudyGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/StudyGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/Clear.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/Clear.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/CollectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/DatabaseCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/DatabaseCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/DatabaseManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -37,6 +37,7 @@ public class StudyGroup implements Validator, Comparable<StudyGroup>, Serializab
     private long averageMark; //Значение поля должно быть больше 0
     private FormOfEducation formOfEducation; //Поле может быть null
     private Person groupAdmin; //Поле не может быть null
+    private String userLogin;
 
     public StudyGroup(String name, Coordinates coordinates, Date creationDate, Long studentsCount, long expelledStudents, long averageMark, FormOfEducation formOfEducation, Person groupAdmin) {
         this.id = 0;
@@ -59,6 +60,30 @@ public class StudyGroup implements Validator, Comparable<StudyGroup>, Serializab
         this.averageMark = averageMark;
         this.formOfEducation = formOfEducation;
         this.groupAdmin = groupAdmin;
+    }
+    public StudyGroup(String name, Coordinates coordinates, Date creationDate, Long studentsCount, long expelledStudents, long averageMark, FormOfEducation formOfEducation, Person groupAdmin, String userLogin) {
+        this.id = 0;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.studentsCount = studentsCount;
+        this.expelledStudents = expelledStudents;
+        this.averageMark = averageMark;
+        this.formOfEducation = formOfEducation;
+        this.groupAdmin = groupAdmin;
+        this.userLogin = userLogin;
+    }
+    public StudyGroup(int id, String name, Coordinates coordinates, Date creationDate, Long studentsCount, long expelledStudents, long averageMark, FormOfEducation formOfEducation, Person groupAdmin, String userLogin) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.studentsCount = studentsCount;
+        this.expelledStudents = expelledStudents;
+        this.averageMark = averageMark;
+        this.formOfEducation = formOfEducation;
+        this.groupAdmin = groupAdmin;
+        this.userLogin = userLogin;
     }
     public Integer getId() {
         return id;
@@ -130,6 +155,14 @@ public class StudyGroup implements Validator, Comparable<StudyGroup>, Serializab
 
     public void setGroupAdmin(Person groupAdmin) {
         this.groupAdmin = groupAdmin;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     /**
@@ -209,15 +242,16 @@ public class StudyGroup implements Validator, Comparable<StudyGroup>, Serializab
     @Override
     public String toString() {
         return "StudyGroup{" + '\n' +
-                ConsoleColors.toColor("id = ", ConsoleColors.CYAN) + id + '\n' +
-                ConsoleColors.toColor("name = ", ConsoleColors.CYAN) + name + '\n' +
-                ConsoleColors.toColor("coordinates = ", ConsoleColors.CYAN) + coordinates + '\n' +
-                ConsoleColors.toColor("creationDate = ", ConsoleColors.CYAN) + timeFormatter(creationDate) + '\n' +
-                ConsoleColors.toColor("studentsCount = ", ConsoleColors.CYAN) + studentsCount + '\n' +
-                ConsoleColors.toColor("expelledStudents = ", ConsoleColors.CYAN) + expelledStudents + '\n' +
-                ConsoleColors.toColor("averageMark = ", ConsoleColors.CYAN) + averageMark + '\n' +
-                ConsoleColors.toColor("formOfEducation = ", ConsoleColors.CYAN) + formOfEducation + '\n' +
-                ConsoleColors.toColor("groupAdmin = ", ConsoleColors.CYAN) + groupAdmin + '\n' +
+                "\t" + ConsoleColors.toColor("id = ", ConsoleColors.CYAN) + id + '\n' +
+                "\t" + ConsoleColors.toColor("name = ", ConsoleColors.CYAN) + name + '\n' +
+                "\t" + ConsoleColors.toColor("coordinates = ", ConsoleColors.CYAN) + coordinates + '\n' +
+                "\t" + ConsoleColors.toColor("creationDate = ", ConsoleColors.CYAN) + timeFormatter(creationDate) + '\n' +
+                "\t" + ConsoleColors.toColor("studentsCount = ", ConsoleColors.CYAN) + studentsCount + '\n' +
+                "\t" + ConsoleColors.toColor("expelledStudents = ", ConsoleColors.CYAN) + expelledStudents + '\n' +
+                "\t" + ConsoleColors.toColor("averageMark = ", ConsoleColors.CYAN) + averageMark + '\n' +
+                "\t" + ConsoleColors.toColor("formOfEducation = ", ConsoleColors.CYAN) + formOfEducation + '\n' +
+                "\t" + ConsoleColors.toColor("groupAdmin = ", ConsoleColors.CYAN) + groupAdmin + '\n' +
+                "\t" + ConsoleColors.toColor("userLogin = ", ConsoleColors.CYAN) + userLogin + '\n' +
                 '}';
     }
 }

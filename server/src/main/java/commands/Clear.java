@@ -6,9 +6,11 @@ import dtp.ResponseStatus;
 import dtp.User;
 import exceptions.IllegalArguments;
 import managers.CollectionManager;
+import models.StudyGroup;
 import utility.DatabaseHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -31,8 +33,11 @@ public class Clear extends Command implements CollectionEditor{
     @Override
     public Response execute(Request request) throws IllegalArguments {
         if (!request.getArgs().isBlank()) throw new IllegalArguments();
-        ArrayList<Integer> deletedIds = DatabaseHandler.getDatabaseManager().deleteAllObjects(request.getUser());
-        if(!Objects.isNull(deletedIds)) {
+        List<Integer> deletedIds = collectionManager.getCollection().stream()
+                .filter(studyGroup -> studyGroup.getUserLogin().equals(request.getUser().name()))
+                .map(StudyGroup::getId)
+                .toList();
+        if(DatabaseHandler.getDatabaseManager().deleteAllObjects(request.getUser(), deletedIds)) {
             collectionManager.removeElements(deletedIds);
             return new Response(ResponseStatus.OK, "Ваши элементы удалены");
         }

@@ -35,6 +35,7 @@ public class AddElement extends Command implements CollectionEditor{
             int new_id = DatabaseHandler.getDatabaseManager().addObject(request.getObject(), request.getUser());
             if(new_id == -1) return new Response(ResponseStatus.ERROR, "Объект добавить не удалось");
             request.getObject().setId(new_id);
+            request.getObject().setUserLogin(request.getUser().name());
             collectionManager.addElement(request.getObject());
             return new Response(ResponseStatus.OK, "Объект успешно добавлен");
         }

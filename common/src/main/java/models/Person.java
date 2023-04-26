@@ -113,12 +113,12 @@ public class Person implements Validator, Serializable {
     @Override
     public String toString() {
         return "Person{" + "\n" +
-                ConsoleColors.toColor("name=", ConsoleColors.CYAN) + name  + "\n" +
-                ConsoleColors.toColor("weight=", ConsoleColors.CYAN) + weight + "\n" +
-                ConsoleColors.toColor("eyeColor=", ConsoleColors.CYAN) + eyeColor + "\n" +
-                ConsoleColors.toColor("hairColor=", ConsoleColors.CYAN) + hairColor + "\n" +
-                ConsoleColors.toColor("nationality=", ConsoleColors.CYAN) + nationality + "\n" +
-                ConsoleColors.toColor("location=", ConsoleColors.CYAN) + location + "\n" +
-                '}';
+                "\t" + "\t" + ConsoleColors.toColor("name=", ConsoleColors.CYAN) + name  + "\n" +
+                "\t" + "\t" + ConsoleColors.toColor("weight=", ConsoleColors.CYAN) + weight + "\n" +
+                "\t" + "\t" + ConsoleColors.toColor("eyeColor=", ConsoleColors.CYAN) + eyeColor + "\n" +
+                "\t" + "\t" + ConsoleColors.toColor("hairColor=", ConsoleColors.CYAN) + hairColor + "\n" +
+                "\t" + "\t" + ConsoleColors.toColor("nationality=", ConsoleColors.CYAN) + nationality + "\n" +
+                "\t" + "\t" + ConsoleColors.toColor("location=", ConsoleColors.CYAN) + location + "\n" +
+                "\t" +'}';
     }
 }

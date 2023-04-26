@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 import dtp.User;
 import main.App;
@@ -188,21 +185,20 @@ public class DatabaseManager {
         }
     }
 
-    public ArrayList<Integer> deleteAllObjects(User user){
+    public boolean deleteAllObjects(User user, List<Integer> ids){
         try {
-            PreparedStatement ps = connection.prepareStatement(DatabaseCommands.deleteUserOwnedObjects);
-            ps.setString(1, user.name());
-            ResultSet resultSet = ps.executeQuery();
-            ArrayList<Integer> deletedIds = new ArrayList<>();
-            while (resultSet.next()){
-                deletedIds.add(resultSet.getInt("id"));
+            for (Integer id : ids) {
+                PreparedStatement ps = connection.prepareStatement(DatabaseCommands.deleteUserOwnedObjects);
+                ps.setString(1, user.name());
+                ps.setInt(2, id);
+                ResultSet resultSet = ps.executeQuery();
             }
             databaseLogger.warn("Удалены все строки таблицы studygroup принадлежащие " + user.name());
-            return deletedIds;
+            return true;
         } catch (SQLException e) {
             databaseLogger.error("Удалить строки таблицы studygroup не удалось!");
             databaseLogger.debug(e);
-            return null;
+            return false;
         }
     }
 
@@ -235,7 +231,8 @@ public class DatabaseManager {
                                     resultSet.getLong("person_location_y"),
                                     resultSet.getString("person_location_name")
                             )
-                        )
+                        ),
+                        resultSet.getString("owner_login")
                 ));
             }
             databaseLogger.info("Коллекция успешно загружена из таблицы");

@@ -65,7 +65,7 @@ public class DatabaseCommands {
             """;
 
     public static final String deleteUserOwnedObjects = """
-            DELETE FROM studygroup WHERE (owner_login = ?) RETURNING id;
+            DELETE FROM studygroup WHERE (owner_login = ?) AND (id = ?) RETURNING id;
             """;
 
     public static final String deleteUserObject = """

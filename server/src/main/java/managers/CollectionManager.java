@@ -141,7 +141,7 @@ public class CollectionManager {
 
     public synchronized void removeElements(Collection<StudyGroup> collection){this.collection.removeAll(collection);}
 
-    public synchronized void removeElements(ArrayList<Integer> deletedIds){
+    public synchronized void removeElements(List<Integer> deletedIds){
         deletedIds
                 .forEach((id) -> this.collection.remove(this.getById(id)));
     }

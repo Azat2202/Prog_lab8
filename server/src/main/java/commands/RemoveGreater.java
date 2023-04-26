@@ -42,6 +42,7 @@ public class RemoveGreater extends Command implements CollectionEditor{
             Collection<StudyGroup> toRemove = collectionManager.getCollection().stream()
                     .filter(Objects::nonNull)
                     .filter(studyGroup -> studyGroup.compareTo(request.getObject()) >= 1)
+                    .filter(studyGroup -> studyGroup.getUserLogin().equals(request.getUser().name()))
                     .filter((obj) -> DatabaseHandler.getDatabaseManager().deleteObject(obj.getId(), request.getUser()))
                     .toList();
             collectionManager.removeElements(toRemove);
