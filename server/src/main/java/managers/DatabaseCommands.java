@@ -71,4 +71,12 @@ public class DatabaseCommands {
     public static final String deleteUserObject = """
             DELETE FROM studygroup WHERE (owner_login = ?) AND (id = ?) RETURNING id;
             """;
+
+    public static final String updateUserObject = """
+            UPDATE studygroup
+            SET (group_name, cord_x, cord_y, creation_date, students_count, expelled_students, average_mark, form_of_education, person_name, person_weight, person_eye_color, person_hair_color, person_nationality, person_location_x, person_location_y, person_location_name)
+             = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            WHERE (id = ?) AND (owner_login = ?)
+            RETURNING id;
+            """;
 }

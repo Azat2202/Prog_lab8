@@ -5,6 +5,7 @@ import dtp.Response;
 import dtp.ResponseStatus;
 import exceptions.IllegalArguments;
 import managers.CollectionManager;
+import utility.DatabaseHandler;
 
 import java.util.Objects;
 
@@ -37,8 +38,11 @@ public class Update extends Command implements CollectionEditor{
             if (Objects.isNull(request.getObject())){
                 return new Response(ResponseStatus.ASK_OBJECT, "Для команды " + this.getName() + " требуется объект");
             }
-            collectionManager.editById(id, request.getObject());
-            return new Response(ResponseStatus.OK, "Объект успешно обновлен");
+            if(DatabaseHandler.getDatabaseManager().updateObject(id, request.getObject(), request.getUser())){
+                collectionManager.editById(id, request.getObject());
+                return new Response(ResponseStatus.OK, "Объект успешно обновлен");
+            }
+            return new Response(ResponseStatus.ERROR, "Объект не обновлен. Вероятнее всего он не ваш");
         } catch (NoSuchId err) {
             return new Response(ResponseStatus.ERROR,"В коллекции нет элемента с таким id");
         } catch (NumberFormatException exception) {

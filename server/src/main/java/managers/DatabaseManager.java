@@ -143,6 +143,37 @@ public class DatabaseManager {
         }
     }
 
+    public boolean updateObject(int id, StudyGroup studyGroup, User user){
+        try {
+            PreparedStatement ps = connection.prepareStatement(DatabaseCommands.updateUserObject);
+            ps.setString(1, studyGroup.getName());
+            ps.setFloat(2, studyGroup.getCoordinates().getX());
+            ps.setDouble(3, studyGroup.getCoordinates().getY());
+            ps.setTimestamp(4, new java.sql.Timestamp(studyGroup.getCreationDate().getTime()));
+            ps.setLong(5, studyGroup.getStudentsCount());
+            ps.setLong(6, studyGroup.getExpelledStudents());
+            ps.setLong(7, studyGroup.getAverageMark());
+            ps.setObject(8, studyGroup.getFormOfEducation(), Types.OTHER);
+            ps.setString(9, studyGroup.getGroupAdmin().getName());
+            ps.setInt(10, studyGroup.getGroupAdmin().getWeight());
+            ps.setObject(11, studyGroup.getGroupAdmin().getEyeColor(), Types.OTHER);
+            ps.setObject(12, studyGroup.getGroupAdmin().getHairColor(), Types.OTHER);
+            ps.setObject(13, studyGroup.getGroupAdmin().getNationality(), Types.OTHER);
+            ps.setDouble(14, studyGroup.getGroupAdmin().getLocation().getX());
+            ps.setDouble(15, studyGroup.getGroupAdmin().getLocation().getY());
+            ps.setString(16, studyGroup.getGroupAdmin().getLocation().getName());
+
+            ps.setInt(17, id);
+            ps.setString(18, user.name());
+            ResultSet resultSet = ps.executeQuery();
+            System.out.println(resultSet);
+            return resultSet.next();
+        } catch (SQLException e) {
+            databaseLogger.debug(e);
+            return false;
+        }
+    }
+
     public boolean deleteObject(int id, User user){
         try{
             PreparedStatement ps = connection.prepareStatement(DatabaseCommands.deleteUserObject);
