@@ -1,5 +1,5 @@
 # Лабораторная работа 7
-### Вариант 3116500
+### Вариант 3116910
 
 *Ссылки в README.MD ведут на строки кода с реализацией*
 
@@ -10,7 +10,7 @@
 - [Обновлять состояние коллекции в памяти только при успешном добавлении объекта в БД](server/src/main/java/commands/RemoveAllByAverageMark.java#L40)
 - [Все команды получения данных должны работать с коллекцией в памяти, а не в БД](server/src/main/java/commands/CountByAverageMark.java#L24)
 - [Организовать возможность регистрации и авторизации пользователей. У пользователя есть возможность указать пароль.](client/src/main/java/utility/RuntimeManager.java#L59)
-- [Пароли при хранении хэшировать алгоритмом SHA-512](server/src/main/java/managers/DatabaseManager.java#L30)
+- [Пароли при хранении хэшировать алгоритмом SHA-384](server/src/main/java/managers/DatabaseManager.java#L30)
 - [Запретить выполнение команд не авторизованным пользователям.](server/src/main/java/managers/DatabaseManager.java#L84)
 - [При хранении объектов сохранять информацию о пользователе, который создал этот объект.](common/src/main/java/models/StudyGroup.java#L40)
 - [Пользователи должны иметь возможность просмотра всех объектов коллекции, но модифицировать могут только принадлежащие им.](server/src/main/java/commands/RemoveAllByAverageMark.java#L40)
@@ -18,9 +18,9 @@
 
 ### Необходимо реализовать многопоточную обработку запросов.
 
-- [Для многопоточного чтения запросов использовать Fixed thread pool](server/src/main/java/utility/Server.java?plain=1#L61)
-- [Для многопотчной обработки полученного запроса использовать ForkJoinPool](server/src/main/java/managers/ConnectionManager.java?plain=1#L38)
-- [Для многопоточной отправки ответа использовать Cached thread pool](server/src/main/java/managers/ConnectionManager.java?plain=1#L41)
+- [Для многопоточного чтения запросов использовать Cached thread pool](server/src/main/java/utility/Server.java?plain=1#L61)
+- [Для многопотчной обработки полученного запроса использовать Fixed thread pool](server/src/main/java/managers/ConnectionManager.java?plain=1#L38)
+- [Для многопоточной отправки ответа использовать ForkJoinPool](server/src/main/java/managers/ConnectionManager.java?plain=1#L41)
 - [Для синхронизации доступа к коллекции использовать синхронизацию чтения и записи с помощью synchronized](server/src/main/java/managers/CollectionManager.java)
 
 ### Порядок выполнения работы:

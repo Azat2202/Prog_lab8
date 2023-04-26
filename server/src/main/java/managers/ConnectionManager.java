@@ -6,7 +6,6 @@ import dtp.ResponseStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.RequestHandler;
-import utility.Server;
 
 import java.io.*;
 import java.nio.channels.SocketChannel;
@@ -15,8 +14,8 @@ import java.util.concurrent.*;
 public class ConnectionManager implements Runnable{
     private CommandManager commandManager;
     private DatabaseManager databaseManager;
-    private ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-    private ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
+    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(2);
+    private ForkJoinPool forkJoinPool = new ForkJoinPool();
     private SocketChannel clientSocket;
 
     static final Logger connectionManagerLogger = LogManager.getLogger(ConnectionManager.class);
@@ -42,13 +41,13 @@ public class ConnectionManager implements Runnable{
                     connectionManagerLogger.info("Юзер не одобрен");
                     responseToUser = new Response(ResponseStatus.LOGIN_FAILED, "Неверный пользователь!");
                 } else{
-                    responseToUser = forkJoinPool.invoke(new RequestHandler(commandManager, userRequest));
+                    responseToUser = fixedThreadPool.submit(new RequestHandler(commandManager, userRequest)).get();
                 }
-                connectionManagerLogger.debug(forkJoinPool.toString());
+                connectionManagerLogger.debug(fixedThreadPool.toString());
                 Response finalResponseToUser = responseToUser;
-                cachedThreadPool.submit(() -> {
+                forkJoinPool.submit(() -> {
                     try {
-                        connectionManagerLogger.debug(this.cachedThreadPool.toString());
+                        connectionManagerLogger.debug(this.forkJoinPool.toString());
                         clientWriter.writeObject(finalResponseToUser);
                         clientWriter.flush();
 
@@ -71,7 +70,7 @@ public class ConnectionManager implements Runnable{
             }
         } finally {
             try {
-                cachedThreadPool.shutdown();
+                forkJoinPool.shutdown();
                 clientSocket.close();
             } catch (IOException e) {
                 connectionManagerLogger.error("Невозмоюно закрыть соединение ");

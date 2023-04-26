@@ -9,9 +9,10 @@ import exceptions.IllegalArguments;
 import exceptions.NoSuchCommand;
 import managers.CommandManager;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.RecursiveTask;
 
-public class RequestHandler extends RecursiveTask<Response> {
+public class RequestHandler implements Callable<Response> {
     private CommandManager commandManager;
     private Request request;
 
@@ -21,7 +22,7 @@ public class RequestHandler extends RecursiveTask<Response> {
     }
 
     @Override
-    public Response compute() {
+    public Response call() {
         try {
             commandManager.addToHistory(request.getUser(), request.getCommandName());
             return commandManager.execute(request);

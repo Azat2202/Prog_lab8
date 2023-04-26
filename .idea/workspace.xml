@@ -6,12 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/StudyGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/StudyGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/Clear.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/Clear.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.MD" beforeDir="false" afterPath="$PROJECT_DIR$/README.MD" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/dtp/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/dtp/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/main/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/main/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/CollectionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/DatabaseCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/DatabaseCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/DatabaseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/ConnectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/ConnectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/utility/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utility/RequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/utility/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/utility/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +97,16 @@
   <component name="RunManager" selected="Compound.Server+Client">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="App" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Client 2" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="App" />
+      <module name="client" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 1084" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -208,6 +219,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.Client 2" />
       <item itemvalue="Application.Client" />
       <item itemvalue="Application.Server" />
       <item itemvalue="Application.ClientToLocalhost" />

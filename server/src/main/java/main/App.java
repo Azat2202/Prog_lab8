@@ -15,7 +15,7 @@ public class App extends Thread {
     //-------------------------------КОНФИГУРАЦИОННЫЕ ПЕРЕМЕННЫЕ-----------------------------------------
     public static final int CONNECTION_TIMEOUT = 60 * 1000;
 
-    public static final String HASHING_ALGORITHM = "SHA-512";
+    public static final String HASHING_ALGORITHM = "SHA-384";
     public static final String DATABASE_URL = "jdbc:postgresql://localhost:1256/studs";
     public static final String DATABASE_URL_HELIOS = "jdbc:postgresql://pg:1256/studs";
     public static final String DATABASE_CONFIG_PATH = "C:\\Users\\R1300-W-12-Stud\\IdeaProjects\\Prog_lab7\\server\\dbconfig.cfg";

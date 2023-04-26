@@ -36,7 +36,7 @@ public class Server {
     BufferedReader scanner = new BufferedReader(new InputStreamReader(bf));
     private final DatabaseManager databaseManager;
 
-    private final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(2);
+    private final ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
 
     public Server(CommandManager commandManager, DatabaseManager databaseManager) {
         this.port = App.PORT;
@@ -62,7 +62,7 @@ public class Server {
                     }
                 } catch (IOException ignored) {}
                 try{
-                    fixedThreadPool.execute(new ConnectionManager(commandManager, connectToClient(), databaseManager));
+                    cachedThreadPool.execute(new ConnectionManager(commandManager, connectToClient(), databaseManager));
                 } catch (ConnectionErrorException  ignored){}
             }
         } catch (OpeningServerException e) {

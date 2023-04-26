@@ -64,7 +64,7 @@ public class Request implements Serializable {
 
     @Override
     public String toString(){
-        return "Request[" + commandName + user +
+        return "Request[" + commandName + ',' + user +
                 (args.isEmpty()
                         ? ""
                         : "," + args ) +
