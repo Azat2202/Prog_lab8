@@ -14,7 +14,7 @@ import java.util.List;
  * Выводит последние 5 команд (без их аргументов)
  */
 public class History extends Command{
-    private CommandManager commandManager;
+    private final CommandManager commandManager;
     public History(CommandManager commandManager) {
         super("history", " вывести последние 5 команд (без их аргументов)");
         this.commandManager = commandManager;

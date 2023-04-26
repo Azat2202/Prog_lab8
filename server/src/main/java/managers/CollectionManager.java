@@ -33,7 +33,7 @@ public class CollectionManager {
         collection.addAll(DatabaseHandler.getDatabaseManager().loadCollection());
     }
 
-    public ArrayDeque<StudyGroup> getCollection() {
+    public synchronized ArrayDeque<StudyGroup> getCollection() {
         return collection;
     }
     /**
@@ -67,31 +67,31 @@ public class CollectionManager {
         return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    public String getLastInitTime() {
+    public synchronized String getLastInitTime() {
         return timeFormatter(lastInitTime);
     }
 
-    public String getLastSaveTime() {
+    public synchronized String getLastSaveTime() {
         return timeFormatter(lastSaveTime);
     }
     /**
      * @return Имя типа коллекции.
      */
-    public String collectionType() {
+    public synchronized String collectionType() {
         return collection.getClass().getName();
     }
 
-    public int collectionSize() {
+    public synchronized int collectionSize() {
         return collection.size();
     }
 
-    public void clear(){
+    public synchronized void clear(){
         this.collection.clear();
         lastInitTime = LocalDateTime.now();
         collectionManagerLogger.info("Коллекция очищена");
     }
 
-    public StudyGroup getLast() {
+    public synchronized StudyGroup getLast() {
         return collection.getLast();
     }
 
@@ -99,7 +99,7 @@ public class CollectionManager {
      * @param id ID элемента.
      * @return Элемент по его ID или null, если не найдено.
      */
-    public StudyGroup getById(int id) {
+    public synchronized StudyGroup getById(int id) {
         for (StudyGroup element : collection) {
             if (element.getId() == id) return element;
         }
@@ -112,7 +112,7 @@ public class CollectionManager {
      * @param newElement новый элемент
      * @throws InvalidForm Нет элемента с таким id
      */
-    public void editById(int id, StudyGroup newElement){
+    public synchronized void editById(int id, StudyGroup newElement){
         StudyGroup pastElement = this.getById(id);
         this.removeElement(pastElement);
         newElement.setId(id);
@@ -124,30 +124,30 @@ public class CollectionManager {
      * @param id ID элемента.
      * @return Проверяет, существует ли элемент с таким ID.
      */
-    public boolean checkExist(int id) {
+    public synchronized boolean checkExist(int id) {
         return collection.stream()
                 .anyMatch((x) -> x.getId() == id);
     }
 
-    public void addElement(StudyGroup studyGroup){
+    public synchronized void addElement(StudyGroup studyGroup){
         this.lastSaveTime = LocalDateTime.now();
         collection.add(studyGroup);
         collectionManagerLogger.info("Добавлен объект в коллекцию", studyGroup);
     }
 
-    public void removeElement(StudyGroup studyGroup){
+    public synchronized void removeElement(StudyGroup studyGroup){
         collection.remove(studyGroup);
     }
 
-    public void removeElements(Collection<StudyGroup> collection){this.collection.removeAll(collection);}
+    public synchronized void removeElements(Collection<StudyGroup> collection){this.collection.removeAll(collection);}
 
-    public void removeElements(ArrayList<Integer> deletedIds){
+    public synchronized void removeElements(ArrayList<Integer> deletedIds){
         deletedIds
                 .forEach((id) -> this.collection.remove(this.getById(id)));
     }
 
     @Override
-    public String toString() {
+    public synchronized String toString() {
         if (collection.isEmpty()) return "Коллекция пуста!";
         var last = getLast();
 
