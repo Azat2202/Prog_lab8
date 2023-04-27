@@ -30,8 +30,9 @@ public class CollectionManager {
 
     private ReadWriteLock lock = new ReentrantReadWriteLock();
     Lock writeLock = lock.writeLock();
+    Lock readLock = lock.readLock();
 
-    static final Logger collectionManagerLogger = LogManager.getLogger(CollectionManager.class);
+    private static final Logger collectionManagerLogger = LogManager.getLogger(CollectionManager.class);
 
     public CollectionManager() {
         this.lastInitTime = LocalDateTime.now();
@@ -41,10 +42,10 @@ public class CollectionManager {
 
     public ArrayDeque<StudyGroup> getCollection() {
         try {
-            writeLock.lock();
+            readLock.lock();
             return collection;
         } finally {
-            writeLock.unlock();
+            readLock.unlock();
         }
     }
 
@@ -63,39 +64,21 @@ public class CollectionManager {
         return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    /**
-     * Метод скрывающий дату, если она сегодняшняя
-     *
-     * @param dateToConvert объект {@link Date}
-     * @return вывод даты
-     */
-    public static String timeFormatter(Date dateToConvert) {
-        LocalDateTime localDateTime = dateToConvert.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-        if (localDateTime == null) return null;
-        if (localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                .equals(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))) {
-            return localDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-        }
-        return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
     public String getLastInitTime() {
         try {
-            writeLock.lock();
+            readLock.lock();
             return timeFormatter(lastInitTime);
         } finally {
-            writeLock.unlock();
+            readLock.unlock();
         }
     }
 
     public String getLastSaveTime() {
         try {
-            writeLock.lock();
+            readLock.lock();
             return timeFormatter(lastSaveTime);
         } finally {
-            writeLock.unlock();
+            readLock.unlock();
         }
 
     }
@@ -105,19 +88,19 @@ public class CollectionManager {
      */
     public String collectionType() {
         try {
-            writeLock.lock();
+            readLock.lock();
             return collection.getClass().getName();
         } finally {
-            writeLock.unlock();
+            readLock.unlock();
         }
     }
 
     public int collectionSize() {
         try {
-            writeLock.lock();
+            readLock.lock();
             return collection.size();
         } finally {
-            writeLock.unlock();
+            readLock.unlock();
         }
     }
 
@@ -134,10 +117,10 @@ public class CollectionManager {
 
     public StudyGroup getLast() {
         try {
-            writeLock.lock();
+            readLock.lock();
             return collection.getLast();
         } finally {
-            writeLock.unlock();
+            readLock.unlock();
         }
     }
 
@@ -147,13 +130,13 @@ public class CollectionManager {
      */
     public StudyGroup getById(int id) {
         try {
-            writeLock.lock();
+            readLock.lock();
             for (StudyGroup element : collection) {
                 if (element.getId() == id) return element;
             }
             return null;
         } finally {
-            writeLock.unlock();
+            readLock.unlock();
         }
     }
 
@@ -183,11 +166,11 @@ public class CollectionManager {
      */
     public boolean checkExist(int id) {
         try {
-            writeLock.lock();
+            readLock.lock();
             return collection.stream()
                     .anyMatch((x) -> x.getId() == id);
         } finally {
-            writeLock.unlock();
+            readLock.unlock();
         }
     }
 

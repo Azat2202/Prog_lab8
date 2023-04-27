@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Рекорд для хранения владельца команды в истории
+ */
 record HistoryCommand(String username, String command){}
 
 /**
@@ -34,7 +37,7 @@ public class CommandManager{
     private final List<HistoryCommand> commandHistory = new ArrayList<>();
     private final DatabaseManager databaseManager;
 
-    static final Logger commandManagerLogger = LogManager.getLogger(CommandManager.class);
+    private static final Logger commandManagerLogger = LogManager.getLogger(CommandManager.class);
 
     public CommandManager(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;

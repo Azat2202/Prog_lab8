@@ -12,11 +12,11 @@ import java.nio.channels.SocketChannel;
 import java.util.concurrent.*;
 
 public class ConnectionManager implements Runnable{
-    private CommandManager commandManager;
-    private DatabaseManager databaseManager;
-    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(2);
-    private ForkJoinPool forkJoinPool = new ForkJoinPool();
-    private SocketChannel clientSocket;
+    private final CommandManager commandManager;
+    private final DatabaseManager databaseManager;
+    private final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(8);
+    private static final ForkJoinPool forkJoinPool = new ForkJoinPool();
+    private final SocketChannel clientSocket;
 
     static final Logger connectionManagerLogger = LogManager.getLogger(ConnectionManager.class);
 
@@ -33,32 +33,21 @@ public class ConnectionManager implements Runnable{
         try {
             ObjectInputStream clientReader = new ObjectInputStream(clientSocket.socket().getInputStream());
             ObjectOutputStream clientWriter = new ObjectOutputStream(clientSocket.socket().getOutputStream());
-            do {
+            while (true){
                 userRequest = (Request) clientReader.readObject();
                 connectionManagerLogger.info("Получен запрос с командой " + userRequest.getCommandName(), userRequest);
                 if(!databaseManager.confirmUser(userRequest.getUser())
                         && !userRequest.getCommandName().equals("register")){
                     connectionManagerLogger.info("Юзер не одобрен");
                     responseToUser = new Response(ResponseStatus.LOGIN_FAILED, "Неверный пользователь!");
+                    submitNewResponse(new ConnectionManagerPool(responseToUser, clientWriter));
                 } else{
-                    responseToUser = fixedThreadPool.submit(new RequestHandler(commandManager, userRequest)).get();
+                    FutureManager.addNewFixedThreadPoolFuture(fixedThreadPool.submit(new RequestHandler(commandManager, userRequest, clientWriter)));
                 }
-                connectionManagerLogger.debug(fixedThreadPool.toString());
-                Response finalResponseToUser = responseToUser;
-                forkJoinPool.submit(() -> {
-                    try {
-                        connectionManagerLogger.debug(this.forkJoinPool.toString());
-                        clientWriter.writeObject(finalResponseToUser);
-                        clientWriter.flush();
-
-                    } catch (IOException e) {
-                        connectionManagerLogger.error("Не удалось отправить ответ");
-                    }
-                }).get();
-            } while (true);
+            }
         } catch (ClassNotFoundException exception) {
             connectionManagerLogger.fatal("Произошла ошибка при чтении полученных данных!");
-        }catch (CancellationException | ExecutionException | InterruptedException exception) {
+        }catch (CancellationException exception) {
             connectionManagerLogger.warn("При обработке запроса произошла ошибка многопоточности!");
         } catch (InvalidClassException | NotSerializableException exception) {
             connectionManagerLogger.error("Произошла ошибка при отправке данных на клиент!");
@@ -68,14 +57,18 @@ public class ConnectionManager implements Runnable{
             } else {
                 connectionManagerLogger.info("Клиент успешно отключен от сервера!");
             }
-        } finally {
-            try {
-                forkJoinPool.shutdown();
-                clientSocket.close();
-            } catch (IOException e) {
-                connectionManagerLogger.error("Невозмоюно закрыть соединение ");
-            }
-
         }
+    }
+
+    public static void submitNewResponse(ConnectionManagerPool connectionManagerPool){
+        forkJoinPool.submit(() -> {
+            try {
+                connectionManagerPool.objectOutputStream().writeObject(connectionManagerPool.response());
+                connectionManagerPool.objectOutputStream().flush();
+            } catch (IOException e) {
+                connectionManagerLogger.error("Не удалось отправить ответ");
+                connectionManagerLogger.debug(e);
+            }
+        });
     }
 }

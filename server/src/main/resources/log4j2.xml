@@ -8,12 +8,12 @@
     </Appenders>
 
     <Loggers>
-        <Logger name= "ru.javastudy.examples.User" level="all" additivity="true">
+        <Logger name= "ru.javastudy.examples.User" level="info" additivity="true">
             <AppenderRef ref="Console"/>
         </Logger>
 
         <!-- Root Logger -->
-        <Root level="all">
+        <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

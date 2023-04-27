@@ -6,6 +6,7 @@ import exceptions.OpeningServerException;
 import managers.CommandManager;
 import managers.ConnectionManager;
 import managers.DatabaseManager;
+import managers.FutureManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,11 +30,9 @@ public class Server {
     private SocketChannel socketChannel;
     private CommandManager commandManager;
 
-    static final Logger serverLogger = LogManager.getLogger(Server.class);
-    static final Logger rootLogger = LogManager.getLogger(App.class);
+    private static final Logger serverLogger = LogManager.getLogger(Server.class);
+    public static final Logger rootLogger = LogManager.getLogger(App.class);
 
-    BufferedInputStream bf = new BufferedInputStream(System.in);
-    BufferedReader scanner = new BufferedReader(new InputStreamReader(bf));
     private final DatabaseManager databaseManager;
 
     private final ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
@@ -52,17 +51,10 @@ public class Server {
             rootLogger.info("--------------------------------------------------------------------");
             rootLogger.info("-----------------СЕРВЕР УСПЕШНО ЗАПУЩЕН-----------------------------");
             rootLogger.info("--------------------------------------------------------------------");
-            for(;;){
-                try {
-                    if (scanner.ready()) {
-                        String line = scanner.readLine();
-                        if (line.equals("save") || line.equals("s")) {
-                            serverLogger.info("Коллекция сохранена");
-                        }
-                    }
-                } catch (IOException ignored) {}
+            while(true){
+                FutureManager.checkAllFutures();
                 try{
-                    cachedThreadPool.execute(new ConnectionManager(commandManager, connectToClient(), databaseManager));
+                    cachedThreadPool.submit(new ConnectionManager(commandManager, connectToClient(), databaseManager));
                 } catch (ConnectionErrorException  ignored){}
             }
         } catch (OpeningServerException e) {
@@ -87,12 +79,11 @@ public class Server {
 
     private SocketChannel connectToClient() throws ConnectionErrorException{
         try {
-            serverLogger.info("Прослушивание порта '" + port + "'...");
+            ss.socket().setSoTimeout(50);
             socketChannel = ss.socket().accept().getChannel();
             serverLogger.info("Соединение с клиентом успешно установлено.");
             return socketChannel;
-        } catch (IOException exception) {
-            serverLogger.fatal("Произошла ошибка при соединении с клиентом!");
+        } catch (IOException e) {
             throw new ConnectionErrorException();
         }
     }

@@ -15,12 +15,12 @@ import org.apache.logging.log4j.Logger;
 
 public class DatabaseManager {
     private Connection connection;
-    MessageDigest md;
+    private MessageDigest md;
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrs" +
             "tuvwxyz0123456789<>?:@{!$%^&*()_+£$";
     private static final String PEPPER = "[g$J*(l;";
-    static final Logger databaseLogger = LogManager.getLogger(DatabaseManager.class);
+    private static final Logger databaseLogger = LogManager.getLogger(DatabaseManager.class);
 
     public DatabaseManager(){
         try {
