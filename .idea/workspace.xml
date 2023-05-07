@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/tyler.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tyler.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.MD" beforeDir="false" afterPath="$PROJECT_DIR$/README.MD" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/~$ограммирование 7 Сиразетдинов Азат.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/~WRL2572.tmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Программирование 7 Сиразетдинов Азат.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Программирование 7 Сиразетдинов Азат.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/utility/RuntimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utility/RuntimeManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +22,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -55,24 +57,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/azat2/IdeaProjects/Prog_lab8/client",
+    "settings.editor.selected.configurable": "terminal"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab8\client" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\target" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\resources" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java\commands" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\src\main\java\utilty" />
-      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java\utilty" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\src\main\java\exceptions" />
@@ -88,23 +91,7 @@
       <command value="mvn clean compile package" />
     </option>
   </component>
-  <component name="RunManager" selected="Compound.Server+Client">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="App" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Client 2" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="17" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="App" />
-      <module name="client" />
-      <option name="PROGRAM_PARAMETERS" value="localhost 1084" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.Client">
     <configuration name="Client" type="Application" factoryName="Application" singleton="false">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -185,17 +172,6 @@
       </envs>
       <method v="2" />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Build everything" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -224,11 +200,9 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.Client 2" />
       <item itemvalue="Application.Client" />
       <item itemvalue="Application.Server" />
       <item itemvalue="Application.ClientToLocalhost" />
-      <item itemvalue="Application.App" />
       <item itemvalue="Compound.Server+Client" />
       <item itemvalue="Compound. Client+Server jar" />
       <item itemvalue="Compound.Server+Client_MultiThread" />
@@ -238,11 +212,6 @@
       <item itemvalue="JAR Application.server-1.0-SNAPSHOT.jar" />
       <item itemvalue="Maven.Build everything" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.App" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -289,7 +258,8 @@
       <workItem from="1682575358012" duration="2140000" />
       <workItem from="1682579009017" duration="3299000" />
       <workItem from="1682605385487" duration="1493000" />
-      <workItem from="1683404959411" duration="336000" />
+      <workItem from="1683404959411" duration="7094000" />
+      <workItem from="1683412231656" duration="4407000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>

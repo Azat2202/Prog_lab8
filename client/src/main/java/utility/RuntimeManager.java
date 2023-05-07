@@ -12,6 +12,8 @@ import exceptions.ExceptionInFileMode;
 import exceptions.ExitObliged;
 import exceptions.InvalidForm;
 import exceptions.LoginDuringExecuteFail;
+import gui.GuiManager;
+import gui.GuiState;
 import models.StudyGroup;
 
 import java.io.File;
@@ -30,11 +32,13 @@ public class RuntimeManager {
     private final Scanner userScanner;
     private final Client client;
     private User user = null;
+    private GuiManager guiManager;
 
     public RuntimeManager(Printable console, Scanner userScanner, Client client) {
         this.console = console;
         this.userScanner = userScanner;
         this.client = client;
+        this.guiManager = new GuiManager();
     }
 
     /**

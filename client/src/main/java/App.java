@@ -4,6 +4,7 @@ import commandLine.Printable;
 import exceptions.IllegalArguments;
 import utility.Client;
 import utility.RuntimeManager;
+import javax.swing.*;
 
 import java.util.Scanner;
 
@@ -28,6 +29,7 @@ public class App {
 
     public static void main(String[] args) {
         if (!parseHostPort(args)) return;
+
         console = new Console();
         Client client = new Client(host, port, 5000, 5, console);
         new RuntimeManager(console, new Scanner(System.in), client).interactiveMode();
