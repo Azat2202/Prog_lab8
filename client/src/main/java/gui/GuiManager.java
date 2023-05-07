@@ -10,15 +10,30 @@ import java.io.File;
 import java.io.IOException;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
+import dtp.Request;
+import dtp.Response;
+import dtp.ResponseStatus;
+import dtp.User;
+import utility.Client;
+
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 
 public class GuiManager {
+    private final Client client;
+
     private final GuiState guiState;
     private final JFrame frame;
     private final Container contentPane;
     private final MenuBar menuBar;
 
+    private final static Color RED_WARNING = Color.decode("#FF4040");
+    private final static Color GREEN_OK = Color.decode("#00BD39");
 
-    public GuiManager() {
+
+    public GuiManager(Client client) {
+        this.client = client;
+
+
         try {
             UIManager.setLookAndFeel(new FlatDarculaLaf());
         } catch (UnsupportedLookAndFeelException e) {
@@ -36,16 +51,21 @@ public class GuiManager {
         this.frame.setMenuBar(this.menuBar);
 
 
-        this.loginAuth();
+        this.run();
 
     }
 
-    public void changeState(GuiState state){
-
+    public void run(){
+        Panel panel = new Panel();
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+        this.loginAuth();
     }
 
     public void loginAuth(){
-        Panel panel = new Panel();
+        JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -57,17 +77,14 @@ public class GuiManager {
         JLabel errorLabel = new JLabel("");
         JButton loginButton = new JButton("Login");
         JButton registerButton = new JButton("Regiser");
-
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(loginTextLabel)
-                        .addComponent(passwordTextLabel)
-                        .addComponent(loginButton))
+                        .addComponent(passwordTextLabel))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(loginField)
                         .addComponent(passwordField)
-                        .addComponent(errorLabel)
-                        .addComponent(registerButton)));
+                        .addComponent(errorLabel)));
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(loginTextLabel)
@@ -75,26 +92,54 @@ public class GuiManager {
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(passwordTextLabel)
                         .addComponent(passwordField))
-                        .addComponent(errorLabel)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(loginButton)
-                        .addComponent(registerButton))
-        );
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                errorLabel.setText("Логин успешный!");
-                errorLabel.setForeground(Color.GREEN);
+                        .addComponent(errorLabel));
+        while(true) {
+            int result = JOptionPane.showOptionDialog(null, panel, "Логин", JOptionPane.YES_NO_OPTION,
+                    QUESTION_MESSAGE, null, new String[]{"Login", "Register"}, "Login");
+            if (result == 1) {
+                if (!checkFields(loginField, passwordField, errorLabel)) continue;
+                Response response = client.sendAndAskResponse(
+                        new Request(
+                                "ping",
+                                "",
+                                new User(loginField.getText(), String.valueOf(passwordField.getPassword()))));
+                if (response.getStatus() == ResponseStatus.OK) {
+                    errorLabel.setText("Логин успешный!");
+                    errorLabel.setForeground(GREEN_OK);
+                } else {
+                    errorLabel.setText("Логин не успешный!");
+                    errorLabel.setForeground(RED_WARNING);
+                }
+            } else {
+                if (!checkFields(loginField, passwordField, errorLabel)) continue;
+                Response response = client.sendAndAskResponse(
+                        new Request(
+                                "register",
+                                "",
+                                new User(loginField.getText(), String.valueOf(passwordField.getPassword()))));
+                if (response.getStatus() == ResponseStatus.OK) {
+                    errorLabel.setText("Вы успешно зарегестрировались!");
+                    errorLabel.setForeground(GREEN_OK);
+                } else {
+                    errorLabel.setText("Логин занят!");
+                    errorLabel.setForeground(RED_WARNING);
+                }
             }
-        });
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                errorLabel.setText("Логин не успешный!");
-                errorLabel.setForeground(Color.RED);
-            }
-        });
-        frame.add(panel);
-        frame.setVisible(true);
+        }
+//        frame.add(panel);
+//        frame.setVisible(true);
+    }
+
+    private boolean checkFields(JTextField loginField, JPasswordField passwordField, JLabel errorLabel){
+        if(loginField.getText().isEmpty()) {
+            errorLabel.setText("Логин не может быть пустым!");
+            errorLabel.setForeground(RED_WARNING);
+            return false;
+        } else if(String.valueOf(passwordField.getPassword()).isEmpty()){
+            errorLabel.setText("Пароль не может быть пустым!");
+            errorLabel.setForeground(RED_WARNING);
+            return false;
+        }
+        return true;
     }
 }

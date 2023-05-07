@@ -38,7 +38,7 @@ public class RuntimeManager {
         this.console = console;
         this.userScanner = userScanner;
         this.client = client;
-        this.guiManager = new GuiManager();
+        this.guiManager = new GuiManager(client);
     }
 
     /**

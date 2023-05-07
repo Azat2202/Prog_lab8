@@ -2,6 +2,7 @@ import commandLine.BlankConsole;
 import commandLine.Console;
 import commandLine.Printable;
 import exceptions.IllegalArguments;
+import gui.GuiManager;
 import utility.Client;
 import utility.RuntimeManager;
 import javax.swing.*;
@@ -32,6 +33,7 @@ public class App {
 
         console = new Console();
         Client client = new Client(host, port, 5000, 5, console);
-        new RuntimeManager(console, new Scanner(System.in), client).interactiveMode();
+        GuiManager guiManager = new GuiManager(client);
+//        new RuntimeManager(console, new Scanner(System.in), client).interactiveMode();
     }
 }
