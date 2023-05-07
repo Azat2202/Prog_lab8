@@ -1,3 +1,5 @@
+package main;
+
 import commandLine.BlankConsole;
 import commandLine.Console;
 import commandLine.Printable;
@@ -9,6 +11,8 @@ public class App {
     //-----------------------SETTINGS---------------------------
     public final static int RECONNECTION_TIMEOUT = 5;
     public final static int MAX_RECONNECTION_ATTEMPTS = 5;
+    public final static int APP_DEFAULT_WIDTH = 1500;
+    public final static int APP_DEFAULT_HEIGHT = 800;
     //----------------------------------------------------------
 
 

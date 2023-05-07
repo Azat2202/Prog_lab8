@@ -1,20 +1,22 @@
 package gui;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 import com.formdev.flatlaf.FlatDarculaLaf;
 import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
 import dtp.User;
+import main.App;
+import models.Coordinates;
+import models.StudyGroup;
 import utility.Client;
+
+import javax.swing.*;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import java.awt.*;
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 
 import static javax.swing.JOptionPane.*;
 
@@ -25,6 +27,7 @@ public class GuiManager {
     private final JFrame frame;
     private final Container contentPane;
     private final MenuBar menuBar;
+    private User user = null;
 
     private final static Color RED_WARNING = Color.decode("#FF4040");
     private final static Color GREEN_OK = Color.decode("#00BD39");
@@ -44,14 +47,16 @@ public class GuiManager {
         this.frame = new JFrame("Лабораторная работа 8");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.contentPane = this.frame.getContentPane();
-        frame.setResizable(false);
+        frame.setJMenuBar(this.createMenuBar());
+        frame.setResizable(true);
         frame.setVisible(true);
-        frame.setSize(300, 350);
+//        frame.setSize(App.APP_DEFAULT_WIDTH, App.APP_DEFAULT_HEIGHT);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setLocationRelativeTo(null);
         this.menuBar = new MenuBar();
         this.frame.setMenuBar(this.menuBar);
 
-
-        this.run();
+        SwingUtilities.invokeLater(this::run);
 
     }
 
@@ -62,6 +67,93 @@ public class GuiManager {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         this.loginAuth();
+
+        JButton tableExecute = new JButton("Таблица");
+        JButton cordExecute = new JButton("Координаты");
+        JTable table = this.getTable();
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
+        //Компаратор для времени
+        sorter.setComparator(3, Comparator.comparing(
+                i -> LocalDateTime.parse(((String) i).replace(" ", "T"))));
+        table.setRowSorter(sorter);
+        JScrollPane tablePane = new JScrollPane(table);
+
+
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup()
+                        .addComponent(tablePane)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(tableExecute)
+                                .addComponent(cordExecute))));
+        layout.setVerticalGroup(layout.createSequentialGroup()
+                .addComponent(tablePane)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(tableExecute)
+                        .addComponent(cordExecute)));
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+
+     public JTable getTable(){
+        Response response = client.sendAndAskResponse(new Request("show", "", user));
+        if(response.getStatus() != ResponseStatus.OK) return null;
+        String[] columnNames = {"id",
+                "group_name",
+                "cord",
+                "creation_date",
+                "students_count",
+                "expelled_students",
+                "average_mark",
+                "form_of_education",
+                "person_name",
+                "person_weight",
+                "person_eye_color",
+                "person_hair_color",
+                "person_nationality",
+                "person_location",
+                "person_location_name",
+                "owner_login"
+        };
+        Object[][] rowData = response.getCollection().stream()
+                .map(this::createRow)
+                .toArray(Object[][]::new);
+        return new JTable(rowData, columnNames);
+     }
+
+     private Object[] createRow(StudyGroup studyGroup){
+        return new Object[]{
+                studyGroup.getId(),
+                studyGroup.getName(),
+                studyGroup.getCoordinates(),
+                StudyGroup.timeFormatter(studyGroup.getCreationDate()),
+                studyGroup.getStudentsCount(),
+                studyGroup.getExpelledStudents(),
+                studyGroup.getAverageMark(),
+                studyGroup.getFormOfEducation().toString(),
+                studyGroup.getGroupAdmin().getName(),
+                studyGroup.getGroupAdmin().getWeight(),
+                studyGroup.getGroupAdmin().getEyeColor(),
+                studyGroup.getGroupAdmin().getHairColor(),
+                studyGroup.getGroupAdmin().getNationality(),
+                studyGroup.getGroupAdmin().getLocation().getCoordinates(),
+                studyGroup.getGroupAdmin().getLocation().getName(),
+                studyGroup.getUserLogin()
+        };
+     }
+
+    private JMenuBar createMenuBar(){
+        JMenuBar menuBar = new JMenuBar();
+        JMenu actions = new JMenu("Actions");
+        JMenuItem add = new JMenuItem("Add");
+        JMenuItem addIfMax = new JMenuItem("AddIfMax");
+        JMenuItem countByAvg = new JMenuItem("CountByAverageMark");
+        JMenuItem countLessThanExp = new JMenuItem("CountLessThanExpelled");
+        actions.add(add);
+        actions.add(addIfMax);
+        actions.add(countByAvg);
+        actions.add(countLessThanExp);
+        menuBar.add(new JMenu("Actions"));
+        return menuBar;
     }
 
     public void loginAuth(){
@@ -93,7 +185,7 @@ public class GuiManager {
                         .addComponent(errorLabel));
         while(true) {
             int result = JOptionPane.showOptionDialog(null, panel, "Логин", JOptionPane.YES_NO_OPTION,
-                    QUESTION_MESSAGE, null, new String[]{"Login", "Register"}, "Login");
+                    QUESTION_MESSAGE, null, new String[]{"Вход", "Регистрация"}, "Логин");
             if (result == OK_OPTION) {
                 if (!checkFields(loginField, passwordField, errorLabel)) continue;
                 Response response = client.sendAndAskResponse(
@@ -104,6 +196,8 @@ public class GuiManager {
                 if (response.getStatus() == ResponseStatus.OK) {
                     errorLabel.setText("Логин успешный!");
                     errorLabel.setForeground(GREEN_OK);
+                    this.user = new User(loginField.getText(), String.valueOf(passwordField.getPassword()));
+                    return;
                 } else {
                     errorLabel.setText("Логин не успешный!");
                     errorLabel.setForeground(RED_WARNING);
@@ -118,6 +212,8 @@ public class GuiManager {
                 if (response.getStatus() == ResponseStatus.OK) {
                     errorLabel.setText("Вы успешно зарегистрировались!");
                     errorLabel.setForeground(GREEN_OK);
+                    this.user = new User(loginField.getText(), String.valueOf(passwordField.getPassword()));
+                    return;
                 } else {
                     errorLabel.setText("Логин занят!");
                     errorLabel.setForeground(RED_WARNING);

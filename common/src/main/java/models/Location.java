@@ -18,6 +18,10 @@ public class Location implements Validator, Serializable {
         this.name = name;
     }
 
+    public Coordinates getCoordinates(){
+        return new Coordinates((float) this.getX(), (double) this.getY());
+    }
+
     public double getX() {
         return x;
     }

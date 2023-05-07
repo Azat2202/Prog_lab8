@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/main/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/utility/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utility/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Location.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +19,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -53,18 +53,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/azat2/IdeaProjects/Prog_lab8/client&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "last_directory_selection": "C:/Users/azat2/IdeaProjects/Prog_lab8/client/src/main/java/main",
+    "last_opened_file_path": "C:/Users/azat2/IdeaProjects/Prog_lab8/client",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab8\client" />
@@ -75,6 +76,9 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\src\main\java\exceptions" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="main" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="main" />
@@ -91,19 +95,9 @@
     <configuration name="Client" type="Application" factoryName="Application" singleton="false">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="App" />
+      <option name="MAIN_CLASS_NAME" value="main.App" />
       <module name="client" />
       <option name="PROGRAM_PARAMETERS" value="localhost 1084" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientToLocalhost" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="corretto-17" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="App" />
-      <module name="client" />
-      <option name="PROGRAM_PARAMETERS" value="localhost 666" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -111,9 +105,6 @@
     <configuration name="Server" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <envs>
-        <env name="file_path" value="C:\Users\R1300-W-12-Stud\IdeaProjects\Prog_lab7\server\my_objects.xml" />
-      </envs>
       <option name="MAIN_CLASS_NAME" value="main.App" />
       <module name="server" />
       <option name="PROGRAM_PARAMETERS" value="1084" />
@@ -121,52 +112,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name=" Client+Server jar" type="CompoundRunConfigurationType">
-      <toRun name="Client1" type="JarApplication" />
-      <toRun name="server-1.0-SNAPSHOT.jar" type="JarApplication" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Server+Client" type="CompoundRunConfigurationType">
+    <configuration name="Client+Server" type="CompoundRunConfigurationType">
       <toRun name="Client" type="Application" />
-      <toRun name="Server" type="Application" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Server+Client_MultiThread" type="CompoundRunConfigurationType">
-      <toRun name="Server" type="Application" />
-      <toRun name="Client1" type="JarApplication" />
-      <toRun name="Client2" type="JarApplication" />
-      <toRun name="Client3" type="JarApplication" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Client1" type="JarApplication">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/client/target/client-1.0-SNAPSHOT.jar" />
-      <option name="PROGRAM_PARAMETERS" value="localhost 1084" />
-      <option name="WORKING_DIRECTORY" value="E:\IdeaProjects\Prog_lab7" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Client2" type="JarApplication">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/client/target/client-1.0-SNAPSHOT.jar" />
-      <option name="PROGRAM_PARAMETERS" value="localhost 1084" />
-      <option name="WORKING_DIRECTORY" value="E:\IdeaProjects\Prog_lab7" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Client3" type="JarApplication">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/client/target/client-1.0-SNAPSHOT.jar" />
-      <option name="PROGRAM_PARAMETERS" value="localhost 1084" />
-      <option name="WORKING_DIRECTORY" value="E:\IdeaProjects\Prog_lab7" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+      <toRun name="server-1.0-SNAPSHOT.jar" type="JarApplication" />
       <method v="2" />
     </configuration>
     <configuration name="server-1.0-SNAPSHOT.jar" type="JarApplication">
       <option name="JAR_PATH" value="$PROJECT_DIR$/server/target/server-1.0-SNAPSHOT.jar" />
       <option name="PROGRAM_PARAMETERS" value="1084" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <envs>
-        <env name="file_path" value="E:\IdeaProjects\Prog_lab7\server\my_objects.xml" />
-      </envs>
       <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="common" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="common" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="Build everything" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
@@ -198,13 +166,7 @@
     <list>
       <item itemvalue="Application.Client" />
       <item itemvalue="Application.Server" />
-      <item itemvalue="Application.ClientToLocalhost" />
-      <item itemvalue="Compound.Server+Client" />
-      <item itemvalue="Compound. Client+Server jar" />
-      <item itemvalue="Compound.Server+Client_MultiThread" />
-      <item itemvalue="JAR Application.Client1" />
-      <item itemvalue="JAR Application.Client3" />
-      <item itemvalue="JAR Application.Client2" />
+      <item itemvalue="Compound.Client+Server" />
       <item itemvalue="JAR Application.server-1.0-SNAPSHOT.jar" />
       <item itemvalue="Maven.Build everything" />
     </list>
