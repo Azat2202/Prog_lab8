@@ -8,7 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/utility/RuntimeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utility/RuntimeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/utility/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utility/Client.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

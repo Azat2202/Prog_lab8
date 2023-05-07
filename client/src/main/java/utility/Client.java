@@ -6,9 +6,11 @@ import dtp.Response;
 import dtp.ResponseStatus;
 import dtp.User;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Client {
     private final String host;
@@ -43,21 +45,33 @@ public class Client {
                 return response;
             } catch (IOException e) {
                 if (reconnectionAttempts == 0){
-                    // console.println("Установка подключения к серверу", ConsoleColors.GREEN);
                     connectToServer();
                     reconnectionAttempts++;
                     continue;
-                } else {
-                    console.printError("Соединение с сервером разорвано");
                 }
                 try {
                     reconnectionAttempts++;
                     if (reconnectionAttempts >= maxReconnectionAttempts) {
-                        console.printError("Превышено максимальное количество попыток соединения с сервером");
-                        return new Response(ResponseStatus.EXIT);
+                        JOptionPane.showMessageDialog(null,
+                                "Превышено максимальное количество попыток соединения с сервером",
+                                "Север не доступен",
+                                JOptionPane.ERROR_MESSAGE);
+                        System.exit(666);
                     }
-                    console.println("Повторная попытка через " + reconnectionTimeout / 1000 + " секунд");
-                    Thread.sleep(reconnectionTimeout);
+                    AtomicInteger seconds = new AtomicInteger(reconnectionTimeout);
+                    JOptionPane optionPane = new JOptionPane("Соединение с сервером разорвано");
+                    JDialog dialog = optionPane.createDialog(null, "Ошибка подключения");
+                    dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                    new Timer(1000, (i) -> {
+                        seconds.decrementAndGet();
+                        if (seconds.get() <= 0) {
+                            dialog.dispose();
+                        } else {
+                            optionPane.setMessage("Соединение с сервером разорвано\n"
+                                    + "Повторная попытка через " + seconds + " секунд");
+                        }
+                    }).start();
+                    dialog.setVisible(true);
                     connectToServer();
                 } catch (Exception exception) {
                     console.printError("Попытка соединения с сервером неуспешна");

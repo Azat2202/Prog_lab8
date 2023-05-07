@@ -4,12 +4,14 @@ import commandLine.Printable;
 import exceptions.IllegalArguments;
 import gui.GuiManager;
 import utility.Client;
-import utility.RuntimeManager;
-import javax.swing.*;
-
-import java.util.Scanner;
 
 public class App {
+    //-----------------------SETTINGS---------------------------
+    public final static int RECONNECTION_TIMEOUT = 5;
+    public final static int MAX_RECONNECTION_ATTEMPTS = 5;
+    //----------------------------------------------------------
+
+
     private static String host;
     private static int port;
     private static Printable console = new BlankConsole();
@@ -32,7 +34,7 @@ public class App {
         if (!parseHostPort(args)) return;
 
         console = new Console();
-        Client client = new Client(host, port, 5000, 5, console);
+        Client client = new Client(host, port, RECONNECTION_TIMEOUT, MAX_RECONNECTION_ATTEMPTS, console);
         GuiManager guiManager = new GuiManager(client);
 //        new RuntimeManager(console, new Scanner(System.in), client).interactiveMode();
     }

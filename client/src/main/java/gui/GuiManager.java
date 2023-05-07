@@ -16,7 +16,7 @@ import dtp.ResponseStatus;
 import dtp.User;
 import utility.Client;
 
-import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+import static javax.swing.JOptionPane.*;
 
 public class GuiManager {
     private final Client client;
@@ -75,8 +75,6 @@ public class GuiManager {
         JLabel passwordTextLabel = new JLabel("Введите пароль: ");
         JPasswordField passwordField = new JPasswordField();
         JLabel errorLabel = new JLabel("");
-        JButton loginButton = new JButton("Login");
-        JButton registerButton = new JButton("Regiser");
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(loginTextLabel)
@@ -96,7 +94,7 @@ public class GuiManager {
         while(true) {
             int result = JOptionPane.showOptionDialog(null, panel, "Логин", JOptionPane.YES_NO_OPTION,
                     QUESTION_MESSAGE, null, new String[]{"Login", "Register"}, "Login");
-            if (result == 1) {
+            if (result == OK_OPTION) {
                 if (!checkFields(loginField, passwordField, errorLabel)) continue;
                 Response response = client.sendAndAskResponse(
                         new Request(
@@ -110,7 +108,7 @@ public class GuiManager {
                     errorLabel.setText("Логин не успешный!");
                     errorLabel.setForeground(RED_WARNING);
                 }
-            } else {
+            } else if (result == NO_OPTION){
                 if (!checkFields(loginField, passwordField, errorLabel)) continue;
                 Response response = client.sendAndAskResponse(
                         new Request(
@@ -118,16 +116,16 @@ public class GuiManager {
                                 "",
                                 new User(loginField.getText(), String.valueOf(passwordField.getPassword()))));
                 if (response.getStatus() == ResponseStatus.OK) {
-                    errorLabel.setText("Вы успешно зарегестрировались!");
+                    errorLabel.setText("Вы успешно зарегистрировались!");
                     errorLabel.setForeground(GREEN_OK);
                 } else {
                     errorLabel.setText("Логин занят!");
                     errorLabel.setForeground(RED_WARNING);
                 }
+            } else if (result == CLOSED_OPTION) {
+                System.exit(666);
             }
         }
-//        frame.add(panel);
-//        frame.setVisible(true);
     }
 
     private boolean checkFields(JTextField loginField, JPasswordField passwordField, JLabel errorLabel){
