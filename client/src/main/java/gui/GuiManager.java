@@ -27,6 +27,9 @@ public class GuiManager {
     private final JFrame frame;
     private final Container contentPane;
     private final MenuBar menuBar;
+    private JTable table = null;
+    private CartesianPanel cartesianPanel = null;
+
     private User user = null;
 
     private final static Color RED_WARNING = Color.decode("#FF4040");
@@ -69,27 +72,39 @@ public class GuiManager {
         this.loginAuth();
 
         JButton tableExecute = new JButton("Таблица");
-        JButton cordExecute = new JButton("Координаты");
-        JTable table = this.getTable();
+        JButton cartesianExecute = new JButton("Координаты");
+        this.table = this.getTable();
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
         //Компаратор для времени
         sorter.setComparator(3, Comparator.comparing(
                 i -> LocalDateTime.parse(((String) i).replace(" ", "T"))));
         table.setRowSorter(sorter);
         JScrollPane tablePane = new JScrollPane(table);
+        this.cartesianPanel = new CartesianPanel(client, user);
+        JPanel cardPanel = new JPanel();
+        CardLayout cardLayout = new CardLayout();
+        cardPanel.setLayout(cardLayout);
+        cardPanel.add(tablePane, "Table");
+        cardPanel.add(cartesianPanel, "Cartesian");
 
+        tableExecute.addActionListener((actionEvent) -> {
+            cardLayout.show(cardPanel, "Table");
+        });
+        cartesianExecute.addActionListener((actionEvent) -> {
+            cardLayout.show(cardPanel, "Cartesian");
+        });
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup()
-                        .addComponent(tablePane)
+                        .addComponent(cardPanel)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(tableExecute)
-                                .addComponent(cordExecute))));
+                                .addComponent(cartesianExecute))));
         layout.setVerticalGroup(layout.createSequentialGroup()
-                .addComponent(tablePane)
+                .addComponent(cardPanel)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addComponent(tableExecute)
-                        .addComponent(cordExecute)));
+                        .addComponent(cartesianExecute)));
         frame.add(panel);
         frame.setVisible(true);
     }
@@ -185,7 +200,7 @@ public class GuiManager {
                         .addComponent(errorLabel));
         while(true) {
             int result = JOptionPane.showOptionDialog(null, panel, "Логин", JOptionPane.YES_NO_OPTION,
-                    QUESTION_MESSAGE, null, new String[]{"Вход", "Регистрация"}, "Логин");
+                    QUESTION_MESSAGE, null, new String[]{"Вход", "Регистрация"}, "Вход");
             if (result == OK_OPTION) {
                 if (!checkFields(loginField, passwordField, errorLabel)) continue;
                 Response response = client.sendAndAskResponse(

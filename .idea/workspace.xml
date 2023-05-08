@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/main/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Location.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
