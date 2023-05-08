@@ -14,6 +14,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 class CartesianPanel extends JPanel {
     private Client client;
@@ -49,6 +52,33 @@ class CartesianPanel extends JPanel {
     private void drawRectangles(Graphics2D g2){
         Response response = client.sendAndAskResponse(new Request("show", "", user));
         if(response.getStatus() != ResponseStatus.OK) return;
+        int width = getWidth();
+        int halfWidth = width / 2;
+        int height = getHeight();
+        int halfHeight = height / 2;
+        int elementWidth = 130;
+        int elementHeight = 130;
+        int fontSize = 45;
+        float delta = 0.2F;
+
+        /* ЭТО ОЧЕНЬ СТРАШНЫЙ МЕТОД
+        ОН НУЖЕН ЧТОБЫ СОСЕДНИЕ КВАДРАТЫ СДВИГАЛИСЬ
+        НО ОН РАБОТАЕТ ЗА О(n^2) а можно СПОКОЙНО написать за О(n)
+        Н-О М-Н-Е Л-Е-Н-Ь
+         */
+
+        while(response.getCollection().stream().map(StudyGroup::getCoordinates).distinct().count() < response.getCollection().size()){
+            for(StudyGroup studyGroup : response.getCollection()){
+                if(response.getCollection().stream()
+                        .anyMatch((i) -> i.getCoordinates().equals(studyGroup.getCoordinates())
+                                && !i.getId().equals(studyGroup.getId()))){
+                    studyGroup.getCoordinates().setX(studyGroup.getCoordinates().getX() + delta);
+                    studyGroup.getCoordinates().setY(studyGroup.getCoordinates().getY() + delta);
+                    break;
+                }
+            }
+        }
+
         float maxCordX = response.getCollection().stream()
                 .map(StudyGroup::getCoordinates)
                 .map(Coordinates::getX)
@@ -59,38 +89,39 @@ class CartesianPanel extends JPanel {
                 .map(Coordinates::getY)
                 .max(Double::compareTo)
                 .orElse(0D);
-        int width = getWidth();
-        int halfWidth = width / 2;
-        int height = getHeight();
-        int halfHeight = height / 2;
-        int elementWidth = 90;
-        int elementHeight = 90;
         BufferedImage img;
         try {
             img = ImageIO.read(new File("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\tyler.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        BufferedImage resized = new BufferedImage(elementWidth, elementHeight, img.getType());
-        Graphics2D g = resized.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        System.out.println(height);
-        System.out.println(width);
-        response.getCollection().forEach(studyGroup -> {
+        g2.setFont(new Font("Tahoma", Font.BOLD, fontSize));
+
+        response.getCollection().stream().sorted(StudyGroup::compareTo).forEach(studyGroup -> {
+            //Image
             g2.drawImage(img,
-                    (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * halfWidth)) - elementWidth / 2,
-                    (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * halfHeight)) - elementHeight / 2,
-                    (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * halfWidth)) + elementWidth / 2,
-                    (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * halfHeight)) + elementHeight / 2,
+                    (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) - elementWidth / 2,
+                    (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight))) - elementHeight / 2,
+                    (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) + elementWidth / 2,
+                    (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight))) + elementHeight / 2,
                     0,
                     0,
                     img.getWidth(),
                     img.getHeight(),
                     null
             );
-            System.out.println(halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * halfWidth));
-            System.out.println((halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * halfHeight)));
+            //Border
+            g2.drawRect((int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) - elementWidth / 2 - 1,
+                    (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight))) - elementHeight / 2 - 1,
+                    elementWidth + 2,
+                    elementHeight + 2);
+            //Number
+            g2.drawString(studyGroup.getId().toString(),
+                    (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) - elementWidth / 4,
+                    (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight))) + elementHeight / 4
+                    );
         });
     }
 }
