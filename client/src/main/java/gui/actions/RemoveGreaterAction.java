@@ -6,12 +6,10 @@ import dtp.ResponseStatus;
 import dtp.User;
 import gui.GuiManager;
 import models.*;
-import models.Color;
 import utility.Client;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.util.Date;
@@ -19,46 +17,13 @@ import java.util.Date;
 import static javax.swing.JOptionPane.OK_OPTION;
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 
-public class UpdateAction extends Action {
-    public UpdateAction(User user, Client client, GuiManager guiManager) {
+public class RemoveGreaterAction extends Action{
+    public RemoveGreaterAction(User user, Client client, GuiManager guiManager) {
         super(user, client, guiManager);
-    }
-
-    private Integer getSelectedId() {
-        Integer[] userOwnedIds = guiManager.getCollection().stream()
-                .filter((s) -> s.getUserLogin().equals(user.name()))
-                .map(StudyGroup::getId)
-                .toArray(Integer[]::new);
-
-        BorderLayout layout = new BorderLayout();
-        JPanel panel = new JPanel(layout);
-        JLabel question = new JLabel("Выберете id для изменения");
-        JLabel idLabel = new JLabel("Выберите id");
-        JComboBox idField = new JComboBox(userOwnedIds);
-
-        layout.addLayoutComponent(question, BorderLayout.NORTH);
-        layout.addLayoutComponent(idLabel, BorderLayout.WEST);
-        layout.addLayoutComponent(idField, BorderLayout.EAST);
-
-        JOptionPane.showMessageDialog(null,
-                idField,
-                "Update",
-                JOptionPane.PLAIN_MESSAGE);
-        return (Integer) idField.getSelectedItem();
-    }
-
-    private StudyGroup getObject(Integer id) {
-        return guiManager.getCollection().stream()
-                .filter((s) -> s.getId().equals(id))
-                .toList().get(0);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Integer id = this.getSelectedId();
-        if(id == null) JOptionPane.showMessageDialog(null, "У вас нет объектов", "Неуспешное удаление", JOptionPane.ERROR_MESSAGE);
-
-
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
@@ -66,7 +31,7 @@ public class UpdateAction extends Action {
         layout.setAutoCreateContainerGaps(true);
 
 
-        JLabel mainLabel = new JLabel("Изменение объекта " + id);
+        JLabel mainLabel = new JLabel("Удаление группы большей чем ");
         JLabel nameLabel = new JLabel("Имя: ");
         JLabel cordXLabel = new JLabel("Координата Х: ");
         JLabel cordYLabel = new JLabel("Координата Y: ");
@@ -236,18 +201,17 @@ public class UpdateAction extends Action {
         }
         // Default Values
         {
-            StudyGroup studyGroup = this.getObject(id);
-            nameField.setValue(studyGroup.getName());
-            cordXField.setValue(studyGroup.getCoordinates().getX());
-            cordYField.setValue(studyGroup.getCoordinates().getY());
-            studentsCountField.setValue(studyGroup.getStudentsCount());
-            expelledStudentsField.setValue(studyGroup.getExpelledStudents());
-            averageMarkField.setValue(studyGroup.getAverageMark());
-            personNameField.setValue(studyGroup.getGroupAdmin().getName());
-            personWeightField.setValue(studyGroup.getGroupAdmin().getWeight());
-            personLocationCordXField.setValue(studyGroup.getGroupAdmin().getLocation().getX());
-            personLocationCordYField.setValue(studyGroup.getGroupAdmin().getLocation().getY());
-            personLocationNameField.setValue(studyGroup.getGroupAdmin().getLocation().getName());
+            nameField.setValue("P3116");
+            cordXField.setValue("10.0");
+            cordYField.setValue("10.0");
+            studentsCountField.setValue("15");
+            expelledStudentsField.setValue("2");
+            averageMarkField.setValue("4");
+            personNameField.setValue("Ksenia");
+            personWeightField.setValue("20");
+            personLocationCordXField.setValue("5");
+            personLocationCordYField.setValue("5");
+            personLocationNameField.setValue("Name");
         }
         // Group Layout
         {
@@ -341,10 +305,10 @@ public class UpdateAction extends Action {
                             .addComponent(personLocationNameField)
                     ));
         }
-        int result = JOptionPane.showOptionDialog(null, panel, "Update", JOptionPane.YES_OPTION,
-                QUESTION_MESSAGE, null, new String[]{"Изменить"}, "Изменить");
+        int result = JOptionPane.showOptionDialog(null, panel, "Add", JOptionPane.YES_OPTION,
+                QUESTION_MESSAGE, null, new String[]{"Удалить"}, "Удалить");
         if(result == OK_OPTION){
-            StudyGroup newStudyGroup = new StudyGroup(
+            StudyGroup studyGroup = new StudyGroup(
                     nameField.getText(),
                     new Coordinates(
                             Float.parseFloat(cordXField.getText()),
@@ -369,13 +333,13 @@ public class UpdateAction extends Action {
                     ),
                     user.name()
             );
-            if(!newStudyGroup.validate()) {
+            if(!studyGroup.validate()) {
                 JOptionPane.showMessageDialog(null, "Объект не валиден!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Response response = client.sendAndAskResponse(new Request("update", id.toString(), user, newStudyGroup));
-            if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, "Объект изменен!", "Итог", JOptionPane.PLAIN_MESSAGE);
-            else JOptionPane.showMessageDialog(null, "Объект не изменен!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+            Response response = client.sendAndAskResponse(new Request("remove_greater", "", user, studyGroup));
+            if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, "Объекты удалены!", "Итог", JOptionPane.PLAIN_MESSAGE);
+            else JOptionPane.showMessageDialog(null, "Объекты не удалены!", "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
