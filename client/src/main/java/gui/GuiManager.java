@@ -10,10 +10,14 @@ import models.StudyGroup;
 import utility.Client;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -23,10 +27,18 @@ import java.util.Comparator;
 
 import static javax.swing.JOptionPane.*;
 
+
+/*
+    TODO:
+        Фильтрация
+        Информация об объекте при нажатии
+        Анимация
+        Локали
+ */
+
 public class GuiManager {
     private final Client client;
 
-    private final GuiState guiState;
     private final JFrame frame;
     private final Container contentPane;
     private final MenuBar menuBar = null;
@@ -68,8 +80,6 @@ public class GuiManager {
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-
-        this.guiState = GuiState.LOGIN;
         this.frame = new JFrame("Лабораторная работа 8");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.contentPane = this.frame.getContentPane();
@@ -99,11 +109,24 @@ public class GuiManager {
         new Timer(1000, (i) ->{
             Object[][] newTableData = this.getTableData();
             if(!Arrays.deepEquals(this.tableData, newTableData)) {
-                this.tableModel.setDataVector(this.getTableData(), columnNames);
+                this.tableData = newTableData;
+                this.tableModel.setDataVector(this.tableData, columnNames);
                 this.tableModel.fireTableDataChanged();
                 this.cartesianPanel.repaint();
             }
         }).start();
+        this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int row = table.convertRowIndexToModel(table.getSelectedRow());
+                Integer id;
+                try {
+                    id = (Integer) tableData[row][0];
+                } catch (ArrayIndexOutOfBoundsException k) {return;}
+                //I dont know when exception occur))
+                new UpdateAction(user, client, GuiManager.this).updateJOptionWorker(id);
+            }
+        });
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
         //Компараторы
         {
@@ -114,7 +137,7 @@ public class GuiManager {
 
         table.setRowSorter(sorter);
         JScrollPane tablePane = new JScrollPane(table);
-        this.cartesianPanel = new CartesianPanel(client, user);
+        this.cartesianPanel = new CartesianPanel(client, user, this);
         JPanel cardPanel = new JPanel();
         ImageIcon userIcon = new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\user.png")
                 .getImage()

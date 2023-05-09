@@ -56,6 +56,10 @@ public class UpdateAction extends Action {
     @Override
     public void actionPerformed(ActionEvent e) {
         Integer id = this.getSelectedId();
+        updateJOptionWorker(id);
+    }
+
+    public void updateJOptionWorker(Integer id) {
         if(id == null) JOptionPane.showMessageDialog(null, "У вас нет объектов", "Неуспешное удаление", JOptionPane.ERROR_MESSAGE);
 
 

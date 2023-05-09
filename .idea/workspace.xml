@@ -5,30 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
-      <change afterPath="$PROJECT_DIR$/client/icons/add_if_max.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/icons/clear.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/icons/count_by_average_mark.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/icons/count_less_than_expelled.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/icons/exit.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/icons/info.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/icons/remove_all_by_average_mark.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/Action.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/AddIfMaxAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/ClearAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/CountByAverageMarkAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/CountLessThanExpelledStudentsAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/ExecuteScriptAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/ExitAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/InfoAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveAllByAverageMarkAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveGreaterAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/AddAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/AddAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/ShowAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiState.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/UpdateAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/UpdateAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/Info.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/Info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/utility/RuntimeManager.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +96,7 @@
       <command value="mvn clean compile package" />
     </option>
   </component>
-  <component name="RunManager" selected="Compound.Client+Server">
+  <component name="RunManager" selected="Application.Client">
     <configuration name="Client" type="Application" factoryName="Application" singleton="false">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -240,7 +223,7 @@
       <workItem from="1682605385487" duration="1493000" />
       <workItem from="1683404959411" duration="7094000" />
       <workItem from="1683412231656" duration="4407000" />
-      <workItem from="1683643941416" duration="14410000" />
+      <workItem from="1683643941416" duration="21885000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>

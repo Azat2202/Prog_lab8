@@ -4,27 +4,53 @@ import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
 import dtp.User;
+import gui.actions.UpdateAction;
 import models.Coordinates;
 import models.StudyGroup;
+import org.apache.commons.lang3.tuple.Pair;
 import utility.Client;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 class CartesianPanel extends JPanel {
     private Client client;
     private User user;
-    public CartesianPanel(Client client, User user){
+    private GuiManager guiManager;
+    private LinkedHashMap<Rectangle, Integer> rectangles = new LinkedHashMap<>();
+    public CartesianPanel(Client client, User user, GuiManager guiManager){
         super();
         this.client = client;
         this.user = user;
+        this.guiManager = guiManager;
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() != 2) return;
+                Rectangle toClick;
+                try {
+                    toClick = rectangles.keySet().stream()
+                            .filter(r -> r.contains(e.getPoint()))
+                            .sorted(Comparator.comparing(Rectangle::getX).reversed())
+                            .toList().get(0);
+                } catch (ArrayIndexOutOfBoundsException k) {
+                    return;
+                }
+                Integer id = rectangles.get(toClick);
+                new UpdateAction(user, client, guiManager).updateJOptionWorker(id);
+            }
+        });
     }
 
     @Override
@@ -50,7 +76,18 @@ class CartesianPanel extends JPanel {
     }
 
     private void drawRectangles(Graphics2D g2){
+        Random random = new Random();
         Response response = client.sendAndAskResponse(new Request("show", "", user));
+        Map<String, Color> users = response.getCollection().stream()
+                .map(StudyGroup::getUserLogin)
+                .distinct()
+                .collect(Collectors.toMap(
+                    s -> s, s -> {
+                    int red = random.nextInt(25) * 10;
+                    int green = random.nextInt(25) * 10;
+                    int blue = random.nextInt(25) * 10;
+                    return new Color(red, green, blue);
+                }));
         if(response.getStatus() != ResponseStatus.OK) return;
         int width = getWidth();
         int halfWidth = width / 2;
@@ -98,13 +135,20 @@ class CartesianPanel extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2.setFont(new Font("Tahoma", Font.BOLD, fontSize));
+        this.rectangles = new LinkedHashMap<>();
         response.getCollection().stream().sorted(StudyGroup::compareTo).forEach(studyGroup -> {
+            int dx1 = (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth)));
+            int dx2 = (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight)));
+            this.rectangles.put( new Rectangle(dx1 - elementWidth / 2 - 1,
+                    dx2 - elementHeight / 2 - 1,
+                    elementWidth + 2,
+                    elementHeight + 2), studyGroup.getId());
             //Image
             g2.drawImage(img,
-                    (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) - elementWidth / 2,
-                    (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight))) - elementHeight / 2,
-                    (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) + elementWidth / 2,
-                    (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight))) + elementHeight / 2,
+                    dx1 - elementWidth / 2,
+                    dx2 - elementHeight / 2,
+                    dx1 + elementWidth / 2,
+                    dx2 + elementHeight / 2,
                     0,
                     0,
                     img.getWidth(),
@@ -112,14 +156,16 @@ class CartesianPanel extends JPanel {
                     null
             );
             //Border
-            g2.drawRect((int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) - elementWidth / 2 - 1,
-                    (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight))) - elementHeight / 2 - 1,
+            g2.setColor(users.get(studyGroup.getUserLogin()));
+            g2.drawRect(dx1 - elementWidth / 2 - 1,
+                    dx2 - elementHeight / 2 - 1,
                     elementWidth + 2,
                     elementHeight + 2);
+            g2.setColor(Color.WHITE);
             //Numbers
             g2.drawString(studyGroup.getId().toString(),
-                    (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) - elementWidth / 4,
-                    (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight))) + elementHeight / 4
+                    dx1 - elementWidth / 4,
+                    dx2 + elementHeight / 4
                     );
         });
     }
