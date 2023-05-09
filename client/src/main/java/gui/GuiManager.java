@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 
 import static javax.swing.JOptionPane.*;
@@ -41,6 +42,7 @@ public class GuiManager {
     private DefaultTableModel tableModel = null;
     private CartesianPanel cartesianPanel = null;
     private Object[][] tableData = null;
+    private Collection<StudyGroup> collection = null;
 
     private User user;
 
@@ -156,12 +158,13 @@ public class GuiManager {
     public Object[][] getTableData(){
         Response response = client.sendAndAskResponse(new Request("show", "", user));
         if(response.getStatus() != ResponseStatus.OK) return null;
+        this.collection = response.getCollection();
         return response.getCollection().stream()
                 .map(this::createRow)
                 .toArray(Object[][]::new);
     }
 
-     private Object[] createRow(StudyGroup studyGroup){
+    private Object[] createRow(StudyGroup studyGroup){
         return new Object[]{
                 studyGroup.getId(),
                 studyGroup.getName(),
@@ -196,7 +199,7 @@ public class GuiManager {
         JMenuItem show = new JMenuItem("Show");
 
         add.addActionListener(new AddAction(user, client));
-        update.addActionListener(new UpdateAction());
+        update.addActionListener(new UpdateAction(user, client, this));
         remove.addActionListener(new RemoveAction());
         show.addActionListener(new ShowAction());
 
@@ -305,4 +308,9 @@ public class GuiManager {
         }
         return true;
     }
+
+    public Collection<StudyGroup> getCollection() {
+        return collection;
+    }
+
 }
