@@ -106,11 +106,7 @@ public class GuiManager {
         this.table = new JTable(tableModel);
         new Timer(1000, (i) ->{
             Object[][] newTableData = this.getTableData();
-            if(!Arrays.stream(newTableData)
-                    .flatMap(Arrays::stream)
-                    .allMatch(element -> Arrays.stream(this.tableData)
-                            .flatMap(Arrays::stream)
-                            .anyMatch(element::equals))) {
+            if(!Arrays.deepEquals(this.tableData, newTableData)) {
                 this.tableModel.setDataVector(this.getTableData(), columnNames);
                 this.tableModel.fireTableDataChanged();
                 this.cartesianPanel.repaint();
@@ -128,6 +124,12 @@ public class GuiManager {
         JScrollPane tablePane = new JScrollPane(table);
         this.cartesianPanel = new CartesianPanel(client, user);
         JPanel cardPanel = new JPanel();
+        ImageIcon userIcon = new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\user.png")
+                .getImage()
+                .getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+        JLabel userLabel = new JLabel(user.name());
+        userLabel.setFont(new Font("Arial", Font.ITALIC, 18));
+        userLabel.setIcon(userIcon);
         CardLayout cardLayout = new CardLayout();
         cardPanel.setLayout(cardLayout);
         cardPanel.add(tablePane, "Table");
@@ -145,12 +147,17 @@ public class GuiManager {
                         .addComponent(cardPanel)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(tableExecute)
-                                .addComponent(cartesianExecute))));
+                                .addComponent(cartesianExecute)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(userLabel)
+                                .addGap(5))));
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addComponent(cardPanel)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addComponent(tableExecute)
-                        .addComponent(cartesianExecute)));
+                        .addComponent(cartesianExecute)
+                        .addComponent(userLabel)
+                        .addGap(5)));
         frame.add(panel);
         frame.setVisible(true);
     }
@@ -200,7 +207,7 @@ public class GuiManager {
 
         add.addActionListener(new AddAction(user, client));
         update.addActionListener(new UpdateAction(user, client, this));
-        remove.addActionListener(new RemoveAction());
+        remove.addActionListener(new RemoveAction(user, client, this));
         show.addActionListener(new ShowAction());
 
         //I hate swing :)

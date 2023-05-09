@@ -62,6 +62,8 @@ public class UpdateAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         Integer id = this.getSelectedId();
+        if(id == null) JOptionPane.showMessageDialog(null, "У вас нет объектов", "Неуспешное удаление", JOptionPane.ERROR_MESSAGE);
+
 
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
