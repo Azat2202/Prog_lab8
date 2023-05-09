@@ -1,27 +1,19 @@
 package gui;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.ui.FlatTableCellBorder;
 import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
 import dtp.User;
-import gui.actions.AddAction;
-import gui.actions.RemoveAction;
-import gui.actions.ShowAction;
-import gui.actions.UpdateAction;
-import main.App;
-import models.Coordinates;
+import gui.actions.*;
 import models.StudyGroup;
 import utility.Client;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -126,7 +118,7 @@ public class GuiManager {
         JPanel cardPanel = new JPanel();
         ImageIcon userIcon = new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\user.png")
                 .getImage()
-                .getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+                .getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING));
         JLabel userLabel = new JLabel(user.name());
         userLabel.setFont(new Font("Arial", Font.ITALIC, 18));
         userLabel.setIcon(userIcon);
@@ -196,41 +188,88 @@ public class GuiManager {
      }
 
     private JMenuBar createMenuBar(){
-        int iconSize = 15;
+        int iconSize = 40;
 
         JMenuBar menuBar = new JMenuBar();
         JMenu actions = new JMenu("Actions");
         JMenuItem add = new JMenuItem("Add");
+        JMenuItem addIfMax = new JMenuItem("AddIfMax");
+        JMenuItem clear = new JMenuItem("Clear");
+        JMenuItem countByAverageMark = new JMenuItem("CountByAverageMark");
+        JMenuItem countLessThanExpelled = new JMenuItem("CountLessThanExpelledStudents");
+        JMenuItem executeScript = new JMenuItem("executeScript");
+        JMenuItem exit = new JMenuItem("Exit");
+        JMenuItem info = new JMenuItem("Info");
+        JMenuItem removeAllByAverageMark = new JMenuItem("removeByAverageMark");
+        JMenuItem removeGreater = new JMenuItem("removeGreater");
         JMenuItem update = new JMenuItem("Update");
         JMenuItem remove = new JMenuItem("Remove");
-        JMenuItem show = new JMenuItem("Show");
 
-        add.addActionListener(new AddAction(user, client));
+        add.addActionListener(new AddAction(user, client, this));
         update.addActionListener(new UpdateAction(user, client, this));
         remove.addActionListener(new RemoveAction(user, client, this));
-        show.addActionListener(new ShowAction());
+        addIfMax.addActionListener(new AddIfMaxAction(user, client, this));
+        clear.addActionListener(new ClearAction(user, client, this));
+        countByAverageMark.addActionListener(new CountByAverageMarkAction(user, client, this));
+        countLessThanExpelled.addActionListener(new CountLessThanExpelledStudentsAction(user, client, this));
+        exit.addActionListener(new ExitAction(user, client, this));
+        info.addActionListener(new InfoAction(user, client, this));
+        removeAllByAverageMark.addActionListener(new RemoveAllByAverageMarkAction(user, client, this));
+        removeGreater.addActionListener(new RemoveGreaterAction(user, client, this));
 
         //I hate swing :)
         add.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\add.png")
                 .getImage()
-                .getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH)));
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        addIfMax.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\add_if_max.png")
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
         update.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\update.png")
                 .getImage()
-                .getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH)));
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
         remove.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\remove.png")
                 .getImage()
-                .getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH)));
-        show.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\show.png")
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        clear.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\clear.png")
                 .getImage()
-                .getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH)));
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        countByAverageMark.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\count_by_average_mark.png")
+                 .getImage()
+                 .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        countLessThanExpelled.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\count_less_than_expelled.png")
+                 .getImage()
+                 .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        exit.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\exit.png")
+                         .getImage()
+                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        info.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\info.png")
+                         .getImage()
+                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        removeAllByAverageMark.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\remove_all_by_average_mark.png")
+                         .getImage()
+                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        removeGreater.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\remove_greater.png")
+                         .getImage()
+                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+
 
 
         actions.add(add);
+        actions.add(addIfMax);
+        actions.addSeparator();
         actions.add(update);
         actions.addSeparator();
-        actions.add(show);
-        actions.addSeparator();
         actions.add(remove);
+        actions.add(removeGreater);
+        actions.add(removeAllByAverageMark);
+        actions.add(clear);
+        actions.addSeparator();
+        actions.add(countByAverageMark);
+        actions.add(countLessThanExpelled);
+        actions.add(info);
+        actions.addSeparator();
+        actions.add(exit);
+
         menuBar.add(actions);
         return menuBar;
     }

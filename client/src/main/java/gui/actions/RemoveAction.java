@@ -12,15 +12,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class RemoveAction extends AbstractAction {
-    private User user;
-    private Client client;
-    private GuiManager guiManager;
+public class RemoveAction extends Action {
 
     public RemoveAction(User user, Client client, GuiManager guiManager) {
-        this.user = user;
-        this.client = client;
-        this.guiManager = guiManager;
+        super(user, client, guiManager);
     }
 
     private Integer getSelectedId() {

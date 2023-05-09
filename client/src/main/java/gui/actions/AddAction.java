@@ -4,6 +4,7 @@ import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
 import dtp.User;
+import gui.GuiManager;
 import models.*;
 import utility.Client;
 
@@ -16,13 +17,9 @@ import java.util.Date;
 import static javax.swing.JOptionPane.OK_OPTION;
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 
-public class AddAction extends AbstractAction {
-    private User user;
-    private Client client;
-
-    public AddAction(User user, Client client) {
-        this.user = user;
-        this.client = client;
+public class AddAction extends Action {
+    public AddAction(User user, Client client, GuiManager guiManager) {
+        super(user, client, guiManager);
     }
 
     @Override

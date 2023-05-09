@@ -34,10 +34,9 @@ public class Info extends Command{
                 ? "В сессии коллекция не инициализирована "
                 : collectionManager.getLastSaveTime().toString();
         String stringBuilder = "Сведения о коллекции: \n" +
-                ConsoleColors.toColor("Тип: ", ConsoleColors.GREEN) + collectionManager.collectionType() + "\n" +
-                ConsoleColors.toColor("Количество элементов: ", ConsoleColors.GREEN) + collectionManager.collectionSize() + "\n" +
-                ConsoleColors.toColor("Дата последней инициализации: ", ConsoleColors.GREEN) + lastInitTime + "\n" +
-                ConsoleColors.toColor("Дата последнего изменения: ", ConsoleColors.GREEN) + lastSaveTime + "\n";
+                "Тип: " + collectionManager.collectionType() + "\n" +
+                "Количество элементов: " + collectionManager.collectionSize() + "\n" +
+                "Дата последней инициализации: " + lastInitTime + "\n";
         return new Response(ResponseStatus.OK, stringBuilder);
     }
 }
