@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiState.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/UpdateAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/UpdateAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/utility/RuntimeManager.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +219,7 @@
       <workItem from="1682605385487" duration="1493000" />
       <workItem from="1683404959411" duration="7094000" />
       <workItem from="1683412231656" duration="4407000" />
-      <workItem from="1683643941416" duration="21885000" />
+      <workItem from="1683643941416" duration="23857000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>

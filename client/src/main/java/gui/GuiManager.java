@@ -31,7 +31,6 @@ import static javax.swing.JOptionPane.*;
 /*
     TODO:
         Фильтрация
-        Информация об объекте при нажатии
         Анимация
         Локали
  */

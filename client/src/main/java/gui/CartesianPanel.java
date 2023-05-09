@@ -7,7 +7,6 @@ import dtp.User;
 import gui.actions.UpdateAction;
 import models.Coordinates;
 import models.StudyGroup;
-import org.apache.commons.lang3.tuple.Pair;
 import utility.Client;
 
 import javax.imageio.ImageIO;
@@ -18,10 +17,9 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.Timer;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 class CartesianPanel extends JPanel {
@@ -72,10 +70,20 @@ class CartesianPanel extends JPanel {
         g2.drawLine(width - 10, height / 2 + 5, width, height / 2);
         g2.drawLine(width / 2 - 5, 10, width / 2, 0);
         g2.drawLine(width / 2 + 5, 10, width / 2, 0);
-        this.drawRectangles(g2);
+//        this.drawRectangles(g2);
+        AtomicInteger step = new AtomicInteger(1);
+        Timer timer = new Timer();
+        TimerTask timerTask =  new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("here");
+                CartesianPanel.this.drawRectangles(g2, (float) step.getAndIncrement());
+            }
+        };
+        timer.schedule(timerTask, 1, 100);
     }
 
-    private void drawRectangles(Graphics2D g2){
+    private void drawRectangles(Graphics2D g2, Float step){
         Random random = new Random();
         Response response = client.sendAndAskResponse(new Request("show", "", user));
         Map<String, Color> users = response.getCollection().stream()
@@ -137,8 +145,8 @@ class CartesianPanel extends JPanel {
         g2.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         this.rectangles = new LinkedHashMap<>();
         response.getCollection().stream().sorted(StudyGroup::compareTo).forEach(studyGroup -> {
-            int dx1 = (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth)));
-            int dx2 = (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight)));
+            int dx1 = (int) ((halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) * (step / 100));
+            int dx2 = (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight)) * (step / 100));
             this.rectangles.put( new Rectangle(dx1 - elementWidth / 2 - 1,
                     dx2 - elementHeight / 2 - 1,
                     elementWidth + 2,
