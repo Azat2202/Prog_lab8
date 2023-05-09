@@ -1,16 +1,29 @@
 package gui.actions;
 
+import dtp.Request;
+import dtp.Response;
+import dtp.ResponseStatus;
+import dtp.User;
 import models.*;
+import utility.Client;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatter;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
+import java.util.Date;
 
 import static javax.swing.JOptionPane.OK_OPTION;
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 
 public class AddAction extends AbstractAction {
+    private User user;
+    private Client client;
+
+    public AddAction(User user, Client client) {
+        this.user = user;
+        this.client = client;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -53,6 +66,7 @@ public class AddAction extends AbstractAction {
         JFormattedTextField personLocationCordXField;
         JFormattedTextField personLocationCordYField;
         JFormattedTextField personLocationNameField;
+        // Action Listeners
         {
             nameField = new JFormattedTextField(new DefaultFormatter() {
                 @Override
@@ -105,7 +119,6 @@ public class AddAction extends AbstractAction {
             expelledStudentsField = new JFormattedTextField(new DefaultFormatter() {
                 @Override
                 public Object stringToValue(String text) throws ParseException {
-                    if (text.equals("null") || text.isEmpty()) return null;
                     Long num;
                     try {
                         num = Long.parseLong(text);
@@ -119,7 +132,6 @@ public class AddAction extends AbstractAction {
             averageMarkField = new JFormattedTextField(new DefaultFormatter() {
                 @Override
                 public Object stringToValue(String text) throws ParseException {
-                    if (text.equals("null") || text.isEmpty()) return null;
                     Long num;
                     try {
                         num = Long.parseLong(text);
@@ -143,7 +155,6 @@ public class AddAction extends AbstractAction {
             personWeightField = new JFormattedTextField(new DefaultFormatter() {
                 @Override
                 public Object stringToValue(String text) throws ParseException {
-                    if (text.equals("null") || text.isEmpty()) return null;
                     Integer num;
                     try {
                         num = Integer.parseInt(text);
@@ -191,96 +202,147 @@ public class AddAction extends AbstractAction {
                 }
             });
         }
-        layout.setVerticalGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(mainLabel))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(nameLabel)
-                        .addComponent(nameField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(cordXLabel)
-                        .addComponent(cordXField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(cordYLabel)
-                        .addComponent(cordYField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(studentsCountLabel)
-                        .addComponent(studentsCountField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(expelledStudentsLabel)
-                        .addComponent(expelledStudentsField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(averageMarkLabel)
-                        .addComponent(averageMarkField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(formOfEducationLabel)
-                        .addComponent(formOfEducationField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(personLabel))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(personNameLabel)
-                        .addComponent(personNameField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(personWeightLabel)
-                        .addComponent(personWeightField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(personEyeColorLabel)
-                        .addComponent(personEyeColorField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(personHairColorLabel)
-                        .addComponent(personHairColorField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(personNationalityLabel)
-                        .addComponent(personNationalityField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(personLocationXLabel)
-                        .addComponent(personLocationCordXField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(personLocationYLabel)
-                        .addComponent(personLocationCordYField))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(personLocationNameLabel)
-                        .addComponent(personLocationNameField))
+        // Default Values
+        {
+            nameField.setValue("P3116");
+            cordXField.setValue("10.0");
+            cordYField.setValue("10.0");
+            studentsCountField.setValue("15");
+            expelledStudentsField.setValue("2");
+            averageMarkField.setValue("4");
+            personNameField.setValue("Ksenia");
+            personWeightField.setValue("20");
+            personLocationCordXField.setValue("5");
+            personLocationCordYField.setValue("5");
+            personLocationNameField.setValue("Name");
+        }
+        // Group Layout
+        {
+            layout.setVerticalGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(mainLabel))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(nameLabel)
+                            .addComponent(nameField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(cordXLabel)
+                            .addComponent(cordXField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(cordYLabel)
+                            .addComponent(cordYField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(studentsCountLabel)
+                            .addComponent(studentsCountField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(expelledStudentsLabel)
+                            .addComponent(expelledStudentsField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(averageMarkLabel)
+                            .addComponent(averageMarkField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(formOfEducationLabel)
+                            .addComponent(formOfEducationField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(personLabel))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(personNameLabel)
+                            .addComponent(personNameField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(personWeightLabel)
+                            .addComponent(personWeightField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(personEyeColorLabel)
+                            .addComponent(personEyeColorField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(personHairColorLabel)
+                            .addComponent(personHairColorField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(personNationalityLabel)
+                            .addComponent(personNationalityField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(personLocationXLabel)
+                            .addComponent(personLocationCordXField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(personLocationYLabel)
+                            .addComponent(personLocationCordYField))
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(personLocationNameLabel)
+                            .addComponent(personLocationNameField))
 
-        );
-        layout.setHorizontalGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(mainLabel)
-                        .addComponent(nameLabel)
-                        .addComponent(cordXLabel)
-                        .addComponent(cordYLabel)
-                        .addComponent(studentsCountLabel)
-                        .addComponent(expelledStudentsLabel)
-                        .addComponent(averageMarkLabel)
-                        .addComponent(formOfEducationLabel)
-                        .addComponent(personLabel)
-                        .addComponent(personNameLabel)
-                        .addComponent(personWeightLabel)
-                        .addComponent(personEyeColorLabel)
-                        .addComponent(personHairColorLabel)
-                        .addComponent(personNationalityLabel)
-                        .addComponent(personLocationXLabel)
-                        .addComponent(personLocationYLabel)
-                        .addComponent(personLocationNameLabel)
-                )
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(nameField)
-                        .addComponent(cordXField)
-                        .addComponent(cordYField)
-                        .addComponent(studentsCountField)
-                        .addComponent(expelledStudentsField)
-                        .addComponent(averageMarkField)
-                        .addComponent(formOfEducationField)
-                        .addComponent(personNameField)
-                        .addComponent(personWeightField)
-                        .addComponent(personEyeColorField)
-                        .addComponent(personHairColorField)
-                        .addComponent(personNationalityField)
-                        .addComponent(personLocationCordXField)
-                        .addComponent(personLocationCordYField)
-                        .addComponent(personLocationNameField)
-                ));
+            );
+            layout.setHorizontalGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(mainLabel)
+                            .addComponent(nameLabel)
+                            .addComponent(cordXLabel)
+                            .addComponent(cordYLabel)
+                            .addComponent(studentsCountLabel)
+                            .addComponent(expelledStudentsLabel)
+                            .addComponent(averageMarkLabel)
+                            .addComponent(formOfEducationLabel)
+                            .addComponent(personLabel)
+                            .addComponent(personNameLabel)
+                            .addComponent(personWeightLabel)
+                            .addComponent(personEyeColorLabel)
+                            .addComponent(personHairColorLabel)
+                            .addComponent(personNationalityLabel)
+                            .addComponent(personLocationXLabel)
+                            .addComponent(personLocationYLabel)
+                            .addComponent(personLocationNameLabel)
+                    )
+                    .addGroup(layout.createParallelGroup()
+                            .addComponent(nameField)
+                            .addComponent(cordXField)
+                            .addComponent(cordYField)
+                            .addComponent(studentsCountField)
+                            .addComponent(expelledStudentsField)
+                            .addComponent(averageMarkField)
+                            .addComponent(formOfEducationField)
+                            .addComponent(personNameField)
+                            .addComponent(personWeightField)
+                            .addComponent(personEyeColorField)
+                            .addComponent(personHairColorField)
+                            .addComponent(personNationalityField)
+                            .addComponent(personLocationCordXField)
+                            .addComponent(personLocationCordYField)
+                            .addComponent(personLocationNameField)
+                    ));
+        }
         int result = JOptionPane.showOptionDialog(null, panel, "Add", JOptionPane.YES_OPTION,
                 QUESTION_MESSAGE, null, new String[]{"Добавить"}, "Добавить");
+        if(result == OK_OPTION){
+            StudyGroup studyGroup = new StudyGroup(
+                    nameField.getText(),
+                    new Coordinates(
+                            Float.parseFloat(cordXField.getText()),
+                            Double.parseDouble(cordYField.getText())
+                    ),
+                    new Date(),
+                    Long.parseLong(studentsCountField.getText()),
+                    Long.parseLong(expelledStudentsField.getText()),
+                    Long.parseLong(averageMarkField.getText()),
+                    (FormOfEducation) formOfEducationField.getSelectedItem(),
+                    new Person(
+                            personNameField.getText(),
+                            Integer.parseInt(personWeightField.getText()),
+                            (Color) personEyeColorField.getSelectedItem(),
+                            (Color) personHairColorField.getSelectedItem(),
+                            (Country) personNationalityField.getSelectedItem(),
+                            new Location(
+                                    Double.parseDouble(personLocationCordXField.getText()),
+                                    Long.parseLong(personLocationCordYField.getText()),
+                                    personLocationNameField.getText()
+                            )
+                    ),
+                    user.name()
+            );
+            if(!studyGroup.validate()) {
+                JOptionPane.showMessageDialog(null, "Объект не валиден!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Response response = client.sendAndAskResponse(new Request("add", "", user, studyGroup));
+            if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, "Объект добавлен!", "Итог", JOptionPane.PLAIN_MESSAGE);
+            else JOptionPane.showMessageDialog(null, "Объект не добавлен!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

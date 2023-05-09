@@ -1,6 +1,7 @@
 package gui;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.ui.FlatTableCellBorder;
 import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
@@ -15,11 +16,16 @@ import models.StudyGroup;
 import utility.Client;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Comparator;
 
 import static javax.swing.JOptionPane.*;
@@ -30,15 +36,34 @@ public class GuiManager {
     private final GuiState guiState;
     private final JFrame frame;
     private final Container contentPane;
-    private final MenuBar menuBar;
+    private final MenuBar menuBar = null;
     private JTable table = null;
+    private DefaultTableModel tableModel = null;
     private CartesianPanel cartesianPanel = null;
+    private Object[][] tableData = null;
 
-    private User user = null;
+    private User user;
 
     private final static Color RED_WARNING = Color.decode("#FF4040");
     private final static Color GREEN_OK = Color.decode("#00BD39");
 
+    String[] columnNames = {"id",
+            "group_name",
+            "cord",
+            "creation_date",
+            "students_count",
+            "expelled_students",
+            "average_mark",
+            "form_of_education",
+            "person_name",
+            "person_weight",
+            "person_eye_color",
+            "person_hair_color",
+            "person_nationality",
+            "person_location",
+            "person_location_name",
+            "owner_login"
+    };
 
     public GuiManager(Client client) {
         this.client = client;
@@ -54,15 +79,10 @@ public class GuiManager {
         this.frame = new JFrame("Лабораторная работа 8");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.contentPane = this.frame.getContentPane();
-        frame.setJMenuBar(this.createMenuBar());
         frame.setResizable(true);
         frame.setVisible(true);
-//        frame.setSize(App.APP_DEFAULT_WIDTH, App.APP_DEFAULT_HEIGHT);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
-        this.menuBar = new MenuBar();
-        this.frame.setMenuBar(this.menuBar);
-
         SwingUtilities.invokeLater(this::run);
 
     }
@@ -74,14 +94,34 @@ public class GuiManager {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         this.loginAuth();
+        frame.setJMenuBar(this.createMenuBar());
 
         JButton tableExecute = new JButton("Таблица");
         JButton cartesianExecute = new JButton("Координаты");
-        this.table = this.getTable();
+        this.tableData = this.getTableData();
+        this.tableModel = new DefaultTableModel(columnNames, tableData.length);
+        this.tableModel.setDataVector(tableData, columnNames);
+        this.table = new JTable(tableModel);
+        new Timer(1000, (i) ->{
+            Object[][] newTableData = this.getTableData();
+            if(!Arrays.stream(newTableData)
+                    .flatMap(Arrays::stream)
+                    .allMatch(element -> Arrays.stream(this.tableData)
+                            .flatMap(Arrays::stream)
+                            .anyMatch(element::equals))) {
+                this.tableModel.setDataVector(this.getTableData(), columnNames);
+                this.tableModel.fireTableDataChanged();
+                this.cartesianPanel.repaint();
+            }
+        }).start();
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
-        //Компаратор для времени
-        sorter.setComparator(3, Comparator.comparing(
-                i -> LocalDateTime.parse(((String) i).replace(" ", "T"))));
+        //Компараторы
+        {
+            //Компаратор для времени
+            sorter.setComparator(3, Comparator.comparing(
+                    i -> LocalDateTime.parse(((String) i).replace(" ", "T"))));
+        }
+
         table.setRowSorter(sorter);
         JScrollPane tablePane = new JScrollPane(table);
         this.cartesianPanel = new CartesianPanel(client, user);
@@ -113,38 +153,23 @@ public class GuiManager {
         frame.setVisible(true);
     }
 
-     public JTable getTable(){
+    public Object[][] getTableData(){
         Response response = client.sendAndAskResponse(new Request("show", "", user));
         if(response.getStatus() != ResponseStatus.OK) return null;
-        String[] columnNames = {"id",
-                "group_name",
-                "cord",
-                "creation_date",
-                "students_count",
-                "expelled_students",
-                "average_mark",
-                "form_of_education",
-                "person_name",
-                "person_weight",
-                "person_eye_color",
-                "person_hair_color",
-                "person_nationality",
-                "person_location",
-                "person_location_name",
-                "owner_login"
-        };
-        Object[][] rowData = response.getCollection().stream()
+        return response.getCollection().stream()
                 .map(this::createRow)
                 .toArray(Object[][]::new);
-        return new JTable(rowData, columnNames);
-     }
+    }
 
      private Object[] createRow(StudyGroup studyGroup){
         return new Object[]{
                 studyGroup.getId(),
                 studyGroup.getName(),
                 studyGroup.getCoordinates(),
-                StudyGroup.timeFormatter(studyGroup.getCreationDate()),
+                studyGroup.getCreationDate().toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime()
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                 studyGroup.getStudentsCount(),
                 studyGroup.getExpelledStudents(),
                 studyGroup.getAverageMark(),
@@ -170,7 +195,7 @@ public class GuiManager {
         JMenuItem remove = new JMenuItem("Remove");
         JMenuItem show = new JMenuItem("Show");
 
-        add.addActionListener(new AddAction());
+        add.addActionListener(new AddAction(user, client));
         update.addActionListener(new UpdateAction());
         remove.addActionListener(new RemoveAction());
         show.addActionListener(new ShowAction());
@@ -178,16 +203,16 @@ public class GuiManager {
         //I hate swing :)
         add.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\add.png")
                 .getImage()
-                .getScaledInstance(iconSize, iconSize, Image.SCALE_FAST)));
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH)));
         update.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\update.png")
                 .getImage()
-                .getScaledInstance(iconSize, iconSize, Image.SCALE_FAST)));
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH)));
         remove.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\remove.png")
                 .getImage()
-                .getScaledInstance(iconSize, iconSize, Image.SCALE_FAST)));
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH)));
         show.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\show.png")
                 .getImage()
-                .getScaledInstance(iconSize, iconSize, Image.SCALE_FAST)));
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH)));
 
 
         actions.add(add);

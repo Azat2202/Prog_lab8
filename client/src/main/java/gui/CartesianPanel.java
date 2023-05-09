@@ -98,7 +98,6 @@ class CartesianPanel extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2.setFont(new Font("Tahoma", Font.BOLD, fontSize));
-
         response.getCollection().stream().sorted(StudyGroup::compareTo).forEach(studyGroup -> {
             //Image
             g2.drawImage(img,
