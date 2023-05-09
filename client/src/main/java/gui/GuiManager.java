@@ -5,6 +5,10 @@ import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
 import dtp.User;
+import gui.actions.AddAction;
+import gui.actions.RemoveAction;
+import gui.actions.ShowAction;
+import gui.actions.UpdateAction;
 import main.App;
 import models.Coordinates;
 import models.StudyGroup;
@@ -157,17 +161,42 @@ public class GuiManager {
      }
 
     private JMenuBar createMenuBar(){
+        int iconSize = 15;
+
         JMenuBar menuBar = new JMenuBar();
         JMenu actions = new JMenu("Actions");
         JMenuItem add = new JMenuItem("Add");
-        JMenuItem addIfMax = new JMenuItem("AddIfMax");
-        JMenuItem countByAvg = new JMenuItem("CountByAverageMark");
-        JMenuItem countLessThanExp = new JMenuItem("CountLessThanExpelled");
+        JMenuItem update = new JMenuItem("Update");
+        JMenuItem remove = new JMenuItem("Remove");
+        JMenuItem show = new JMenuItem("Show");
+
+        add.addActionListener(new AddAction());
+        update.addActionListener(new UpdateAction());
+        remove.addActionListener(new RemoveAction());
+        show.addActionListener(new ShowAction());
+
+        //I hate swing :)
+        add.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\add.png")
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_FAST)));
+        update.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\update.png")
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_FAST)));
+        remove.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\remove.png")
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_FAST)));
+        show.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\show.png")
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_FAST)));
+
+
         actions.add(add);
-        actions.add(addIfMax);
-        actions.add(countByAvg);
-        actions.add(countLessThanExp);
-        menuBar.add(new JMenu("Actions"));
+        actions.add(update);
+        actions.addSeparator();
+        actions.add(show);
+        actions.addSeparator();
+        actions.add(remove);
+        menuBar.add(actions);
         return menuBar;
     }
 

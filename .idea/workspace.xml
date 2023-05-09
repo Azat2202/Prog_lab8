@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
+      <change afterPath="$PROJECT_DIR$/client/icons/add.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/icons/remove.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/icons/show.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/icons/update.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/AddAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/ShowAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/UpdateAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tyler.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/client/icons/tyler.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +83,8 @@
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\src\main\java\utilty" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab8\client\icons" />
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab8\client" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\src\main\java\exceptions" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -264,11 +276,6 @@
           <properties class="java.nio.channels.IllegalBlockingModeException" package="java.nio.channels" />
           <option name="timeStamp" value="3" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

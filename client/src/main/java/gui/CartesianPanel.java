@@ -91,7 +91,7 @@ class CartesianPanel extends JPanel {
                 .orElse(0D);
         BufferedImage img;
         try {
-            img = ImageIO.read(new File("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\tyler.jpg"));
+            img = ImageIO.read(new File("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\tyler.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -117,7 +117,7 @@ class CartesianPanel extends JPanel {
                     (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight))) - elementHeight / 2 - 1,
                     elementWidth + 2,
                     elementHeight + 2);
-            //Number
+            //Numbers
             g2.drawString(studyGroup.getId().toString(),
                     (int) (halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) - elementWidth / 4,
                     (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight))) + elementHeight / 4
