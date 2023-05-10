@@ -11,6 +11,7 @@ import models.StudyGroup;
 import utility.Client;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -20,10 +21,7 @@ import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +36,8 @@ import static javax.swing.JOptionPane.*;
 
 public class GuiManager {
     private final Client client;
-
+    private static Locale locale = new Locale("ru");
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle("GuiLabels", this.locale);
     private final JFrame frame;
     private final Container contentPane;
     private JTable table = null;
@@ -46,7 +45,6 @@ public class GuiManager {
     private CartesianPanel cartesianPanel = null;
     private Object[][] tableData = null;
     private Collection<StudyGroup> collection = null;
-
     private User user;
 
     private final static Color RED_WARNING = Color.decode("#FF4040");
@@ -73,13 +71,12 @@ public class GuiManager {
     public GuiManager(Client client) {
         this.client = client;
 
-
         try {
             UIManager.setLookAndFeel(new FlatDarculaLaf());
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        this.frame = new JFrame("Лабораторная работа 8");
+        this.frame = new JFrame(resourceBundle.getString("LabWork8"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.contentPane = this.frame.getContentPane();
         frame.setResizable(true);
@@ -99,8 +96,8 @@ public class GuiManager {
         this.loginAuth();
         frame.setJMenuBar(this.createMenuBar());
 
-        JButton tableExecute = new JButton("Таблица");
-        JButton cartesianExecute = new JButton("Координаты");
+        JButton tableExecute = new JButton(resourceBundle.getString("Table"));
+        JButton cartesianExecute = new JButton(resourceBundle.getString("Coordinates"));
         this.tableData = this.getTableData();
         this.tableModel = new DefaultTableModel(columnNames, tableData.length);
         this.tableModel.setDataVector(tableData, columnNames);
@@ -218,19 +215,19 @@ public class GuiManager {
         int iconSize = 40;
 
         JMenuBar menuBar = new JMenuBar();
-        JMenu actions = new JMenu("Actions");
-        JMenuItem add = new JMenuItem("Add");
-        JMenuItem addIfMax = new JMenuItem("AddIfMax");
-        JMenuItem clear = new JMenuItem("Clear");
-        JMenuItem countByAverageMark = new JMenuItem("CountByAverageMark");
-        JMenuItem countLessThanExpelled = new JMenuItem("CountLessThanExpelledStudents");
-        JMenuItem executeScript = new JMenuItem("executeScript");
-        JMenuItem exit = new JMenuItem("Exit");
-        JMenuItem info = new JMenuItem("Info");
-        JMenuItem removeAllByAverageMark = new JMenuItem("removeByAverageMark");
-        JMenuItem removeGreater = new JMenuItem("removeGreater");
-        JMenuItem update = new JMenuItem("Update");
-        JMenuItem remove = new JMenuItem("Remove");
+        JMenu actions = new JMenu(resourceBundle.getString("Actions"));
+        JMenuItem add = new JMenuItem(resourceBundle.getString("Add"));
+        JMenuItem addIfMax = new JMenuItem(resourceBundle.getString("AddIfMax"));
+        JMenuItem clear = new JMenuItem(resourceBundle.getString("Clear"));
+        JMenuItem countByAverageMark = new JMenuItem(resourceBundle.getString("CountByAverageMark"));
+        JMenuItem countLessThanExpelled = new JMenuItem(resourceBundle.getString("CountLessThanExpelledStudents"));
+        JMenuItem executeScript = new JMenuItem(resourceBundle.getString("executeScript"));
+        JMenuItem exit = new JMenuItem(resourceBundle.getString("Exit"));
+        JMenuItem info = new JMenuItem(resourceBundle.getString("Info"));
+        JMenuItem removeAllByAverageMark = new JMenuItem(resourceBundle.getString("removeByAverageMark"));
+        JMenuItem removeGreater = new JMenuItem(resourceBundle.getString("removeGreater"));
+        JMenuItem update = new JMenuItem(resourceBundle.getString("Update"));
+        JMenuItem remove = new JMenuItem(resourceBundle.getString("Remove"));
 
         add.addActionListener(new AddAction(user, client, this));
         update.addActionListener(new UpdateAction(user, client, this));
@@ -307,9 +304,9 @@ public class GuiManager {
         panel.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
-        JLabel loginTextLabel = new JLabel("Введите логин: ");
+        JLabel loginTextLabel = new JLabel(resourceBundle.getString("WriteLogin"));
         JTextField loginField = new JTextField();
-        JLabel passwordTextLabel = new JLabel("Введите пароль: ");
+        JLabel passwordTextLabel = new JLabel(resourceBundle.getString("EnterPass"));
         JPasswordField passwordField = new JPasswordField();
         JLabel errorLabel = new JLabel("");
         layout.setHorizontalGroup(layout.createSequentialGroup()
@@ -329,8 +326,8 @@ public class GuiManager {
                         .addComponent(passwordField))
                         .addComponent(errorLabel));
         while(true) {
-            int result = JOptionPane.showOptionDialog(null, panel, "Логин", JOptionPane.YES_NO_OPTION,
-                    QUESTION_MESSAGE, null, new String[]{"Вход", "Регистрация"}, "Вход");
+            int result = JOptionPane.showOptionDialog(null, panel, resourceBundle.getString("Login"), JOptionPane.YES_NO_OPTION,
+                    QUESTION_MESSAGE, null, new String[]{resourceBundle.getString("Login"), resourceBundle.getString("Register")}, resourceBundle.getString("Login"));
             if (result == OK_OPTION) {
                 if (!checkFields(loginField, passwordField, errorLabel)) continue;
                 Response response = client.sendAndAskResponse(
@@ -339,12 +336,12 @@ public class GuiManager {
                                 "",
                                 new User(loginField.getText(), String.valueOf(passwordField.getPassword()))));
                 if (response.getStatus() == ResponseStatus.OK) {
-                    errorLabel.setText("Логин успешный!");
+                    errorLabel.setText(resourceBundle.getString("LoginAcc"));
                     errorLabel.setForeground(GREEN_OK);
                     this.user = new User(loginField.getText(), String.valueOf(passwordField.getPassword()));
                     return;
                 } else {
-                    errorLabel.setText("Логин не успешный!");
+                    errorLabel.setText(resourceBundle.getString("LoginNotAcc"));
                     errorLabel.setForeground(RED_WARNING);
                 }
             } else if (result == NO_OPTION){
@@ -355,12 +352,12 @@ public class GuiManager {
                                 "",
                                 new User(loginField.getText(), String.valueOf(passwordField.getPassword()))));
                 if (response.getStatus() == ResponseStatus.OK) {
-                    errorLabel.setText("Вы успешно зарегистрировались!");
+                    errorLabel.setText(resourceBundle.getString("RegAcc"));
                     errorLabel.setForeground(GREEN_OK);
                     this.user = new User(loginField.getText(), String.valueOf(passwordField.getPassword()));
                     return;
                 } else {
-                    errorLabel.setText("Логин занят!");
+                    errorLabel.setText(resourceBundle.getString("RegNotAcc"));
                     errorLabel.setForeground(RED_WARNING);
                 }
             } else if (result == CLOSED_OPTION) {
@@ -371,11 +368,11 @@ public class GuiManager {
 
     private boolean checkFields(JTextField loginField, JPasswordField passwordField, JLabel errorLabel){
         if(loginField.getText().isEmpty()) {
-            errorLabel.setText("Логин не может быть пустым!");
+            errorLabel.setText(resourceBundle.getString("LoginNotNull"));
             errorLabel.setForeground(RED_WARNING);
             return false;
         } else if(String.valueOf(passwordField.getPassword()).isEmpty()){
-            errorLabel.setText("Пароль не может быть пустым!");
+            errorLabel.setText(resourceBundle.getString("PassNotNull"));
             errorLabel.setForeground(RED_WARNING);
             return false;
         }
@@ -386,4 +383,11 @@ public class GuiManager {
         return collection;
     }
 
+    public static Locale getLocale() {
+        return locale;
+    }
+
+    public static void setLocale(Locale locale) {
+        GuiManager.locale = locale;
+    }
 }

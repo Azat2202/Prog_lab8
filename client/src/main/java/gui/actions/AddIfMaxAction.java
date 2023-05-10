@@ -32,23 +32,23 @@ public class AddIfMaxAction extends Action{
         layout.setAutoCreateContainerGaps(true);
 
 
-        JLabel mainLabel = new JLabel("Создание группы ");
-        JLabel nameLabel = new JLabel("Имя: ");
-        JLabel cordXLabel = new JLabel("Координата Х: ");
-        JLabel cordYLabel = new JLabel("Координата Y: ");
-        JLabel studentsCountLabel = new JLabel("Количество студентов: ");
-        JLabel expelledStudentsLabel = new JLabel("Отчисленные студенты: ");
-        JLabel averageMarkLabel = new JLabel("Средняя оценка: ");
-        JLabel formOfEducationLabel = new JLabel("Вид обучения: ");
-        JLabel personLabel = new JLabel("Создание админа ");
-        JLabel personNameLabel = new JLabel("Имя: ");
-        JLabel personWeightLabel = new JLabel("Вес: ");
-        JLabel personEyeColorLabel = new JLabel("Цвет глаз: ");
-        JLabel personHairColorLabel = new JLabel("Цвет волос: ");
-        JLabel personNationalityLabel = new JLabel("Национальность: ");
-        JLabel personLocationXLabel = new JLabel("Координата X: ");
-        JLabel personLocationYLabel = new JLabel("Координата Y: ");
-        JLabel personLocationNameLabel = new JLabel("Название локации: ");
+        JLabel mainLabel = new JLabel(resourceBundle.getString("GroupCreation"));
+        JLabel nameLabel = new JLabel(resourceBundle.getString("Name"));
+        JLabel cordXLabel = new JLabel(resourceBundle.getString("CoordX"));
+        JLabel cordYLabel = new JLabel(resourceBundle.getString("CoordY"));
+        JLabel studentsCountLabel = new JLabel(resourceBundle.getString("StudentsCount"));
+        JLabel expelledStudentsLabel = new JLabel(resourceBundle.getString("ExpelledStuds"));
+        JLabel averageMarkLabel = new JLabel(resourceBundle.getString("AverageMark"));
+        JLabel formOfEducationLabel = new JLabel(resourceBundle.getString("StudyType"));
+        JLabel personLabel = new JLabel(resourceBundle.getString("AdminCreation"));
+        JLabel personNameLabel = new JLabel(resourceBundle.getString("AdminName"));
+        JLabel personWeightLabel = new JLabel(resourceBundle.getString("AdminWeight"));
+        JLabel personEyeColorLabel = new JLabel(resourceBundle.getString("EyeColor"));
+        JLabel personHairColorLabel = new JLabel(resourceBundle.getString("HairColor"));
+        JLabel personNationalityLabel = new JLabel(resourceBundle.getString("Nationality"));
+        JLabel personLocationXLabel = new JLabel(resourceBundle.getString("CoordX"));
+        JLabel personLocationYLabel = new JLabel(resourceBundle.getString("CoordY"));
+        JLabel personLocationNameLabel = new JLabel(resourceBundle.getString("LocationName"));
         JFormattedTextField nameField;
         JFormattedTextField cordXField;
         JFormattedTextField cordYField;
@@ -70,7 +70,7 @@ public class AddIfMaxAction extends Action{
                 @Override
                 public Object stringToValue(String text) throws ParseException {
                     if (text.trim().isEmpty()) {
-                        throw new ParseException("Field cannot be empty", 0);
+                        throw new ParseException(resourceBundle.getString("FiledNotEmpty"), 0);
                     }
                     return super.stringToValue(text);
                 }
@@ -82,9 +82,9 @@ public class AddIfMaxAction extends Action{
                     try {
                         num = Float.parseFloat(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа float", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + "float", 0);
                     }
-                    if (num <= -206) throw new ParseException("Число должно быть больше -206", 0);
+                    if (num <= -206) throw new ParseException(resourceBundle.getString("NumberMustBe") + " " + resourceBundle.getString("More") + " -206", 0);
                     return num;
                 }
             });
@@ -95,9 +95,9 @@ public class AddIfMaxAction extends Action{
                     try {
                         num = Double.parseDouble(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа double", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "double", 0);
                     }
-                    if (num > 463) throw new ParseException("Максимальное значение поля: 463", 0);
+                    if (num > 463) throw new ParseException(resourceBundle.getString("MaxNum") + " 463", 0);
                     return num;
                 }
             });
@@ -108,9 +108,9 @@ public class AddIfMaxAction extends Action{
                     try {
                         num = Long.parseLong(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа long", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "long", 0);
                     }
-                    if (num <= 0) throw new ParseException("Значение поля должно быть больше 0", 0);
+                    if (num <= 0) throw new ParseException(resourceBundle.getString("NumberMustBe") + resourceBundle.getString("More") + " 0", 0);
                     return num;
                 }
             });
@@ -121,9 +121,9 @@ public class AddIfMaxAction extends Action{
                     try {
                         num = Long.parseLong(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа long", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "long", 0);
                     }
-                    if (num <= 0) throw new ParseException("Значение поля должно быть больше 0", 0);
+                    if (num <= 0) throw new ParseException(resourceBundle.getString("NumberMustBe") + resourceBundle.getString("More") + " 0", 0);
                     return num;
                 }
             });
@@ -134,9 +134,9 @@ public class AddIfMaxAction extends Action{
                     try {
                         num = Long.parseLong(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа long", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "long", 0);
                     }
-                    if (num <= 0) throw new ParseException("Значение поля должно быть больше 0", 0);
+                    if (num <= 0) throw new ParseException(resourceBundle.getString("NumberMustBe") + resourceBundle.getString("More") + " 0", 0);
                     return num;
                 }
             });
@@ -145,7 +145,7 @@ public class AddIfMaxAction extends Action{
                 @Override
                 public Object stringToValue(String text) throws ParseException {
                     if (text.trim().isEmpty()) {
-                        throw new ParseException("Field cannot be empty", 0);
+                        throw new ParseException(resourceBundle.getString("FiledNotEmpty"), 0);
                     }
                     return super.stringToValue(text);
                 }
@@ -157,9 +157,9 @@ public class AddIfMaxAction extends Action{
                     try {
                         num = Integer.parseInt(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа int", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "int", 0);
                     }
-                    if (num <= 0) throw new ParseException("Значение поля должно быть больше 0", 0);
+                    if (num <= 0) throw new ParseException(resourceBundle.getString("NumberMustBe") + resourceBundle.getString("More") + " 0", 0);
                     return num;
                 }
             });
@@ -173,7 +173,7 @@ public class AddIfMaxAction extends Action{
                     try {
                         num = Double.parseDouble(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа float", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "float", 0);
                     }
                     return num;
                 }
@@ -185,7 +185,7 @@ public class AddIfMaxAction extends Action{
                     try {
                         num = Long.parseLong(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа double", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "double", 0);
                     }
                     return num;
                 }
@@ -194,7 +194,7 @@ public class AddIfMaxAction extends Action{
                 @Override
                 public Object stringToValue(String text) throws ParseException {
                     if (text.trim().isEmpty()) {
-                        throw new ParseException("Field cannot be empty", 0);
+                        throw new ParseException(resourceBundle.getString("FieldNotEmpty"), 0);
                     }
                     return super.stringToValue(text);
                 }
@@ -306,8 +306,8 @@ public class AddIfMaxAction extends Action{
                             .addComponent(personLocationNameField)
                     ));
         }
-        int result = JOptionPane.showOptionDialog(null, panel, "AddIfMax", JOptionPane.YES_OPTION,
-                QUESTION_MESSAGE, null, new String[]{"Добавить"}, "Добавить");
+        int result = JOptionPane.showOptionDialog(null, panel, resourceBundle.getString("AddIfMax"), JOptionPane.YES_OPTION,
+                QUESTION_MESSAGE, null, new String[]{resourceBundle.getString("Add")}, resourceBundle.getString("Add"));
         if(result == OK_OPTION){
             StudyGroup studyGroup = new StudyGroup(
                     nameField.getText(),
@@ -335,12 +335,12 @@ public class AddIfMaxAction extends Action{
                     user.name()
             );
             if(!studyGroup.validate()) {
-                JOptionPane.showMessageDialog(null, "Объект не валиден!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotValid"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
             Response response = client.sendAndAskResponse(new Request("add_if_max", "", user, studyGroup));
-            if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, "Объект добавлен!", "Итог", JOptionPane.PLAIN_MESSAGE);
-            else JOptionPane.showMessageDialog(null, "Объект не добавлен!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+            if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectAcc"), resourceBundle.getString("Result"), JOptionPane.PLAIN_MESSAGE);
+            else JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotValid"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
         }
     }
 }

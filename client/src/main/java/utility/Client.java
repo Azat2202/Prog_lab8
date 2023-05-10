@@ -1,18 +1,24 @@
 package utility;
 
+import commandLine.BlankConsole;
 import commandLine.Printable;
 import dtp.Request;
 import dtp.Response;
 import dtp.ResponseStatus;
 import dtp.User;
+import gui.GuiManager;
 
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
+import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Client {
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle("GuiLabels", GuiManager.getLocale());
     private final String host;
     private final int port;
     private final int reconnectionTimeout;
@@ -29,14 +35,14 @@ public class Client {
         this.port = port;
         this.reconnectionTimeout = reconnectionTimeout;
         this.maxReconnectionAttempts = maxReconnectionAttempts;
-        this.console = console;
+        this.console = new BlankConsole();
     }
 
     public Response sendAndAskResponse(Request request){
         while (true) {
             try {
                 if(Objects.isNull(serverWriter) || Objects.isNull(serverReader)) throw new IOException();
-                if (request.isEmpty()) return new Response(ResponseStatus.WRONG_ARGUMENTS, "Запрос пустой!");
+                if (request.isEmpty()) return new Response(ResponseStatus.WRONG_ARGUMENTS, resourceBundle.getString("EmptyrRequest"));
                 serverWriter.writeObject(request);
                 serverWriter.flush();
                 Response response = (Response) serverReader.readObject();
@@ -53,22 +59,22 @@ public class Client {
                     reconnectionAttempts++;
                     if (reconnectionAttempts >= maxReconnectionAttempts) {
                         JOptionPane.showMessageDialog(null,
-                                "Превышено максимальное количество попыток соединения с сервером",
-                                "Север не доступен",
+                                resourceBundle.getString("ToMuchTries"),
+                                resourceBundle.getString("ServerNotAvailable"),
                                 JOptionPane.ERROR_MESSAGE);
                         System.exit(666);
                     }
                     AtomicInteger seconds = new AtomicInteger(reconnectionTimeout);
-                    JOptionPane optionPane = new JOptionPane("Соединение с сервером разорвано");
-                    JDialog dialog = optionPane.createDialog(null, "Ошибка подключения");
+                    JOptionPane optionPane = new JOptionPane(resourceBundle.getString("ServerConnectionBreaked"));
+                    JDialog dialog = optionPane.createDialog(null, resourceBundle.getString("ServerConnectionBreaked"));
                     dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                     new Timer(1000, (i) -> {
                         seconds.decrementAndGet();
                         if (seconds.get() <= 0) {
                             dialog.dispose();
                         } else {
-                            optionPane.setMessage("Соединение с сервером разорвано\n"
-                                    + "Повторная попытка через " + seconds + " секунд");
+                            optionPane.setMessage(MessageFormat.format(
+                                    resourceBundle.getString("NextTryIn") + seconds, resourceBundle.getString("ServerConnectionBreaked"),seconds));
                         }
                     }).start();
                     dialog.setVisible(true);

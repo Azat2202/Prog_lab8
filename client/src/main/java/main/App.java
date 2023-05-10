@@ -7,6 +7,8 @@ import exceptions.IllegalArguments;
 import gui.GuiManager;
 import utility.Client;
 
+import java.util.Locale;
+
 public class App {
     //-----------------------SETTINGS---------------------------
     public final static int RECONNECTION_TIMEOUT = 5;

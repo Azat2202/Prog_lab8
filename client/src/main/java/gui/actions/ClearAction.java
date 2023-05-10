@@ -21,17 +21,17 @@ public class ClearAction extends Action{
     @Override
     public void actionPerformed(ActionEvent e) {
         int result = JOptionPane.showOptionDialog(null,
-                "Вы уверены что хотите удалить свои объекты?",
-                "Подтверждение",
+                resourceBundle.getString("AreYouSure"),
+                resourceBundle.getString("Confirmation"),
                 JOptionPane.YES_NO_OPTION,
                 QUESTION_MESSAGE,
                 null,
-                new String[]{"Да", "Нет"},
-                "Нет");
+                new String[]{resourceBundle.getString("Yes"), resourceBundle.getString("No")},
+                resourceBundle.getString("No"));
         if(result == OK_OPTION){
             Response response = client.sendAndAskResponse(new Request("clear", "", user));
-            if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, "Объекты удалены!", "Итог", JOptionPane.PLAIN_MESSAGE);
-            else JOptionPane.showMessageDialog(null, "Объекты не удалены!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+            if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectsDeleted"), resourceBundle.getString("Result"), JOptionPane.PLAIN_MESSAGE);
+            else JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotValid"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
         }
     }
 }

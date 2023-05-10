@@ -19,8 +19,8 @@ public class CountLessThanExpelledStudentsAction extends Action{
     private String askExpelled(){
         BorderLayout layout = new BorderLayout();
         JPanel panel = new JPanel(layout);
-        JLabel question = new JLabel("Введите количество отчисленных студентов");
-        JLabel markLabel = new JLabel("Количество отчисленных студентов:");
+        JLabel question = new JLabel(resourceBundle.getString("EnterExpelled"));
+        JLabel markLabel = new JLabel(resourceBundle.getString("ExpelledStuds"));
         JFormattedTextField markField = new JFormattedTextField(DecimalFormat.getInstance());
 
         layout.addLayoutComponent(question, BorderLayout.NORTH);
@@ -38,8 +38,8 @@ public class CountLessThanExpelledStudentsAction extends Action{
     public void actionPerformed(ActionEvent e) {
 
         Response response = client.sendAndAskResponse(new Request("count_less_than_expelled_students", this.askExpelled(), user));
-        if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, response.getResponse(), "Итог", JOptionPane.PLAIN_MESSAGE);
-        else JOptionPane.showMessageDialog(null, "Ответ не получен!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+        if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, response.getResponse(), resourceBundle.getString("Result"), JOptionPane.PLAIN_MESSAGE);
+        else JOptionPane.showMessageDialog(null, resourceBundle.getString("NoResult"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 
     }
 }

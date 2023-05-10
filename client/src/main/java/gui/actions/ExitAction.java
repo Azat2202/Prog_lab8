@@ -21,13 +21,13 @@ public class ExitAction extends Action{
     @Override
     public void actionPerformed(ActionEvent e) {
         int result = JOptionPane.showOptionDialog(null,
-                "Вы уверены что хотите выйти?",
-                "Подтверждение",
+                resourceBundle.getString("AreYouSure"),
+                resourceBundle.getString("Confirmation"),
                 JOptionPane.YES_NO_OPTION,
                 QUESTION_MESSAGE,
                 null,
-                new String[]{"Да", "Нет"},
-                "Нет");
+                new String[]{resourceBundle.getString("Yes"), resourceBundle.getString("No")},
+                resourceBundle.getString("No"));
         if(result == OK_OPTION){
             System.exit(0);
         }

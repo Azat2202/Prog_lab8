@@ -18,11 +18,11 @@ public class CountByAverageMarkAction extends Action{
         super(user, client, guiManager);
     }
 
-    private long askAverageMark(){
+    private String askAverageMark(){
         BorderLayout layout = new BorderLayout();
         JPanel panel = new JPanel(layout);
-        JLabel question = new JLabel("Введите среднюю оценку для подсчета количества");
-        JLabel markLabel = new JLabel("Средняя оценка:");
+        JLabel question = new JLabel(resourceBundle.getString("EnterAverageMark"));
+        JLabel markLabel = new JLabel(resourceBundle.getString("AverageMark"));
         JFormattedTextField markField = new JFormattedTextField(DecimalFormat.getInstance());
 
         layout.addLayoutComponent(question, BorderLayout.NORTH);
@@ -33,13 +33,13 @@ public class CountByAverageMarkAction extends Action{
                 markField,
                 "Count",
                 JOptionPane.PLAIN_MESSAGE);
-        return Long.parseLong(markField.getText());
+        return markField.getText();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Response response = client.sendAndAskResponse(new Request("count_by_average_mark", String.valueOf(this.askAverageMark()), user));
+        Response response = client.sendAndAskResponse(new Request("count_by_average_mark", this.askAverageMark(), user));
         if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, response.getResponse(), "Итог", JOptionPane.PLAIN_MESSAGE);
-        else JOptionPane.showMessageDialog(null, "Ответ не получен!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+        else JOptionPane.showMessageDialog(null, resourceBundle.getString("NoResult"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
     }
 }

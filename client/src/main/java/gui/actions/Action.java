@@ -6,8 +6,12 @@ import models.StudyGroup;
 import utility.Client;
 
 import javax.swing.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public abstract class Action extends AbstractAction {
+    protected ResourceBundle resourceBundle;
+
     protected User user;
     protected Client client;
     protected GuiManager guiManager;
@@ -16,5 +20,6 @@ public abstract class Action extends AbstractAction {
         this.user = user;
         this.client = client;
         this.guiManager = guiManager;
+        this.resourceBundle = ResourceBundle.getBundle("GuiLabels", guiManager.getLocale());
     }
 }

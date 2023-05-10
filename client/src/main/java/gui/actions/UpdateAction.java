@@ -32,8 +32,8 @@ public class UpdateAction extends Action {
 
         BorderLayout layout = new BorderLayout();
         JPanel panel = new JPanel(layout);
-        JLabel question = new JLabel("Выберете id для изменения");
-        JLabel idLabel = new JLabel("Выберите id");
+        JLabel question = new JLabel(resourceBundle.getString("SelectId"));
+        JLabel idLabel = new JLabel(resourceBundle.getString("SelectId"));
         JComboBox idField = new JComboBox(userOwnedIds);
 
         layout.addLayoutComponent(question, BorderLayout.NORTH);
@@ -42,7 +42,7 @@ public class UpdateAction extends Action {
 
         JOptionPane.showMessageDialog(null,
                 idField,
-                "Update",
+                resourceBundle.getString("Update"),
                 JOptionPane.PLAIN_MESSAGE);
         return (Integer) idField.getSelectedItem();
     }
@@ -60,7 +60,7 @@ public class UpdateAction extends Action {
     }
 
     public void updateJOptionWorker(Integer id) {
-        if(id == null) JOptionPane.showMessageDialog(null, "У вас нет объектов", "Неуспешное удаление", JOptionPane.ERROR_MESSAGE);
+        if(id == null) JOptionPane.showMessageDialog(null, resourceBundle.getString("NoObjects"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 
 
         JPanel panel = new JPanel();
@@ -70,23 +70,23 @@ public class UpdateAction extends Action {
         layout.setAutoCreateContainerGaps(true);
 
 
-        JLabel mainLabel = new JLabel("Изменение объекта " + id);
-        JLabel nameLabel = new JLabel("Имя: ");
-        JLabel cordXLabel = new JLabel("Координата Х: ");
-        JLabel cordYLabel = new JLabel("Координата Y: ");
-        JLabel studentsCountLabel = new JLabel("Количество студентов: ");
-        JLabel expelledStudentsLabel = new JLabel("Отчисленные студенты: ");
-        JLabel averageMarkLabel = new JLabel("Средняя оценка: ");
-        JLabel formOfEducationLabel = new JLabel("Вид обучения: ");
-        JLabel personLabel = new JLabel("Создание админа ");
-        JLabel personNameLabel = new JLabel("Имя: ");
-        JLabel personWeightLabel = new JLabel("Вес: ");
-        JLabel personEyeColorLabel = new JLabel("Цвет глаз: ");
-        JLabel personHairColorLabel = new JLabel("Цвет волос: ");
-        JLabel personNationalityLabel = new JLabel("Национальность: ");
-        JLabel personLocationXLabel = new JLabel("Координата X: ");
-        JLabel personLocationYLabel = new JLabel("Координата Y: ");
-        JLabel personLocationNameLabel = new JLabel("Название локации: ");
+        JLabel mainLabel = new JLabel(resourceBundle.getString("GroupCreation"));
+        JLabel nameLabel = new JLabel(resourceBundle.getString("Name"));
+        JLabel cordXLabel = new JLabel(resourceBundle.getString("CoordX"));
+        JLabel cordYLabel = new JLabel(resourceBundle.getString("CoordY"));
+        JLabel studentsCountLabel = new JLabel(resourceBundle.getString("StudentsCount"));
+        JLabel expelledStudentsLabel = new JLabel(resourceBundle.getString("ExpelledStuds"));
+        JLabel averageMarkLabel = new JLabel(resourceBundle.getString("AverageMark"));
+        JLabel formOfEducationLabel = new JLabel(resourceBundle.getString("StudyType"));
+        JLabel personLabel = new JLabel(resourceBundle.getString("AdminCreation"));
+        JLabel personNameLabel = new JLabel(resourceBundle.getString("AdminName"));
+        JLabel personWeightLabel = new JLabel(resourceBundle.getString("AdminWeight"));
+        JLabel personEyeColorLabel = new JLabel(resourceBundle.getString("EyeColor"));
+        JLabel personHairColorLabel = new JLabel(resourceBundle.getString("HairColor"));
+        JLabel personNationalityLabel = new JLabel(resourceBundle.getString("Nationality"));
+        JLabel personLocationXLabel = new JLabel(resourceBundle.getString("CoordX"));
+        JLabel personLocationYLabel = new JLabel(resourceBundle.getString("CoordY"));
+        JLabel personLocationNameLabel = new JLabel(resourceBundle.getString("LocationName"));
         JFormattedTextField nameField;
         JFormattedTextField cordXField;
         JFormattedTextField cordYField;
@@ -108,7 +108,7 @@ public class UpdateAction extends Action {
                 @Override
                 public Object stringToValue(String text) throws ParseException {
                     if (text.trim().isEmpty()) {
-                        throw new ParseException("Field cannot be empty", 0);
+                        throw new ParseException(resourceBundle.getString("FiledNotEmpty"), 0);
                     }
                     return super.stringToValue(text);
                 }
@@ -120,9 +120,9 @@ public class UpdateAction extends Action {
                     try {
                         num = Float.parseFloat(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа float", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + "float", 0);
                     }
-                    if (num <= -206) throw new ParseException("Число должно быть больше -206", 0);
+                    if (num <= -206) throw new ParseException(resourceBundle.getString("NumberMustBe") + " " + resourceBundle.getString("More") + " -206", 0);
                     return num;
                 }
             });
@@ -133,9 +133,9 @@ public class UpdateAction extends Action {
                     try {
                         num = Double.parseDouble(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа double", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "double", 0);
                     }
-                    if (num > 463) throw new ParseException("Максимальное значение поля: 463", 0);
+                    if (num > 463) throw new ParseException(resourceBundle.getString("MaxNum") + " 463", 0);
                     return num;
                 }
             });
@@ -146,9 +146,9 @@ public class UpdateAction extends Action {
                     try {
                         num = Long.parseLong(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа long", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "long", 0);
                     }
-                    if (num <= 0) throw new ParseException("Значение поля должно быть больше 0", 0);
+                    if (num <= 0) throw new ParseException(resourceBundle.getString("NumberMustBe") + resourceBundle.getString("More") + " 0", 0);
                     return num;
                 }
             });
@@ -159,9 +159,9 @@ public class UpdateAction extends Action {
                     try {
                         num = Long.parseLong(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа long", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "long", 0);
                     }
-                    if (num <= 0) throw new ParseException("Значение поля должно быть больше 0", 0);
+                    if (num <= 0) throw new ParseException(resourceBundle.getString("NumberMustBe") + resourceBundle.getString("More") + " 0", 0);
                     return num;
                 }
             });
@@ -172,9 +172,9 @@ public class UpdateAction extends Action {
                     try {
                         num = Long.parseLong(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа long", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "long", 0);
                     }
-                    if (num <= 0) throw new ParseException("Значение поля должно быть больше 0", 0);
+                    if (num <= 0) throw new ParseException(resourceBundle.getString("NumberMustBe") + resourceBundle.getString("More") + " 0", 0);
                     return num;
                 }
             });
@@ -183,7 +183,7 @@ public class UpdateAction extends Action {
                 @Override
                 public Object stringToValue(String text) throws ParseException {
                     if (text.trim().isEmpty()) {
-                        throw new ParseException("Field cannot be empty", 0);
+                        throw new ParseException(resourceBundle.getString("FiledNotEmpty"), 0);
                     }
                     return super.stringToValue(text);
                 }
@@ -195,9 +195,9 @@ public class UpdateAction extends Action {
                     try {
                         num = Integer.parseInt(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа int", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "int", 0);
                     }
-                    if (num <= 0) throw new ParseException("Значение поля должно быть больше 0", 0);
+                    if (num <= 0) throw new ParseException(resourceBundle.getString("NumberMustBe") + resourceBundle.getString("More") + " 0", 0);
                     return num;
                 }
             });
@@ -211,7 +211,7 @@ public class UpdateAction extends Action {
                     try {
                         num = Double.parseDouble(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа float", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "float", 0);
                     }
                     return num;
                 }
@@ -223,7 +223,7 @@ public class UpdateAction extends Action {
                     try {
                         num = Long.parseLong(text);
                     } catch (NumberFormatException e) {
-                        throw new ParseException("Введите число типа double", 0);
+                        throw new ParseException(resourceBundle.getString("NumberType") + " " + "double", 0);
                     }
                     return num;
                 }
@@ -232,7 +232,7 @@ public class UpdateAction extends Action {
                 @Override
                 public Object stringToValue(String text) throws ParseException {
                     if (text.trim().isEmpty()) {
-                        throw new ParseException("Field cannot be empty", 0);
+                        throw new ParseException(resourceBundle.getString("FieldNotEmpty"), 0);
                     }
                     return super.stringToValue(text);
                 }
@@ -345,8 +345,8 @@ public class UpdateAction extends Action {
                             .addComponent(personLocationNameField)
                     ));
         }
-        int result = JOptionPane.showOptionDialog(null, panel, "Update", JOptionPane.YES_OPTION,
-                QUESTION_MESSAGE, null, new String[]{"Изменить"}, "Изменить");
+        int result = JOptionPane.showOptionDialog(null, panel, resourceBundle.getString("Update"), JOptionPane.YES_OPTION,
+                QUESTION_MESSAGE, null, new String[]{resourceBundle.getString("Update")}, resourceBundle.getString("Update"));
         if(result == OK_OPTION){
             StudyGroup newStudyGroup = new StudyGroup(
                     nameField.getText(),
@@ -374,12 +374,12 @@ public class UpdateAction extends Action {
                     user.name()
             );
             if(!newStudyGroup.validate()) {
-                JOptionPane.showMessageDialog(null, "Объект не валиден!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotValid"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
             Response response = client.sendAndAskResponse(new Request("update", id.toString(), user, newStudyGroup));
-            if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, "Объект изменен!", "Итог", JOptionPane.PLAIN_MESSAGE);
-            else JOptionPane.showMessageDialog(null, "Объект не изменен!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+            if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectUpdated"), resourceBundle.getString("Ok"), JOptionPane.PLAIN_MESSAGE);
+            else JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotChanged"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
         }
     }
 }

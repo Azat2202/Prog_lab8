@@ -20,8 +20,8 @@ public class RemoveAllByAverageMarkAction extends Action{
     private String askAverageMark(){
         BorderLayout layout = new BorderLayout();
         JPanel panel = new JPanel(layout);
-        JLabel question = new JLabel("Введите среднюю оценку для подсчета количества");
-        JLabel markLabel = new JLabel("Средняя оценка:");
+        JLabel question = new JLabel(resourceBundle.getString("EnterAvgMark"));
+        JLabel markLabel = new JLabel(resourceBundle.getString("AverageMark"));
         JFormattedTextField markField = new JFormattedTextField(DecimalFormat.getInstance());
 
         layout.addLayoutComponent(question, BorderLayout.NORTH);
@@ -38,7 +38,7 @@ public class RemoveAllByAverageMarkAction extends Action{
     @Override
     public void actionPerformed(ActionEvent e) {
         Response response = client.sendAndAskResponse(new Request("remove_all_by_average_mark", this.askAverageMark(), user));
-        if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, "Объекты удалены!", "Итог", JOptionPane.PLAIN_MESSAGE);
-        else JOptionPane.showMessageDialog(null, "Объекты не удалены!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+        if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectDeleted"), resourceBundle.getString("Result"), JOptionPane.PLAIN_MESSAGE);
+        else JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotDeleted"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
     }
 }

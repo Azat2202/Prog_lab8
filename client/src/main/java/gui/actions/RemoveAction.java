@@ -26,8 +26,8 @@ public class RemoveAction extends Action {
 
         BorderLayout layout = new BorderLayout();
         JPanel panel = new JPanel(layout);
-        JLabel question = new JLabel("Выберете id для удаления");
-        JLabel idLabel = new JLabel("Выберите id");
+        JLabel question = new JLabel(resourceBundle.getString("SelectIdForDelete"));
+        JLabel idLabel = new JLabel(resourceBundle.getString("SelectId"));
         JComboBox idField = new JComboBox(userOwnedIds);
 
         layout.addLayoutComponent(question, BorderLayout.NORTH);
@@ -36,7 +36,7 @@ public class RemoveAction extends Action {
 
         JOptionPane.showMessageDialog(null,
                 idField,
-                "Update",
+                resourceBundle.getString("Update"),
                 JOptionPane.PLAIN_MESSAGE);
         return (Integer) idField.getSelectedItem();
     }
@@ -44,13 +44,13 @@ public class RemoveAction extends Action {
     @Override
     public void actionPerformed(ActionEvent e) {
         Integer id = this.getSelectedId();
-        if(id == null) JOptionPane.showMessageDialog(null, "У вас нет объектов", "Неуспешное удаление", JOptionPane.ERROR_MESSAGE);
+        if(id == null) JOptionPane.showMessageDialog(null, resourceBundle.getString("NoObjects"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
         Response response = client.sendAndAskResponse(new Request("remove_by_id", id.toString(), user));
         if(response.getStatus() == ResponseStatus.OK) {
-            JOptionPane.showMessageDialog(null, "Объект удален успешно", "Успешное удаление", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectDeleted"), resourceBundle.getString("Ok"), JOptionPane.INFORMATION_MESSAGE);
         }
         else{
-            JOptionPane.showMessageDialog(null, "Объект удалить не удалось", "Неуспешное удаление", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotDeleted"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
         }
     }
 }
