@@ -16,8 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +29,6 @@ import static javax.swing.JOptionPane.*;
 /*
     TODO:
         Фильтрация
-        Анимация
         Локали
  */
 
@@ -105,15 +102,18 @@ public class GuiManager {
         this.tableModel = new DefaultTableModel(columnNames, tableData.length);
         this.tableModel.setDataVector(tableData, columnNames);
         this.table = new JTable(tableModel);
+
         new Timer(1000, (i) ->{
             Object[][] newTableData = this.getTableData();
             if(!Arrays.deepEquals(this.tableData, newTableData)) {
                 this.tableData = newTableData;
                 this.tableModel.setDataVector(this.tableData, columnNames);
                 this.tableModel.fireTableDataChanged();
-                this.cartesianPanel.repaint();
+                this.cartesianPanel.updateUserColors();
+                this.cartesianPanel.reanimate();
             }
         }).start();
+
         this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -153,6 +153,7 @@ public class GuiManager {
             cardLayout.show(cardPanel, "Table");
         });
         cartesianExecute.addActionListener((actionEvent) -> {
+            this.cartesianPanel.reanimate();
             cardLayout.show(cardPanel, "Cartesian");
         });
 

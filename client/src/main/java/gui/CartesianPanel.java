@@ -11,27 +11,35 @@ import utility.Client;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-class CartesianPanel extends JPanel {
+class CartesianPanel extends JPanel implements ActionListener {
     private Client client;
     private User user;
     private GuiManager guiManager;
     private LinkedHashMap<Rectangle, Integer> rectangles = new LinkedHashMap<>();
+    private Timer timer;
+    private Map<String, Color> users;
+    private int step;
     public CartesianPanel(Client client, User user, GuiManager guiManager){
         super();
         this.client = client;
         this.user = user;
         this.guiManager = guiManager;
+        this.step = 0;
+        this.timer = new Timer(1, this);
+        timer.start();
+        updateUserColors();
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -49,6 +57,21 @@ class CartesianPanel extends JPanel {
                 new UpdateAction(user, client, guiManager).updateJOptionWorker(id);
             }
         });
+    }
+
+    public void updateUserColors() {
+        Random random = new Random();
+        Response response = client.sendAndAskResponse(new Request("show", "", user));
+        this.users = response.getCollection().stream()
+                .map(StudyGroup::getUserLogin)
+                .distinct()
+                .collect(Collectors.toMap(
+                        s -> s, s -> {
+                            int red = random.nextInt(25) * 10;
+                            int green = random.nextInt(25) * 10;
+                            int blue = random.nextInt(25) * 10;
+                            return new Color(red, green, blue);
+                        }));
     }
 
     @Override
@@ -70,32 +93,21 @@ class CartesianPanel extends JPanel {
         g2.drawLine(width - 10, height / 2 + 5, width, height / 2);
         g2.drawLine(width / 2 - 5, 10, width / 2, 0);
         g2.drawLine(width / 2 + 5, 10, width / 2, 0);
-//        this.drawRectangles(g2);
-        AtomicInteger step = new AtomicInteger(1);
-        Timer timer = new Timer();
-        TimerTask timerTask =  new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("here");
-                CartesianPanel.this.drawRectangles(g2, (float) step.getAndIncrement());
-            }
-        };
-        timer.schedule(timerTask, 1, 100);
+        this.paintRectangles(g2);
     }
 
-    private void drawRectangles(Graphics2D g2, Float step){
-        Random random = new Random();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(step == 100) timer.stop();
+        else{
+            step += 6;
+            step = Math.min(step, 100);
+            repaint();
+        }
+    }
+
+    private void paintRectangles(Graphics2D g2){
         Response response = client.sendAndAskResponse(new Request("show", "", user));
-        Map<String, Color> users = response.getCollection().stream()
-                .map(StudyGroup::getUserLogin)
-                .distinct()
-                .collect(Collectors.toMap(
-                    s -> s, s -> {
-                    int red = random.nextInt(25) * 10;
-                    int green = random.nextInt(25) * 10;
-                    int blue = random.nextInt(25) * 10;
-                    return new Color(red, green, blue);
-                }));
         if(response.getStatus() != ResponseStatus.OK) return;
         int width = getWidth();
         int halfWidth = width / 2;
@@ -127,11 +139,13 @@ class CartesianPanel extends JPanel {
         float maxCordX = response.getCollection().stream()
                 .map(StudyGroup::getCoordinates)
                 .map(Coordinates::getX)
+                .map(Math::abs)
                 .max(Float::compareTo)
                 .orElse(0F);
         Double maxCordY = response.getCollection().stream()
                 .map(StudyGroup::getCoordinates)
                 .map(Coordinates::getY)
+                .map(Math::abs)
                 .max(Double::compareTo)
                 .orElse(0D);
         BufferedImage img;
@@ -145,8 +159,8 @@ class CartesianPanel extends JPanel {
         g2.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         this.rectangles = new LinkedHashMap<>();
         response.getCollection().stream().sorted(StudyGroup::compareTo).forEach(studyGroup -> {
-            int dx1 = (int) ((halfWidth + (studyGroup.getCoordinates().getX() / maxCordX * (halfWidth - elementWidth))) * (step / 100));
-            int dx2 = (int) (halfHeight + (studyGroup.getCoordinates().getY() / maxCordY * (halfHeight - elementHeight)) * (step / 100));
+            int dx1 = (int) ((halfWidth + (studyGroup.getCoordinates().getX() * step / 100 / maxCordX * (halfWidth - elementWidth))));
+            int dx2 = (int) ((halfHeight + (studyGroup.getCoordinates().getY() * step / 100 / maxCordY * (halfHeight - elementHeight))));
             this.rectangles.put( new Rectangle(dx1 - elementWidth / 2 - 1,
                     dx2 - elementHeight / 2 - 1,
                     elementWidth + 2,
@@ -177,4 +191,11 @@ class CartesianPanel extends JPanel {
                     );
         });
     }
+
+    public void reanimate(){
+        this.step = 0;
+        this.timer.start();
+    }
+
+
 }
