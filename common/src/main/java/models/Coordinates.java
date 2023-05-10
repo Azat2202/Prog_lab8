@@ -1,13 +1,14 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
  * Класс координат
  * @author azat2202
  */
-public class Coordinates implements Validator, Serializable {
+public class Coordinates implements Validator, Serializable, Comparable<Coordinates> {
     private float x; //Значение поля должно быть больше -206
     private Double y; //Максимальное значение поля: 463, Поле не может быть null
 
@@ -30,6 +31,13 @@ public class Coordinates implements Validator, Serializable {
 
     public void setY(Double y) {
         this.y = y;
+    }
+
+    @Override
+    public int compareTo(Coordinates o) {
+        if (Objects.isNull(o)) return 1;
+        return Double.compare((Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2)),
+                (Math.pow(o.getX(), 2) + Math.pow(o.getY(), 2)));
     }
 
     /**

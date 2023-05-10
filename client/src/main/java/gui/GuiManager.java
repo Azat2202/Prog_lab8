@@ -6,6 +6,7 @@ import dtp.Response;
 import dtp.ResponseStatus;
 import dtp.User;
 import gui.actions.*;
+import models.Coordinates;
 import models.StudyGroup;
 import utility.Client;
 
@@ -19,9 +20,12 @@ import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static javax.swing.JOptionPane.*;
 
@@ -37,7 +41,6 @@ public class GuiManager {
 
     private final JFrame frame;
     private final Container contentPane;
-    private final MenuBar menuBar = null;
     private JTable table = null;
     private DefaultTableModel tableModel = null;
     private CartesianPanel cartesianPanel = null;
@@ -129,9 +132,10 @@ public class GuiManager {
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
         //Компараторы
         {
-            //Компаратор для времени
+            sorter.setComparator(2, Comparator.comparing(i -> ((Coordinates) i)));
             sorter.setComparator(3, Comparator.comparing(
                     i -> LocalDateTime.parse(((String) i).replace(" ", "T"))));
+            sorter.setComparator(13, Comparator.comparing(i -> ((Coordinates) i)));
         }
 
         table.setRowSorter(sorter);
