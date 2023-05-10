@@ -37,7 +37,7 @@ import static javax.swing.JOptionPane.*;
 public class GuiManager {
     private final Client client;
     private static Locale locale = new Locale("ru");
-    private ResourceBundle resourceBundle = ResourceBundle.getBundle("GuiLabels", this.locale);
+    private static ResourceBundle resourceBundle = ResourceBundle.getBundle("GuiLabels", GuiManager.getLocale());
     private final JFrame frame;
     private final Container contentPane;
     private JTable table = null;
@@ -87,13 +87,32 @@ public class GuiManager {
 
     }
 
+    public GuiManager(Client client, User user) {
+        this.client = client;
+        this.user = user;
+        try {
+            UIManager.setLookAndFeel(new FlatDarculaLaf());
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+        this.frame = new JFrame(resourceBundle.getString("LabWork8"));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.contentPane = this.frame.getContentPane();
+        frame.setResizable(true);
+        frame.setVisible(true);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setLocationRelativeTo(null);
+        SwingUtilities.invokeLater(this::run);
+
+    }
+
     public void run(){
         Panel panel = new Panel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
-        this.loginAuth();
+        if(user == null) this.loginAuth();
         frame.setJMenuBar(this.createMenuBar());
 
         JButton tableExecute = new JButton(resourceBundle.getString("Table"));
@@ -228,6 +247,7 @@ public class GuiManager {
         JMenuItem removeGreater = new JMenuItem(resourceBundle.getString("removeGreater"));
         JMenuItem update = new JMenuItem(resourceBundle.getString("Update"));
         JMenuItem remove = new JMenuItem(resourceBundle.getString("Remove"));
+        JMenuItem language = new JMenuItem(resourceBundle.getString("Language"));
 
         add.addActionListener(new AddAction(user, client, this));
         update.addActionListener(new UpdateAction(user, client, this));
@@ -240,6 +260,7 @@ public class GuiManager {
         info.addActionListener(new InfoAction(user, client, this));
         removeAllByAverageMark.addActionListener(new RemoveAllByAverageMarkAction(user, client, this));
         removeGreater.addActionListener(new RemoveGreaterAction(user, client, this));
+        language.addActionListener(new ChangeLanguageAction(user, client, this));
 
         //I hate swing :)
         add.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\add.png")
@@ -275,6 +296,9 @@ public class GuiManager {
         removeGreater.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\remove_greater.png")
                          .getImage()
                          .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        language.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\language.png")
+                         .getImage()
+                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
 
 
 
@@ -291,6 +315,8 @@ public class GuiManager {
         actions.add(countByAverageMark);
         actions.add(countLessThanExpelled);
         actions.add(info);
+        actions.addSeparator();
+        actions.add(language);
         actions.addSeparator();
         actions.add(exit);
 
@@ -389,5 +415,13 @@ public class GuiManager {
 
     public static void setLocale(Locale locale) {
         GuiManager.locale = locale;
+        Locale.setDefault(locale);
+        ResourceBundle.clearCache();
+        resourceBundle = ResourceBundle.getBundle("GuiLabels", locale);
+    }
+
+    public void restart(){
+        this.frame.dispose();
+        new GuiManager(client, user);
     }
 }
