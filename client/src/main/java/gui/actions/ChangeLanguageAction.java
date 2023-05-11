@@ -27,7 +27,6 @@ public class ChangeLanguageAction extends Action{
                 languages,
                 "Choose language",
                 JOptionPane.INFORMATION_MESSAGE);
-        GuiManager.setLocale((Locale) languages.getSelectedItem());
-        guiManager.restart();
+        guiManager.setLocale((Locale) languages.getSelectedItem());
     }
 }

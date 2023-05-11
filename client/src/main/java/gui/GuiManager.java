@@ -18,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -29,22 +31,22 @@ import static javax.swing.JOptionPane.*;
 
 
 /*
-    TODO:
-        Фильтрация
-        Локали
  */
 
 public class GuiManager {
     private final Client client;
     private static Locale locale = new Locale("ru");
+    private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
     private static ResourceBundle resourceBundle = ResourceBundle.getBundle("GuiLabels", GuiManager.getLocale());
     private final JFrame frame;
-    private final Container contentPane;
+    private Container contentPane;
+    private Panel panel;
     private JTable table = null;
     private DefaultTableModel tableModel = null;
     private CartesianPanel cartesianPanel = null;
     private Object[][] tableData = null;
     private Collection<StudyGroup> collection = null;
+    private Map<JButton, String> buttonsToChangeLocale = new LinkedHashMap<>();
     private User user;
 
     private final static Color RED_WARNING = Color.decode("#FF4040");
@@ -97,7 +99,6 @@ public class GuiManager {
         }
         this.frame = new JFrame(resourceBundle.getString("LabWork8"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.contentPane = this.frame.getContentPane();
         frame.setResizable(true);
         frame.setVisible(true);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -107,7 +108,8 @@ public class GuiManager {
     }
 
     public void run(){
-        Panel panel = new Panel();
+        this.contentPane = this.frame.getContentPane();
+        panel = new Panel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -117,12 +119,14 @@ public class GuiManager {
 
         JButton tableExecute = new JButton(resourceBundle.getString("Table"));
         JButton cartesianExecute = new JButton(resourceBundle.getString("Coordinates"));
+//        this.buttonsToChangeLocale.put(tableExecute, "Table");
+//        this.buttonsToChangeLocale.put(cartesianExecute, "Coordinates");
         this.tableData = this.getTableData();
         this.tableModel = new DefaultTableModel(columnNames, tableData.length);
         this.tableModel.setDataVector(tableData, columnNames);
         this.table = new JTable(tableModel);
 
-        new Timer(1000, (i) ->{
+        new Timer(3000, (i) ->{
             Object[][] newTableData = this.getTableData();
             if(!Arrays.deepEquals(this.tableData, newTableData)) {
                 this.tableData = newTableData;
@@ -136,11 +140,13 @@ public class GuiManager {
         this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                int row = table.convertRowIndexToModel(table.getSelectedRow());
                 Integer id;
                 try {
+                    int row = table.convertRowIndexToModel(
+                                    table.getSelectedRow());
                     id = (Integer) tableData[row][0];
-                } catch (ArrayIndexOutOfBoundsException k) {return;}
+                } catch (IndexOutOfBoundsException k) {return;}
+
                 //I dont know when exception occur))
                 new UpdateAction(user, client, GuiManager.this).updateJOptionWorker(id);
             }
@@ -150,7 +156,14 @@ public class GuiManager {
         {
             sorter.setComparator(2, Comparator.comparing(i -> ((Coordinates) i)));
             sorter.setComparator(3, Comparator.comparing(
-                    i -> LocalDateTime.parse(((String) i).replace(" ", "T"))));
+                    i -> {
+                        try {
+                            return dateFormat.parse((String) i);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    }));
             sorter.setComparator(13, Comparator.comparing(i -> ((Coordinates) i)));
         }
 
@@ -211,10 +224,7 @@ public class GuiManager {
                 studyGroup.getId(),
                 studyGroup.getName(),
                 studyGroup.getCoordinates(),
-                studyGroup.getCreationDate().toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDateTime()
-                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                dateFormat.format(studyGroup.getCreationDate()),
                 studyGroup.getStudentsCount(),
                 studyGroup.getExpelledStudents(),
                 studyGroup.getAverageMark(),
@@ -413,15 +423,18 @@ public class GuiManager {
         return locale;
     }
 
-    public static void setLocale(Locale locale) {
+    public void setLocale(Locale locale) {
         GuiManager.locale = locale;
         Locale.setDefault(locale);
         ResourceBundle.clearCache();
         resourceBundle = ResourceBundle.getBundle("GuiLabels", locale);
-    }
-
-    public void restart(){
-        this.frame.dispose();
-        new GuiManager(client, user);
+        dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
+        this.buttonsToChangeLocale.forEach((i, j) -> i.setText(resourceBundle.getString(j)));
+        this.tableData = this.getTableData();
+        this.tableModel.setDataVector(this.tableData, columnNames);
+        this.tableModel.fireTableDataChanged();
+        this.frame.remove(panel);
+        this.frame.setTitle(resourceBundle.getString("LabWork8"));
+        this.run();
     }
 }

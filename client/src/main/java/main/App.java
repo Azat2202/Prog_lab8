@@ -41,7 +41,7 @@ public class App {
 
         console = new Console();
         Client client = new Client(host, port, RECONNECTION_TIMEOUT, MAX_RECONNECTION_ATTEMPTS, console);
-        GuiManager guiManager = new GuiManager(client);
+        new GuiManager(client);
 //        new RuntimeManager(console, new Scanner(System.in), client).interactiveMode();
     }
 }

@@ -62,6 +62,19 @@ public class UpdateAction extends Action {
     public void updateJOptionWorker(Integer id) {
         if(id == null) JOptionPane.showMessageDialog(null, resourceBundle.getString("NoObjects"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 
+        if(!guiManager.getCollection().stream()
+                .filter((i) -> i.getId().equals(id))
+                .toList()
+                .get(0)
+                .getUserLogin()
+                .equals(user.name())){
+            JOptionPane.showMessageDialog(null,
+                    resourceBundle.getString("ObjectNotYour"),
+                    resourceBundle.getString("Error"),
+                    JOptionPane.WARNING_MESSAGE
+                    );
+            return;
+        }
 
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
