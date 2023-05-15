@@ -6,18 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/ChangeLanguageAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/ChangeLanguageAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/UpdateAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/UpdateAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/main/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/main/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/ExecuteScriptAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/ExecuteScriptAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/utility/ExecuteFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utility/ExecuteFileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_de.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_de.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_en_AU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_en_AU.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_ru.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_sv.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_sv.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/main/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/main/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +230,9 @@
       <workItem from="1683643941416" duration="24216000" />
       <workItem from="1683735380453" duration="7678000" />
       <workItem from="1683747956352" duration="11663000" />
-      <workItem from="1683783010905" duration="7746000" />
+      <workItem from="1683783010905" duration="10716000" />
+      <workItem from="1683932058787" duration="201000" />
+      <workItem from="1684188321219" duration="1705000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>

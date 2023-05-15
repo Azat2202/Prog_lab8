@@ -265,6 +265,7 @@ public class GuiManager {
         addIfMax.addActionListener(new AddIfMaxAction(user, client, this));
         clear.addActionListener(new ClearAction(user, client, this));
         countByAverageMark.addActionListener(new CountByAverageMarkAction(user, client, this));
+        executeScript.addActionListener(new ExecuteScriptAction(user, client, this));
         countLessThanExpelled.addActionListener(new CountLessThanExpelledStudentsAction(user, client, this));
         exit.addActionListener(new ExitAction(user, client, this));
         info.addActionListener(new InfoAction(user, client, this));
@@ -309,6 +310,9 @@ public class GuiManager {
         language.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\language.png")
                          .getImage()
                          .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        executeScript.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\execute.png")
+                         .getImage()
+                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
 
 
 
@@ -328,6 +332,7 @@ public class GuiManager {
         actions.addSeparator();
         actions.add(language);
         actions.addSeparator();
+        actions.add(executeScript);
         actions.add(exit);
 
         menuBar.add(actions);

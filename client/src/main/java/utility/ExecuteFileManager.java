@@ -1,5 +1,6 @@
 package utility;
 
+import commandLine.BlankConsole;
 import commandLine.Printable;
 import commandLine.UserInput;
 import commandLine.forms.StudyGroupForm;
@@ -25,17 +26,19 @@ public class ExecuteFileManager implements UserInput {
     private static final ArrayDeque<BufferedReader> fileReaders = new ArrayDeque<>();
 
     private final Printable console;
-    private final Scanner userScanner;
     private final Client client;
     private User user = null;
 
-    public ExecuteFileManager(Printable console, Scanner userScanner, Client client) {
+    public ExecuteFileManager() {
+        this.console = new BlankConsole();
+        this.client = null;
+    }
+    public ExecuteFileManager(Printable console, Client client) {
         this.console = console;
-        this.userScanner = userScanner;
         this.client = client;
     }
 
-    private void fileExecution(String args) throws ExitObliged, LoginDuringExecuteFail {
+    public void fileExecution(String args) throws ExitObliged, LoginDuringExecuteFail {
         if (args == null || args.isEmpty()) {
             console.printError("Путь не распознан");
             return;

@@ -31,6 +31,20 @@ class CartesianPanel extends JPanel implements ActionListener {
     private Timer timer;
     private Map<String, Color> users;
     private int step;
+    private Collection<StudyGroup> collection;
+
+    private float maxCordX;
+    private Double maxCordY;
+    private BufferedImage img = null;
+
+    {
+        try {
+            this.img = ImageIO.read(new File("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\tyler.jpg"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public CartesianPanel(Client client, User user, GuiManager guiManager){
         super();
         this.client = client;
@@ -72,12 +86,47 @@ class CartesianPanel extends JPanel implements ActionListener {
                             int blue = random.nextInt(25) * 10;
                             return new Color(red, green, blue);
                         }));
+        /* ЭТО ОЧЕНЬ СТРАШНЫЙ МЕТОД
+        ОН НУЖЕН ЧТОБЫ СОСЕДНИЕ КВАДРАТЫ СДВИГАЛИСЬ
+        НО ОН РАБОТАЕТ ЗА О(n^2) а можно СПОКОЙНО написать за О(n)
+        Н-О М-Н-Е Л-Е-Н-Ь
+         */
+        float delta = 0.2F;
+        while(response.getCollection().stream().map(StudyGroup::getCoordinates).distinct().count() < response.getCollection().size()){
+            for(StudyGroup studyGroup : response.getCollection()){
+                if(response.getCollection().stream()
+                        .anyMatch((i) -> i.getCoordinates().equals(studyGroup.getCoordinates())
+                                && !i.getId().equals(studyGroup.getId()))){
+                    studyGroup.getCoordinates().setX(studyGroup.getCoordinates().getX() + delta);
+                    studyGroup.getCoordinates().setY(studyGroup.getCoordinates().getY() + delta);
+                    break;
+                }
+            }
+        }
+        this.collection = response.getCollection();
+        this.maxCordX = this.collection.stream()
+                .map(StudyGroup::getCoordinates)
+                .map(Coordinates::getX)
+                .map(Math::abs)
+                .max(Float::compareTo)
+                .orElse(0F);
+        this.maxCordY = this.collection.stream()
+                .map(StudyGroup::getCoordinates)
+                .map(Coordinates::getY)
+                .map(Math::abs)
+                .max(Double::compareTo)
+                .orElse(0D);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.setFont(new Font("Tahoma", Font.BOLD, 45));
 
         int width = getWidth();
         int height = getHeight();
@@ -100,71 +149,30 @@ class CartesianPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(step == 100) timer.stop();
         else{
-            step += 6;
+            step += 2;
             step = Math.min(step, 100);
             repaint();
         }
     }
 
     private void paintRectangles(Graphics2D g2){
-        Response response = client.sendAndAskResponse(new Request("show", "", user));
-        if(response.getStatus() != ResponseStatus.OK) return;
         int width = getWidth();
         int halfWidth = width / 2;
         int height = getHeight();
         int halfHeight = height / 2;
         int elementWidth = 130;
         int elementHeight = 130;
-        int fontSize = 45;
-        float delta = 0.2F;
 
-        /* ЭТО ОЧЕНЬ СТРАШНЫЙ МЕТОД
-        ОН НУЖЕН ЧТОБЫ СОСЕДНИЕ КВАДРАТЫ СДВИГАЛИСЬ
-        НО ОН РАБОТАЕТ ЗА О(n^2) а можно СПОКОЙНО написать за О(n)
-        Н-О М-Н-Е Л-Е-Н-Ь
-         */
-
-        while(response.getCollection().stream().map(StudyGroup::getCoordinates).distinct().count() < response.getCollection().size()){
-            for(StudyGroup studyGroup : response.getCollection()){
-                if(response.getCollection().stream()
-                        .anyMatch((i) -> i.getCoordinates().equals(studyGroup.getCoordinates())
-                                && !i.getId().equals(studyGroup.getId()))){
-                    studyGroup.getCoordinates().setX(studyGroup.getCoordinates().getX() + delta);
-                    studyGroup.getCoordinates().setY(studyGroup.getCoordinates().getY() + delta);
-                    break;
-                }
-            }
-        }
-
-        float maxCordX = response.getCollection().stream()
-                .map(StudyGroup::getCoordinates)
-                .map(Coordinates::getX)
-                .map(Math::abs)
-                .max(Float::compareTo)
-                .orElse(0F);
-        Double maxCordY = response.getCollection().stream()
-                .map(StudyGroup::getCoordinates)
-                .map(Coordinates::getY)
-                .map(Math::abs)
-                .max(Double::compareTo)
-                .orElse(0D);
-        BufferedImage img;
-        try {
-            img = ImageIO.read(new File("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\tyler.jpg"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2.setFont(new Font("Tahoma", Font.BOLD, fontSize));
-        this.rectangles = new LinkedHashMap<>();
-        response.getCollection().stream().sorted(StudyGroup::compareTo).forEach(studyGroup -> {
+        if(step == 100) this.rectangles = new LinkedHashMap<>();
+        this.collection.stream().sorted(StudyGroup::compareTo).forEach(studyGroup -> {
             int dx1 = (int) ((halfWidth + (studyGroup.getCoordinates().getX() * step / 100 / maxCordX * (halfWidth - elementWidth))));
             int dx2 = (int) ((halfHeight + (studyGroup.getCoordinates().getY() * step / 100 / maxCordY * (halfHeight - elementHeight))));
-            this.rectangles.put( new Rectangle(dx1 - elementWidth / 2 - 1,
-                    dx2 - elementHeight / 2 - 1,
-                    elementWidth + 2,
-                    elementHeight + 2), studyGroup.getId());
+            if(step == 100) {
+                this.rectangles.put(new Rectangle(dx1 - elementWidth / 2 - 1,
+                        dx2 - elementHeight / 2 - 1,
+                        elementWidth + 2,
+                        elementHeight + 2), studyGroup.getId());
+            }
             //Image
             g2.drawImage(img,
                     dx1 - elementWidth / 2,
