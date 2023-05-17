@@ -1,4 +1,4 @@
-execute_script a
+execute_script client\a
 info
-execute_script b
+execute_script client\b
 show

@@ -2,16 +2,14 @@ package gui.actions;
 
 import commandLine.Console;
 import dtp.User;
-import exceptions.ExitObliged;
 import gui.GuiManager;
 import utility.Client;
 import utility.ExecuteFileManager;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.nio.file.Path;
-import java.text.DecimalFormat;
+
+import static javax.swing.JOptionPane.*;
 
 public class ExecuteScriptAction extends Action{
     public ExecuteScriptAction(User user, Client client, GuiManager guiManager) {
@@ -36,12 +34,20 @@ public class ExecuteScriptAction extends Action{
                     .addComponent(fileAsker)
                     .addComponent(fileChooser));
 
-        JOptionPane.showMessageDialog(null,
+        int option = JOptionPane.showOptionDialog(null,
                 panel,
                 resourceBundle.getString("ScriptExecute"),
-                JOptionPane.QUESTION_MESSAGE);
-        try {
-            new ExecuteFileManager(new Console(), client).fileExecution(fileChooser.getSelectedFile().getAbsolutePath());
-        } catch (Exception ignored) {ignored.printStackTrace();}
+                JOptionPane.YES_NO_OPTION,
+                QUESTION_MESSAGE,
+                null,
+                new String[]{resourceBundle.getString("Yes"), resourceBundle.getString("No")},
+                resourceBundle.getString("Yes"));
+        if(option == OK_OPTION) {
+            try {
+                Console.setFileMode(true);
+                new ExecuteFileManager(new Console(), client, user).fileExecution(fileChooser.getSelectedFile().getAbsolutePath());
+                Console.setFileMode(false);
+            } catch (Exception ignored) {}
+        }
     }
 }

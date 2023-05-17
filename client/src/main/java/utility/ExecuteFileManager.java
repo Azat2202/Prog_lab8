@@ -27,15 +27,17 @@ public class ExecuteFileManager implements UserInput {
 
     private final Printable console;
     private final Client client;
-    private User user = null;
+    private User user;
 
     public ExecuteFileManager() {
         this.console = new BlankConsole();
         this.client = null;
+        this.user = null;
     }
-    public ExecuteFileManager(Printable console, Client client) {
+    public ExecuteFileManager(Printable console, Client client, User user) {
         this.console = console;
         this.client = client;
+        this.user = user;
     }
 
     public void fileExecution(String args) throws ExitObliged, LoginDuringExecuteFail {
@@ -49,8 +51,9 @@ public class ExecuteFileManager implements UserInput {
             ExecuteFileManager.pushFile(args);
             for (String line = ExecuteFileManager.readLine(); line != null; line = ExecuteFileManager.readLine()) {
                 String[] userCommand = (line + " ").split(" ", 2);
-                userCommand[1] = userCommand[1].trim();
                 if (userCommand[0].isBlank()) return;
+                userCommand[0] = userCommand[0].trim();
+                userCommand[1] = userCommand[1].trim();
                 if (userCommand[0].equals("execute_script")){
                     if(ExecuteFileManager.fileRepeat(userCommand[1])){
                         console.printError("Найдена рекурсия по пути " + new File(userCommand[1]).getAbsolutePath());
@@ -58,7 +61,7 @@ public class ExecuteFileManager implements UserInput {
                     }
                 }
                 console.println(ConsoleColors.toColor("Выполнение команды " + userCommand[0], ConsoleColors.YELLOW));
-                Response response = client.sendAndAskResponse(new Request(userCommand[0].trim(), userCommand[1].trim(), user));
+                Response response = client.sendAndAskResponse(new Request(userCommand[0], userCommand[1], user));
                 this.printResponse(response);
                 switch (response.getStatus()){
                     case ASK_OBJECT -> {
@@ -86,7 +89,6 @@ public class ExecuteFileManager implements UserInput {
                     case EXIT -> throw new ExitObliged();
                     case EXECUTE_SCRIPT -> {
                         this.fileExecution(response.getResponse());
-                        ExecuteFileManager.popRecursion();
                     }
                     case LOGIN_FAILED -> {
                         console.printError("Ошибка с вашим аккаунтом. Зайдите в него снова");

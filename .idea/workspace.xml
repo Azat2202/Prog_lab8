@@ -6,14 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/a" beforeDir="false" afterPath="$PROJECT_DIR$/client/a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/b" beforeDir="false" afterPath="$PROJECT_DIR$/client/b" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/simple_script" beforeDir="false" afterPath="$PROJECT_DIR$/client/simple_script" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/ExecuteScriptAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/ExecuteScriptAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/utility/ExecuteFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utility/ExecuteFileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_de.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_de.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_ru.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_sv.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_sv.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -232,7 +229,10 @@
       <workItem from="1683747956352" duration="11663000" />
       <workItem from="1683783010905" duration="10716000" />
       <workItem from="1683932058787" duration="201000" />
-      <workItem from="1684188321219" duration="1705000" />
+      <workItem from="1684188321219" duration="2075000" />
+      <workItem from="1684321450833" duration="335000" />
+      <workItem from="1684322644048" duration="1736000" />
+      <workItem from="1684334108920" duration="1412000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>
@@ -281,6 +281,11 @@
           <properties class="java.nio.channels.IllegalBlockingModeException" package="java.nio.channels" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/utility/ExecuteFileManager.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
