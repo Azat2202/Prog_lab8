@@ -8,6 +8,8 @@ import dtp.User;
 import gui.actions.*;
 import models.Coordinates;
 import models.StudyGroup;
+import net.coderazzi.filters.gui.AutoChoices;
+import net.coderazzi.filters.gui.TableFilterHeader;
 import utility.Client;
 
 import javax.swing.*;
@@ -137,6 +139,9 @@ public class GuiManager {
             }
         }).start();
 
+
+        TableFilterHeader filterHeader = new TableFilterHeader(table, AutoChoices.ENABLED);
+
         this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -166,8 +171,9 @@ public class GuiManager {
                     }));
             sorter.setComparator(13, Comparator.comparing(i -> ((Coordinates) i)));
         }
-
         table.setRowSorter(sorter);
+
+
         JScrollPane tablePane = new JScrollPane(table);
         this.cartesianPanel = new CartesianPanel(client, user, this);
         JPanel cardPanel = new JPanel();
