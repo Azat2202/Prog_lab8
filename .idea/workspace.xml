@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/StreamTableModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Coordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Location.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,20 +54,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RESOURCE_BUNDLE_EXPRESSION_USED&quot;: &quot;resourceBundle&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_directory_selection&quot;: &quot;C:/Users/azat2/IdeaProjects/Prog_lab8/client/src/main/java/main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/azat2/IdeaProjects/Prog_lab8/client&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RESOURCE_BUNDLE_EXPRESSION_USED": "resourceBundle",
+    "WebServerToolWindowFactoryState": "false",
+    "last_directory_selection": "C:/Users/azat2/IdeaProjects/Prog_lab8/client/src/main/java/main",
+    "last_opened_file_path": "C:/Users/azat2/IdeaProjects/bcomp",
+    "settings.editor.selected.configurable": "Errors"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab8\client" />
@@ -232,6 +233,10 @@
       <workItem from="1684322644048" duration="1736000" />
       <workItem from="1684334108920" duration="1412000" />
       <workItem from="1684869356498" duration="2520000" />
+      <workItem from="1684915770218" duration="660000" />
+      <workItem from="1684921935384" duration="1733000" />
+      <workItem from="1684924722225" duration="11012000" />
+      <workItem from="1684944077822" duration="1178000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>

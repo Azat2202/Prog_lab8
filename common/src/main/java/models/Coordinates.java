@@ -40,6 +40,10 @@ public class Coordinates implements Validator, Serializable, Comparable<Coordina
                 (Math.pow(o.getX(), 2) + Math.pow(o.getY(), 2)));
     }
 
+    public float getRadius(){
+        return (float) (Math.pow(getX(), 2) + Math.pow(getY(), 2));
+    }
+
     /**
      * Валидирует правильность полей.
      * @return true, если все верно, иначе false

@@ -38,6 +38,10 @@ public class Location implements Validator, Serializable {
         this.y = y;
     }
 
+    public float getRadius(){
+        return (float) (Math.pow(getX(), 2) + Math.pow(getY(), 2));
+    }
+
     public String getName() {
         return name;
     }

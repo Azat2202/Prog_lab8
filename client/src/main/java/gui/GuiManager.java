@@ -20,12 +20,16 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.List;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,10 +48,10 @@ public class GuiManager {
     private Container contentPane;
     private Panel panel;
     private JTable table = null;
-    private DefaultTableModel tableModel = null;
+    private StreamTableModel tableModel = null;
     private CartesianPanel cartesianPanel = null;
-    private Object[][] tableData = null;
-    private Collection<StudyGroup> collection = null;
+    private ArrayList<StudyGroup> tableData = null;
+    private ArrayList<StudyGroup> collection = null;
     private Map<JButton, String> buttonsToChangeLocale = new LinkedHashMap<>();
     private User user;
 
@@ -121,16 +125,14 @@ public class GuiManager {
 
         JButton tableExecute = new JButton(resourceBundle.getString("Table"));
         JButton cartesianExecute = new JButton(resourceBundle.getString("Coordinates"));
-//        this.buttonsToChangeLocale.put(tableExecute, "Table");
-//        this.buttonsToChangeLocale.put(cartesianExecute, "Coordinates");
-        this.tableData = this.getTableData();
-        this.tableModel = new DefaultTableModel(columnNames, tableData.length);
+        this.tableData = this.getTableDataStudyGroup();
+        this.tableModel = new StreamTableModel(columnNames, tableData.size());
         this.tableModel.setDataVector(tableData, columnNames);
         this.table = new JTable(tableModel);
 
         new Timer(3000, (i) ->{
-            Object[][] newTableData = this.getTableData();
-            if(!Arrays.deepEquals(this.tableData, newTableData)) {
+            ArrayList<StudyGroup> newTableData = this.getTableDataStudyGroup();
+            if(!(this.tableData.equals(newTableData))) {
                 this.tableData = newTableData;
                 this.tableModel.setDataVector(this.tableData, columnNames);
                 this.tableModel.fireTableDataChanged();
@@ -139,39 +141,27 @@ public class GuiManager {
             }
         }).start();
 
-
-        TableFilterHeader filterHeader = new TableFilterHeader(table, AutoChoices.ENABLED);
-
+        // Выбрать столбец для сортировки
+        table.getTableHeader().setReorderingAllowed(false);
+        table.setDragEnabled(false);
+        table.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point point = e.getPoint();
+                int column = table.columnAtPoint(point);
+                tableModel.performSorting(column);
+                table.repaint();
+            }
+        });
+        // Выбрать строку для изменения
         this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                Integer id;
-                try {
-                    int row = table.convertRowIndexToModel(
-                                    table.getSelectedRow());
-                    id = (Integer) tableData[row][0];
-                } catch (IndexOutOfBoundsException k) {return;}
-
-                //I dont know when exception occur))
+                Integer id = tableModel.getRow(table.getSelectedRow()).getId();
                 new UpdateAction(user, client, GuiManager.this).updateJOptionWorker(id);
             }
         });
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
-        //Компараторы
-        {
-            sorter.setComparator(2, Comparator.comparing(i -> ((Coordinates) i)));
-            sorter.setComparator(3, Comparator.comparing(
-                    i -> {
-                        try {
-                            return dateFormat.parse((String) i);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                            return null;
-                        }
-                    }));
-            sorter.setComparator(13, Comparator.comparing(i -> ((Coordinates) i)));
-        }
-        table.setRowSorter(sorter);
+
 
 
         JScrollPane tablePane = new JScrollPane(table);
@@ -216,13 +206,20 @@ public class GuiManager {
         frame.setVisible(true);
     }
 
-    public Object[][] getTableData(){
+//    public Object[][] getTableData(){
+//        Response response = client.sendAndAskResponse(new Request("show", "", user));
+//        if(response.getStatus() != ResponseStatus.OK) return null;
+//        this.collection = response.getCollection();
+//        return response.getCollection().stream()
+//                .map(this::createRow)
+//                .toArray(Object[][]::new);
+//    }
+
+    public ArrayList<StudyGroup> getTableDataStudyGroup(){
         Response response = client.sendAndAskResponse(new Request("show", "", user));
         if(response.getStatus() != ResponseStatus.OK) return null;
-        this.collection = response.getCollection();
-        return response.getCollection().stream()
-                .map(this::createRow)
-                .toArray(Object[][]::new);
+        this.collection = new ArrayList<>(response.getCollection());
+        return new ArrayList<>(response.getCollection());
     }
 
     private Object[] createRow(StudyGroup studyGroup){
@@ -441,11 +438,15 @@ public class GuiManager {
         resourceBundle = ResourceBundle.getBundle("GuiLabels", locale);
         dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
         this.buttonsToChangeLocale.forEach((i, j) -> i.setText(resourceBundle.getString(j)));
-        this.tableData = this.getTableData();
+        this.tableData = this.getTableDataStudyGroup();
         this.tableModel.setDataVector(this.tableData, columnNames);
         this.tableModel.fireTableDataChanged();
         this.frame.remove(panel);
         this.frame.setTitle(resourceBundle.getString("LabWork8"));
         this.run();
+    }
+
+    private void setFilters(){
+
     }
 }
