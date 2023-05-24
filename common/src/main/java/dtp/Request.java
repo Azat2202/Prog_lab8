@@ -3,6 +3,7 @@ package dtp;
 import models.StudyGroup;
 
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Request implements Serializable {
@@ -10,24 +11,28 @@ public class Request implements Serializable {
     private String args = "";
     private StudyGroup object = null;
     private User user;
+    private Locale locale;
 
-    public Request(String commandName, String args, User user) {
+    public Request(String commandName, String args, User user, Locale locale) {
         this.commandName = commandName.trim();
         this.args = args;
         this.user = user;
+        this.locale = locale;
     }
 
-    public Request(String commandName, User user, StudyGroup object) {
+    public Request(String commandName, User user, StudyGroup object, Locale locale) {
         this.commandName = commandName.trim();
         this.object = object;
         this.user = user;
+        this.locale = locale;
     }
 
-    public Request(String commandName, String args, User user, StudyGroup object) {
+    public Request(String commandName, String args, User user, StudyGroup object, Locale locale) {
         this.commandName = commandName.trim();
         this.args = args.trim();
         this.object = object;
         this.user = user;
+        this.locale = locale;
     }
 
     public boolean isEmpty() {
@@ -48,6 +53,10 @@ public class Request implements Serializable {
 
     public User getUser() {
         return user;
+    }
+
+    public Locale getLocale() {
+        return locale;
     }
 
     @Override

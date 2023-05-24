@@ -23,9 +23,10 @@ public class Help extends Command {
     @Override
     public Response execute(Request request) throws IllegalArguments {
         if (!request.getArgs().isBlank()) throw new IllegalArguments();
-        return new Response(ResponseStatus.OK,
-                String.join("\n",
-                        commandManager.getCommands()
-                                .stream().map(Command::toString).toList()));
+//        return new Response(ResponseStatus.OK,
+//                String.join("\n",
+//                        commandManager.getCommands()
+//                                .stream().map(Command::toString).toList()));
+        return new Response(ResponseStatus.OK);
     }
 }

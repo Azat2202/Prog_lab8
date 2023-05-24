@@ -337,7 +337,7 @@ public class AddAction extends Action {
                 JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotValid"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Response response = client.sendAndAskResponse(new Request("add", "", user, studyGroup));
+            Response response = client.sendAndAskResponse(new Request("add", "", user, studyGroup, GuiManager.getLocale()));
             if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectAcc"), resourceBundle.getString("Result"), JOptionPane.PLAIN_MESSAGE);
             else JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotValid"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
         }

@@ -75,7 +75,7 @@ class CartesianPanel extends JPanel implements ActionListener {
 
     public void updateUserColors() {
         Random random = new Random();
-        Response response = client.sendAndAskResponse(new Request("show", "", user));
+        Response response = client.sendAndAskResponse(new Request("show", "", user, GuiManager.getLocale()));
         this.users = response.getCollection().stream()
                 .map(StudyGroup::getUserLogin)
                 .distinct()

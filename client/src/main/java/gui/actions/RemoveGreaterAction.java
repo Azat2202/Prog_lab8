@@ -337,7 +337,7 @@ public class RemoveGreaterAction extends Action{
                 JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotValid"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Response response = client.sendAndAskResponse(new Request("remove_greater", "", user, studyGroup));
+            Response response = client.sendAndAskResponse(new Request("remove_greater", "", user, studyGroup, GuiManager.getLocale()));
             if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectDeleted"), resourceBundle.getString("Ok"), JOptionPane.PLAIN_MESSAGE);
             else JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotDeleted"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
         }

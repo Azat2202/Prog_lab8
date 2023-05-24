@@ -45,7 +45,7 @@ public class RemoveAction extends Action {
     public void actionPerformed(ActionEvent e) {
         Integer id = this.getSelectedId();
         if(id == null) JOptionPane.showMessageDialog(null, resourceBundle.getString("NoObjects"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
-        Response response = client.sendAndAskResponse(new Request("remove_by_id", id.toString(), user));
+        Response response = client.sendAndAskResponse(new Request("remove_by_id", id.toString(), user, GuiManager.getLocale()));
         if(response.getStatus() == ResponseStatus.OK) {
             JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectDeleted"), resourceBundle.getString("Ok"), JOptionPane.INFORMATION_MESSAGE);
         }

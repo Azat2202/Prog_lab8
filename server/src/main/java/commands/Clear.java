@@ -12,6 +12,7 @@ import utility.DatabaseHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * Команда 'clear'
@@ -33,13 +34,14 @@ public class Clear extends Command implements CollectionEditor{
     @Override
     public Response execute(Request request) throws IllegalArguments {
         if (!request.getArgs().isBlank()) throw new IllegalArguments();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Response", request.getLocale());
         List<Integer> deletedIds = collectionManager.getCollection().stream()
                 .filter(studyGroup -> studyGroup.getUserLogin().equals(request.getUser().name()))
                 .map(StudyGroup::getId)
                 .toList();
         if(DatabaseHandler.getDatabaseManager().deleteAllObjects(request.getUser(), deletedIds)) {
             collectionManager.removeElements(deletedIds);
-            return new Response(ResponseStatus.OK, "Ваши элементы удалены");
+            return new Response(ResponseStatus.OK, resourceBundle.getString("allIsCleared"));
         }
         return new Response(ResponseStatus.ERROR, "Элементы коллекции удалить не удалось");
     }

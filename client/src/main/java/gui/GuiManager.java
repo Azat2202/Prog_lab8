@@ -6,37 +6,20 @@ import dtp.Response;
 import dtp.ResponseStatus;
 import dtp.User;
 import gui.actions.*;
-import models.Coordinates;
 import models.StudyGroup;
-import net.coderazzi.filters.gui.AutoChoices;
-import net.coderazzi.filters.gui.TableFilterHeader;
 import utility.Client;
 
-import javax.swing.*;
 import javax.swing.Timer;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
-import java.text.ParseException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static javax.swing.JOptionPane.*;
 
@@ -143,6 +126,8 @@ public class GuiManager {
                 this.tableData = newTableData;
                 this.tableModel.setDataVector(this.tableData, columnNames);
                 this.tableModel.performFiltration();
+                this.table.repaint();
+                this.tableModel.fireTableDataChanged();
                 this.cartesianPanel.updateUserColors();
                 this.cartesianPanel.reanimate();
             }
@@ -223,7 +208,7 @@ public class GuiManager {
 //    }
 
     public ArrayList<StudyGroup> getTableDataStudyGroup(){
-        Response response = client.sendAndAskResponse(new Request("show", "", user));
+        Response response = client.sendAndAskResponse(new Request("show", "", user, GuiManager.getLocale()));
         if(response.getStatus() != ResponseStatus.OK) return null;
         this.collection = new ArrayList<>(response.getCollection());
         return new ArrayList<>(response.getCollection());
@@ -450,7 +435,8 @@ public class GuiManager {
                         new Request(
                                 "ping",
                                 "",
-                                new User(loginField.getText(), String.valueOf(passwordField.getPassword()))));
+                                new User(loginField.getText(), String.valueOf(passwordField.getPassword())),
+                                GuiManager.getLocale()));
                 if (response.getStatus() == ResponseStatus.OK) {
                     errorLabel.setText(resourceBundle.getString("LoginAcc"));
                     errorLabel.setForeground(GREEN_OK);
@@ -466,7 +452,8 @@ public class GuiManager {
                         new Request(
                                 "register",
                                 "",
-                                new User(loginField.getText(), String.valueOf(passwordField.getPassword()))));
+                                new User(loginField.getText(), String.valueOf(passwordField.getPassword())),
+                                GuiManager.getLocale()));
                 if (response.getStatus() == ResponseStatus.OK) {
                     errorLabel.setText(resourceBundle.getString("RegAcc"));
                     errorLabel.setForeground(GREEN_OK);

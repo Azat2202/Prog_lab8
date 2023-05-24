@@ -5,16 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/FilterListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/FilterWorker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/big_adding_script" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/Response.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/Response_de.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/Response_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/Response_en_AU.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/Response_ru.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/resources/Response_sv.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/StreamTableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/StreamTableModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/AddAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/AddAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/AddIfMaxAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/AddIfMaxAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/ClearAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/ClearAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/CountByAverageMarkAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/CountByAverageMarkAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/CountLessThanExpelledStudentsAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/CountLessThanExpelledStudentsAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/InfoAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/InfoAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveAllByAverageMarkAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveAllByAverageMarkAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveGreaterAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/RemoveGreaterAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/actions/UpdateAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/actions/UpdateAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/utility/ExecuteFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/utility/ExecuteFileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_de.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_de.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_en.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_en_AU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_en_AU.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_ru.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_sv.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_sv.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/dtp/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/dtp/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/AddElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/AddElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/AddIfMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/AddIfMax.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/Clear.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/Clear.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/CountByAverageMark.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/CountByAverageMark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/CountLessThanExpelledStudents.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/CountLessThanExpelledStudents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/Help.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/Help.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/Info.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/Info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/commands/RemoveAllByAverageMark.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/commands/RemoveAllByAverageMark.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,27 +88,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RESOURCE_BUNDLE_EXPRESSION_USED&quot;: &quot;resourceBundle&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_directory_selection&quot;: &quot;C:/Users/azat2/IdeaProjects/Prog_lab8/client/src/main/java/main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/azat2/IdeaProjects/bcomp&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RESOURCE_BUNDLE_EXPRESSION_USED": "resourceBundle",
+    "WebServerToolWindowFactoryState": "false",
+    "last_directory_selection": "C:/Users/azat2/IdeaProjects/Prog_lab8/client/src/main/java/main",
+    "last_opened_file_path": "C:/Users/azat2/IdeaProjects/Prog_lab8/server/src/main/resources",
+    "settings.editor.selected.configurable": "Errors"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab8\server\src\main\resources" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab8\client" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\target" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\resources" />
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\server\src\main\java\commands" />
-      <recent name="C:\Users\azat2\IdeaProjects\Prog_lab6\client\src\main\java\utilty" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab8\client\icons" />
@@ -247,7 +276,7 @@
       <workItem from="1684921935384" duration="1733000" />
       <workItem from="1684924722225" duration="11012000" />
       <workItem from="1684944077822" duration="9512000" />
-      <workItem from="1684955093300" duration="1397000" />
+      <workItem from="1684955093300" duration="6865000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>
@@ -296,16 +325,6 @@
           <properties class="java.nio.channels.IllegalBlockingModeException" package="java.nio.channels" />
           <option name="timeStamp" value="3" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/utility/ExecuteFileManager.java</url>
-          <line>51</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/gui/StreamTableModel.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

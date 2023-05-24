@@ -11,11 +11,14 @@ import dtp.User;
 import exceptions.ExceptionInFileMode;
 import exceptions.ExitObliged;
 import exceptions.LoginDuringExecuteFail;
+import gui.GuiManager;
 import models.StudyGroup;
 
 import java.io.*;
+import java.text.MessageFormat;
 import java.util.ArrayDeque;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 /**
@@ -24,6 +27,8 @@ import java.util.Scanner;
 public class ExecuteFileManager implements UserInput {
     private static final ArrayDeque<String> pathQueue = new ArrayDeque<>();
     private static final ArrayDeque<BufferedReader> fileReaders = new ArrayDeque<>();
+    private static ResourceBundle resourceBundle = ResourceBundle.getBundle("GuiLabels", GuiManager.getLocale());
+
 
     private final Printable console;
     private final Client client;
@@ -42,10 +47,10 @@ public class ExecuteFileManager implements UserInput {
 
     public void fileExecution(String args) throws ExitObliged, LoginDuringExecuteFail {
         if (args == null || args.isEmpty()) {
-            console.printError("Путь не распознан");
+            console.printError(resourceBundle.getString("ErrorFile"));
             return;
         }
-        else console.println(ConsoleColors.toColor("Путь получен успешно", ConsoleColors.PURPLE));
+        else console.println(ConsoleColors.toColor(resourceBundle.getString("FileGot"), ConsoleColors.PURPLE));
         args = args.trim();
         try {
             ExecuteFileManager.pushFile(args);
@@ -56,12 +61,12 @@ public class ExecuteFileManager implements UserInput {
                 userCommand[1] = userCommand[1].trim();
                 if (userCommand[0].equals("execute_script")){
                     if(ExecuteFileManager.fileRepeat(userCommand[1])){
-                        console.printError("Найдена рекурсия по пути " + new File(userCommand[1]).getAbsolutePath());
+                        console.printError(MessageFormat.format(resourceBundle.getString("FoundRecursion"), new File(userCommand[1]).getAbsolutePath()));
                         continue;
                     }
                 }
-                console.println(ConsoleColors.toColor("Выполнение команды " + userCommand[0], ConsoleColors.YELLOW));
-                Response response = client.sendAndAskResponse(new Request(userCommand[0], userCommand[1], user));
+                console.println(ConsoleColors.toColor(resourceBundle.getString("DoingCommand") + userCommand[0], ConsoleColors.YELLOW));
+                Response response = client.sendAndAskResponse(new Request(userCommand[0], userCommand[1], user, GuiManager.getLocale()));
                 this.printResponse(response);
                 switch (response.getStatus()){
                     case ASK_OBJECT -> {
@@ -70,7 +75,7 @@ public class ExecuteFileManager implements UserInput {
                             studyGroup = new StudyGroupForm(console).build();
                             if (!studyGroup.validate()) throw new ExceptionInFileMode();
                         } catch (ExceptionInFileMode err){
-                            console.printError("Поля в файле не валидны! Объект не создан");
+                            console.printError(resourceBundle.getString("VariablesNotValid"));
                             continue;
                         }
                         Response newResponse = client.sendAndAskResponse(
@@ -78,7 +83,8 @@ public class ExecuteFileManager implements UserInput {
                                         userCommand[0].trim(),
                                         userCommand[1].trim(),
                                         user,
-                                        studyGroup));
+                                        studyGroup,
+                                        GuiManager.getLocale()));
                         if (newResponse.getStatus() != ResponseStatus.OK){
                             console.printError(newResponse.getResponse());
                         }
@@ -100,7 +106,7 @@ public class ExecuteFileManager implements UserInput {
             }
             ExecuteFileManager.popFile();
         } catch (FileNotFoundException fileNotFoundException){
-            console.printError("Такого файла не существует");
+            console.printError(resourceBundle.getString("FileNotExists"));
         } catch (IOException e) {
             console.printError("Ошибка ввода вывода");
         }

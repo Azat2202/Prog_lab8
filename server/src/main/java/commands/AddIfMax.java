@@ -9,6 +9,7 @@ import models.StudyGroup;
 import utility.DatabaseHandler;
 
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * Команда 'add_if_max'
@@ -30,8 +31,9 @@ public class AddIfMax extends Command implements CollectionEditor{
     @Override
     public Response execute(Request request) throws IllegalArguments {
         if (!request.getArgs().isBlank()) throw new IllegalArguments();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Response", request.getLocale());
         if (Objects.isNull(request.getObject())){
-            return new Response(ResponseStatus.ASK_OBJECT, "Для команды " + this.getName() + " требуется объект");
+            return new Response(ResponseStatus.ASK_OBJECT, resourceBundle.getString("objNeed") + getName() + resourceBundle.getString("ForCommandObjecRrequired"));
         }
         if (request.getObject().compareTo(collectionManager.getCollection().stream()
                 .filter(Objects::nonNull)
@@ -39,12 +41,12 @@ public class AddIfMax extends Command implements CollectionEditor{
                 .orElse(null)) >= 1)
         {
             int new_id = DatabaseHandler.getDatabaseManager().addObject(request.getObject(), request.getUser());
-            if(new_id == -1) return new Response(ResponseStatus.ERROR, "Объект добавить не удалось");
+            if(new_id == -1) return new Response(ResponseStatus.ERROR, resourceBundle.getString("objNotSucceedAdd"));
             request.getObject().setId(new_id);
             request.getObject().setUserLogin(request.getUser().name());
             collectionManager.addElement(request.getObject());
-            return new Response(ResponseStatus.OK, "Объект успешно добавлен");
+            return new Response(ResponseStatus.OK, resourceBundle.getString("objAddOl"));
         }
-        return new Response(ResponseStatus.ERROR,"Элемент меньше максимального");
+        return new Response(ResponseStatus.ERROR, resourceBundle.getString("elementLess"));
     }
 }

@@ -5,13 +5,15 @@ import models.StudyGroup;
 
 import javax.swing.table.AbstractTableModel;
 import java.lang.reflect.Array;
+import java.text.DateFormat;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StreamTableModel extends AbstractTableModel {
-    private final int rowCount;
+    private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, GuiManager.getLocale());
+    private int rowCount;
     private String[] columnNames;
     private ArrayList<StudyGroup> allData;
     private ArrayList<StudyGroup> filteredData;
@@ -27,6 +29,7 @@ public class StreamTableModel extends AbstractTableModel {
 
     public void setDataVector(ArrayList<StudyGroup> data, String[] columnNames){
         this.allData = data;
+        this.rowCount = allData.size();
         this.columnNames = columnNames;
         this.filteredData = actFiltration(data);
     }
@@ -45,7 +48,7 @@ public class StreamTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return this.filteredData.size();
+        return this.rowCount;
     }
 
     @Override
@@ -80,7 +83,7 @@ public class StreamTableModel extends AbstractTableModel {
             case 0 -> o.getId();
             case 1 -> o.getName();
             case 2 -> o.getCoordinates();
-            case 3 -> o.getCreationDate();
+            case 3 -> dateFormat.format(o.getCreationDate());
             case 4 -> o.getStudentsCount();
             case 5 -> o.getExpelledStudents();
             case 6 -> o.getAverageMark();
@@ -119,7 +122,13 @@ public class StreamTableModel extends AbstractTableModel {
         };
     }
 
-    public StudyGroup getRow(int row) {return this.filteredData.get(row);}
+    public StudyGroup getRow(int row) {
+        try {
+            return this.filteredData.get(row);
+        } catch (IndexOutOfBoundsException e) {
+            return this.filteredData.get(0);
+        }
+    }
 
     public ArrayList<StudyGroup> getAllData() {
         return allData;

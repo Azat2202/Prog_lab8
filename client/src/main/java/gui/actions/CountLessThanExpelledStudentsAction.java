@@ -37,7 +37,7 @@ public class CountLessThanExpelledStudentsAction extends Action{
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        Response response = client.sendAndAskResponse(new Request("count_less_than_expelled_students", this.askExpelled(), user));
+        Response response = client.sendAndAskResponse(new Request("count_less_than_expelled_students", this.askExpelled(), user, GuiManager.getLocale()));
         if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, response.getResponse(), resourceBundle.getString("Result"), JOptionPane.PLAIN_MESSAGE);
         else JOptionPane.showMessageDialog(null, resourceBundle.getString("NoResult"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 

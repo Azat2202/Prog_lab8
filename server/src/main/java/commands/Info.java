@@ -7,6 +7,8 @@ import exceptions.IllegalArguments;
 import managers.CollectionManager;
 import utility.ConsoleColors;
 
+import java.util.ResourceBundle;
+
 /**
  * Команда 'info'
  * Выводит в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
@@ -27,16 +29,17 @@ public class Info extends Command{
     @Override
     public Response execute(Request request) throws IllegalArguments {
         if (!request.getArgs().isBlank()) throw new IllegalArguments();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Response", request.getLocale());
         String lastInitTime = (collectionManager.getLastInitTime() == null)
-                ? "В сессии коллекция не инициализирована"
+                ? resourceBundle.getString("noCollectionInSession")
                 : collectionManager.getLastInitTime().toString();
         String lastSaveTime = (collectionManager.getLastSaveTime() == null)
-                ? "В сессии коллекция не инициализирована "
+                ? resourceBundle.getString("noCollectionInSession")
                 : collectionManager.getLastSaveTime().toString();
-        String stringBuilder = "Сведения о коллекции: \n" +
-                "Тип: " + collectionManager.collectionType() + "\n" +
-                "Количество элементов: " + collectionManager.collectionSize() + "\n" +
-                "Дата последней инициализации: " + lastInitTime + "\n";
+        String stringBuilder = resourceBundle.getString("CollectionInfo") +
+                resourceBundle.getString("type") + collectionManager.collectionType() + "\n" +
+                resourceBundle.getString("elementsCount") + collectionManager.collectionSize() + "\n" +
+                resourceBundle.getString("lastInitTime") + lastInitTime + "\n";
         return new Response(ResponseStatus.OK, stringBuilder);
     }
 }

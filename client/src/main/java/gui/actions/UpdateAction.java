@@ -390,7 +390,7 @@ public class UpdateAction extends Action {
                 JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotValid"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Response response = client.sendAndAskResponse(new Request("update", id.toString(), user, newStudyGroup));
+            Response response = client.sendAndAskResponse(new Request("update", id.toString(), user, newStudyGroup, GuiManager.getLocale()));
             if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectUpdated"), resourceBundle.getString("Ok"), JOptionPane.PLAIN_MESSAGE);
             else JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotChanged"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
         }

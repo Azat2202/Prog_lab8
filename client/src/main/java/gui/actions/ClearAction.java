@@ -29,7 +29,7 @@ public class ClearAction extends Action{
                 new String[]{resourceBundle.getString("Yes"), resourceBundle.getString("No")},
                 resourceBundle.getString("No"));
         if(result == OK_OPTION){
-            Response response = client.sendAndAskResponse(new Request("clear", "", user));
+            Response response = client.sendAndAskResponse(new Request("clear", "", user, GuiManager.getLocale()));
             if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectsDeleted"), resourceBundle.getString("Result"), JOptionPane.PLAIN_MESSAGE);
             else JOptionPane.showMessageDialog(null, resourceBundle.getString("ObjectNotValid"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
         }

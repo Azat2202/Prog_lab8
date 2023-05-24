@@ -38,7 +38,7 @@ public class CountByAverageMarkAction extends Action{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Response response = client.sendAndAskResponse(new Request("count_by_average_mark", this.askAverageMark(), user));
+        Response response = client.sendAndAskResponse(new Request("count_by_average_mark", this.askAverageMark(), user, GuiManager.getLocale()));
         if(response.getStatus() == ResponseStatus.OK) JOptionPane.showMessageDialog(null, response.getResponse(), "Итог", JOptionPane.PLAIN_MESSAGE);
         else JOptionPane.showMessageDialog(null, resourceBundle.getString("NoResult"), resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
     }
