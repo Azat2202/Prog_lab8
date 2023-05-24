@@ -17,10 +17,12 @@ public class StreamTableModel extends AbstractTableModel {
     private ArrayList<StudyGroup> filteredData;
     private Integer sortingColumn = 0;
     private boolean reversed = false;
+    private FilterWorker filterWorker;
 
-    public StreamTableModel( String[] columnNames, int rowCount) {
+    public StreamTableModel(String[] columnNames, int rowCount, FilterWorker filterWorker) {
         this.rowCount = rowCount;
         this.columnNames = columnNames;
+        this.filterWorker = filterWorker;
     }
 
     public void setDataVector(ArrayList<StudyGroup> data, String[] columnNames){
@@ -37,9 +39,13 @@ public class StreamTableModel extends AbstractTableModel {
         this.filteredData = actFiltration(this.allData);
     }
 
+    public void performFiltration(){
+        this.filteredData = actFiltration(this.allData);
+    }
+
     @Override
     public int getRowCount() {
-        return this.rowCount;
+        return this.filteredData.size();
     }
 
     @Override
@@ -63,6 +69,7 @@ public class StreamTableModel extends AbstractTableModel {
                 .sorted(Comparator.comparing(o -> this.sortingColumn < 0
                         ? (float)o.getId()
                         : this.getSortedFiledFloat(o, this.sortingColumn)))
+                .filter(filterWorker.getPredicate())
                 .toList());
         if(reversed) Collections.reverse(sorted);
         return sorted;
@@ -113,4 +120,8 @@ public class StreamTableModel extends AbstractTableModel {
     }
 
     public StudyGroup getRow(int row) {return this.filteredData.get(row);}
+
+    public ArrayList<StudyGroup> getAllData() {
+        return allData;
+    }
 }

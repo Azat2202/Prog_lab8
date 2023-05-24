@@ -16,10 +16,15 @@ import javax.swing.*;
 import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
@@ -52,6 +57,7 @@ public class GuiManager {
     private CartesianPanel cartesianPanel = null;
     private ArrayList<StudyGroup> tableData = null;
     private ArrayList<StudyGroup> collection = null;
+    private FilterWorker filterWorker = new FilterWorker();
     private Map<JButton, String> buttonsToChangeLocale = new LinkedHashMap<>();
     private User user;
 
@@ -121,21 +127,22 @@ public class GuiManager {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         if(user == null) this.loginAuth();
+        this.tableData = this.getTableDataStudyGroup();
+        this.tableModel = new StreamTableModel(columnNames, tableData.size(), filterWorker);
+        this.tableModel.setDataVector(tableData, columnNames);
+        this.table = new JTable(tableModel);
         frame.setJMenuBar(this.createMenuBar());
 
         JButton tableExecute = new JButton(resourceBundle.getString("Table"));
         JButton cartesianExecute = new JButton(resourceBundle.getString("Coordinates"));
-        this.tableData = this.getTableDataStudyGroup();
-        this.tableModel = new StreamTableModel(columnNames, tableData.size());
-        this.tableModel.setDataVector(tableData, columnNames);
-        this.table = new JTable(tableModel);
+
 
         new Timer(3000, (i) ->{
             ArrayList<StudyGroup> newTableData = this.getTableDataStudyGroup();
             if(!(this.tableData.equals(newTableData))) {
                 this.tableData = newTableData;
                 this.tableModel.setDataVector(this.tableData, columnNames);
-                this.tableModel.fireTableDataChanged();
+                this.tableModel.performFiltration();
                 this.cartesianPanel.updateUserColors();
                 this.cartesianPanel.reanimate();
             }
@@ -339,6 +346,71 @@ public class GuiManager {
         actions.add(exit);
 
         menuBar.add(actions);
+
+        JMenuItem clearFilters = new JMenuItem(resourceBundle.getString("ClearFilter"));
+        JMenuItem idFilter = new JMenuItem("id");
+        JMenuItem groupNameFilter = new JMenuItem("group_name");
+        JMenuItem cordFilter = new JMenuItem("cord");
+        JMenuItem creationDateFilter = new JMenuItem("creation_date");
+        JMenuItem studentsCountFilter = new JMenuItem("students_count");
+        JMenuItem expelledStudentsFilter = new JMenuItem("students_count");
+        JMenuItem averageMarkFilter = new JMenuItem("expelled_students");
+        JMenuItem formOfEducationFilter = new JMenuItem("average_mark");
+        JMenuItem personNameFilter = new JMenuItem("person_name");
+        JMenuItem personWeightFilter = new JMenuItem("person_weight");
+        JMenuItem personEyeColorFilter = new JMenuItem("person_eyeColor");
+        JMenuItem personHairColorFilter = new JMenuItem("person_hairColor");
+        JMenuItem personNationalityFilter = new JMenuItem("person_nationality");
+        JMenuItem personLocationNameFilter = new JMenuItem("person_location_name");
+        JMenuItem personLocationCordsFilter = new JMenuItem("person_location");
+        JMenuItem ownerLoginFilter = new JMenuItem("owner_login");
+
+        clearFilters.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filterWorker.clearPredicates();
+                tableModel.performFiltration();
+                table.repaint();
+            }
+        });
+        idFilter.addActionListener(new FilterListener(0, tableModel, table, filterWorker));
+        groupNameFilter.addActionListener(new FilterListener(1, tableModel, table, filterWorker));
+        cordFilter.addActionListener(new FilterListener(2, tableModel, table, filterWorker));
+        creationDateFilter.addActionListener(new FilterListener(3, tableModel, table, filterWorker));
+        studentsCountFilter.addActionListener(new FilterListener(4, tableModel, table, filterWorker));
+        expelledStudentsFilter.addActionListener(new FilterListener(5, tableModel, table, filterWorker));
+        averageMarkFilter.addActionListener(new FilterListener(6, tableModel, table, filterWorker));
+        formOfEducationFilter.addActionListener(new FilterListener(7, tableModel, table, filterWorker));
+        personNameFilter.addActionListener(new FilterListener(8, tableModel, table, filterWorker));
+        personWeightFilter.addActionListener(new FilterListener(9, tableModel, table, filterWorker));
+        personEyeColorFilter.addActionListener(new FilterListener(10, tableModel, table, filterWorker));
+        personHairColorFilter.addActionListener(new FilterListener(11, tableModel, table, filterWorker));
+        personNationalityFilter.addActionListener(new FilterListener(12, tableModel, table, filterWorker));
+        personLocationNameFilter.addActionListener(new FilterListener(13, tableModel, table, filterWorker));
+        personLocationCordsFilter.addActionListener(new FilterListener(14, tableModel, table, filterWorker));
+        ownerLoginFilter.addActionListener(new FilterListener(15, tableModel, table, filterWorker));
+
+        JMenu filters = new JMenu(resourceBundle.getString("Filters"));
+
+        filters.add(clearFilters);
+        filters.add(idFilter);
+        filters.add(groupNameFilter);
+        filters.add(cordFilter);
+        filters.add(creationDateFilter);
+        filters.add(studentsCountFilter);
+        filters.add(expelledStudentsFilter);
+        filters.add(averageMarkFilter);
+        filters.add(formOfEducationFilter);
+        filters.add(personNameFilter);
+        filters.add(personWeightFilter);
+        filters.add(personEyeColorFilter);
+        filters.add(personHairColorFilter);
+        filters.add(personNationalityFilter);
+        filters.add(personLocationNameFilter);
+        filters.add(personLocationCordsFilter);
+        filters.add(ownerLoginFilter);
+
+        menuBar.add(filters);
         return menuBar;
     }
 
@@ -444,9 +516,5 @@ public class GuiManager {
         this.frame.remove(panel);
         this.frame.setTitle(resourceBundle.getString("LabWork8"));
         this.run();
-    }
-
-    private void setFilters(){
-
     }
 }

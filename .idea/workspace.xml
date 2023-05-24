@@ -5,11 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/StreamTableModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/FilterListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/gui/FilterWorker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Coordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/models/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/models/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/StreamTableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/StreamTableModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_de.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_de.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_ru.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_sv.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/GuiLabels_sv.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,20 +59,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RESOURCE_BUNDLE_EXPRESSION_USED": "resourceBundle",
-    "WebServerToolWindowFactoryState": "false",
-    "last_directory_selection": "C:/Users/azat2/IdeaProjects/Prog_lab8/client/src/main/java/main",
-    "last_opened_file_path": "C:/Users/azat2/IdeaProjects/bcomp",
-    "settings.editor.selected.configurable": "Errors"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RESOURCE_BUNDLE_EXPRESSION_USED&quot;: &quot;resourceBundle&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/azat2/IdeaProjects/Prog_lab8/client/src/main/java/main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/azat2/IdeaProjects/bcomp&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\azat2\IdeaProjects\Prog_lab8\client" />
@@ -96,7 +101,7 @@
       <command value="mvn clean compile package" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Server">
+  <component name="RunManager" selected="Application.Client">
     <configuration name="Client" type="Application" factoryName="Application" singleton="false">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -120,6 +125,10 @@
     <configuration name="Client+Server" type="CompoundRunConfigurationType">
       <toRun name="Client" type="Application" />
       <toRun name="server-1.0-SNAPSHOT.jar" type="JarApplication" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TwoClients" type="CompoundRunConfigurationType">
+      <toRun name="Client" type="Application" />
       <method v="2" />
     </configuration>
     <configuration name="server-1.0-SNAPSHOT.jar" type="JarApplication">
@@ -171,6 +180,7 @@
     <list>
       <item itemvalue="Application.Client" />
       <item itemvalue="Application.Server" />
+      <item itemvalue="Compound.TwoClients" />
       <item itemvalue="Compound.Client+Server" />
       <item itemvalue="JAR Application.server-1.0-SNAPSHOT.jar" />
       <item itemvalue="Maven.Build everything" />
@@ -236,7 +246,8 @@
       <workItem from="1684915770218" duration="660000" />
       <workItem from="1684921935384" duration="1733000" />
       <workItem from="1684924722225" duration="11012000" />
-      <workItem from="1684944077822" duration="1178000" />
+      <workItem from="1684944077822" duration="9512000" />
+      <workItem from="1684955093300" duration="1397000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>
@@ -289,6 +300,11 @@
           <url>file://$PROJECT_DIR$/client/src/main/java/utility/ExecuteFileManager.java</url>
           <line>51</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/gui/StreamTableModel.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
