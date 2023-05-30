@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 
 public class StreamTableModel extends AbstractTableModel {
     private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, GuiManager.getLocale());
-    private int rowCount;
     private String[] columnNames;
     private ArrayList<StudyGroup> allData;
     private ArrayList<StudyGroup> filteredData;
@@ -22,14 +21,12 @@ public class StreamTableModel extends AbstractTableModel {
     private FilterWorker filterWorker;
 
     public StreamTableModel(String[] columnNames, int rowCount, FilterWorker filterWorker) {
-        this.rowCount = rowCount;
         this.columnNames = columnNames;
         this.filterWorker = filterWorker;
     }
 
     public void setDataVector(ArrayList<StudyGroup> data, String[] columnNames){
         this.allData = data;
-        this.rowCount = allData.size();
         this.columnNames = columnNames;
         this.filteredData = actFiltration(data);
     }
@@ -48,7 +45,7 @@ public class StreamTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return this.rowCount;
+        return this.filteredData.size() - 1;
     }
 
     @Override

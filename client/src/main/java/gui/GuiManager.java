@@ -494,7 +494,7 @@ public class GuiManager {
         this.tableModel.performFiltration();
         this.table.repaint();
         this.tableModel.fireTableDataChanged();
-        this.cartesianPanel.updateUserColors();
+//        this.cartesianPanel.updateUserColors();
         this.cartesianPanel.reanimate(100);
     }
 

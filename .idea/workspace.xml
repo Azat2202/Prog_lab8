@@ -5,27 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2902448-8e83-4907-81a4-f967998d744f" name="Changes" comment="added first object and non-object commands">
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/ARBUZ.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/add.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/add_if_max.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/clear.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/count_by_average_mark.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/count_less_than_expelled.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/execute.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/exit.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/info.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/language.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/remove.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/remove_all_by_average_mark.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/remove_greater.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/show.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/tyler.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/update.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/icons/user.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/CartesianPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/GuiManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/managers/ConnectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/managers/ConnectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/gui/StreamTableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/gui/StreamTableModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +95,7 @@
       <command value="mvn clean compile package" />
     </option>
   </component>
-  <component name="RunManager" selected="Compound.Client+Server">
+  <component name="RunManager" selected="Application.Client">
     <configuration name="Client" type="Application" factoryName="Application" singleton="false">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -262,7 +245,7 @@
       <workItem from="1684996735518" duration="7220000" />
       <workItem from="1685018777629" duration="641000" />
       <workItem from="1685134972202" duration="573000" />
-      <workItem from="1685459159181" duration="657000" />
+      <workItem from="1685459159181" duration="2030000" />
     </task>
     <task id="LOCAL-00001" summary="added first object and non-object commands">
       <created>1679936396373</created>
