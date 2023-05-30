@@ -14,7 +14,7 @@ import java.util.concurrent.*;
 public class ConnectionManager implements Runnable{
     private final CommandManager commandManager;
     private final DatabaseManager databaseManager;
-    private final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(8);
+    private static final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(8);
     private static final ForkJoinPool forkJoinPool = new ForkJoinPool();
     private final SocketChannel clientSocket;
 

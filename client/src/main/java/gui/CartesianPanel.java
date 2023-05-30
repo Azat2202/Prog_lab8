@@ -2,7 +2,6 @@ package gui;
 
 import dtp.Request;
 import dtp.Response;
-import dtp.ResponseStatus;
 import dtp.User;
 import gui.actions.UpdateAction;
 import models.Coordinates;
@@ -13,10 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +32,12 @@ class CartesianPanel extends JPanel implements ActionListener {
     private float maxCordX;
     private Double maxCordY;
     private BufferedImage img = null;
+    private boolean isDragging = false;
+    private boolean skip_animation = false;
+
+    private Point mouseDragOldPoint; // Переменная для drag`n`drop
+    private Rectangle mouseDragRectangle;
+    private StudyGroup mouseDragObject;
 
     {
         try {
@@ -54,6 +56,7 @@ class CartesianPanel extends JPanel implements ActionListener {
         this.timer = new Timer(1, this);
         timer.start();
         updateUserColors();
+        // Изменение по дабл клику
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -69,6 +72,48 @@ class CartesianPanel extends JPanel implements ActionListener {
                 }
                 Integer id = rectangles.get(toClick);
                 new UpdateAction(user, client, guiManager).updateJOptionWorker(id);
+            }
+        });
+        // Drag`n`drop объектов
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                try {
+                    mouseDragOldPoint = e.getPoint();
+                    mouseDragRectangle = rectangles.keySet().stream()
+                            .filter(r -> r.contains(mouseDragOldPoint))
+                            .sorted(Comparator.comparing(Rectangle::getX).reversed())
+                            .toList().get(0);
+                    Integer id = rectangles.get(mouseDragRectangle);
+                    mouseDragObject = collection.stream()
+                            .filter((s) -> s.getId().equals(id))
+                            .toList().get(0);
+                    isDragging = true;
+                } catch (ArrayIndexOutOfBoundsException err) {return;}
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                if(!isDragging) return;
+                int width = getWidth();
+                int halfWidth = width / 2;
+                int height = getHeight();
+                int halfHeight = height / 2;
+                int elementWidth = 130;
+                int elementHeight = 130;
+//                System.out.print(mouseDragOldPoint.getX());
+//                System.out.print("   ");
+//                System.out.println(mouseDragOldPoint.getY());
+                if(!mouseDragObject.getUserLogin().equals(user.name())) return;
+                mouseDragObject.setCoordinates(new Coordinates(
+                        (float) ((maxCordX / (halfWidth - elementWidth)) * (e.getX() - halfWidth)),
+                        (maxCordY / (halfHeight - elementHeight)) * (e.getY() - halfHeight)));
+                client.sendAndAskResponse(new Request("update", String.valueOf(mouseDragObject.getId()), user, mouseDragObject, GuiManager.getLocale()));
+                guiManager.repaintNoAnimation();
+                mouseDragOldPoint = e.getPoint();
+                isDragging = false;
+                skip_animation = true;
             }
         });
     }
@@ -162,7 +207,10 @@ class CartesianPanel extends JPanel implements ActionListener {
         int halfHeight = height / 2;
         int elementWidth = 130;
         int elementHeight = 130;
-
+        if(skip_animation == true) {
+            this.step = 100;
+            this.skip_animation = false;
+        }
         if(step == 100) this.rectangles = new LinkedHashMap<>();
         this.collection.stream().sorted(StudyGroup::compareTo).forEach(studyGroup -> {
             int dx1 = (int) ((halfWidth + (studyGroup.getCoordinates().getX() * step / 100 / maxCordX * (halfWidth - elementWidth))));
@@ -205,5 +253,9 @@ class CartesianPanel extends JPanel implements ActionListener {
         this.timer.start();
     }
 
+    public void reanimate(int step){
+        this.step = 100;
+        repaint();
+    }
 
 }

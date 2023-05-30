@@ -121,16 +121,7 @@ public class GuiManager {
 
 
         new Timer(3000, (i) ->{
-            ArrayList<StudyGroup> newTableData = this.getTableDataStudyGroup();
-            if(!(this.tableData.equals(newTableData))) {
-                this.tableData = newTableData;
-                this.tableModel.setDataVector(this.tableData, columnNames);
-                this.tableModel.performFiltration();
-                this.table.repaint();
-                this.tableModel.fireTableDataChanged();
-                this.cartesianPanel.updateUserColors();
-                this.cartesianPanel.reanimate();
-            }
+            this.timerTrigger();
         }).start();
 
         // Выбрать столбец для сортировки
@@ -197,15 +188,6 @@ public class GuiManager {
         frame.add(panel);
         frame.setVisible(true);
     }
-
-//    public Object[][] getTableData(){
-//        Response response = client.sendAndAskResponse(new Request("show", "", user));
-//        if(response.getStatus() != ResponseStatus.OK) return null;
-//        this.collection = response.getCollection();
-//        return response.getCollection().stream()
-//                .map(this::createRow)
-//                .toArray(Object[][]::new);
-//    }
 
     public ArrayList<StudyGroup> getTableDataStudyGroup(){
         Response response = client.sendAndAskResponse(new Request("show", "", user, GuiManager.getLocale()));
@@ -503,5 +485,29 @@ public class GuiManager {
         this.frame.remove(panel);
         this.frame.setTitle(resourceBundle.getString("LabWork8"));
         this.run();
+    }
+
+    public void repaintNoAnimation(){
+        ArrayList<StudyGroup> newTableData = this.getTableDataStudyGroup();
+        this.tableData = newTableData;
+        this.tableModel.setDataVector(this.tableData, columnNames);
+        this.tableModel.performFiltration();
+        this.table.repaint();
+        this.tableModel.fireTableDataChanged();
+        this.cartesianPanel.updateUserColors();
+        this.cartesianPanel.reanimate(100);
+    }
+
+    public void timerTrigger(){
+        ArrayList<StudyGroup> newTableData = this.getTableDataStudyGroup();
+        if(!(this.tableData.equals(newTableData))) {
+            this.tableData = newTableData;
+            this.tableModel.setDataVector(this.tableData, columnNames);
+            this.tableModel.performFiltration();
+            this.table.repaint();
+            this.tableModel.fireTableDataChanged();
+            this.cartesianPanel.updateUserColors();
+            this.cartesianPanel.reanimate();
+        }
     }
 }
