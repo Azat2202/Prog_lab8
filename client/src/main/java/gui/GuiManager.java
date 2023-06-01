@@ -18,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.util.*;
 
@@ -30,10 +32,10 @@ import static javax.swing.JOptionPane.*;
 public class GuiManager {
     private final Client client;
     private static Locale locale = new Locale("ru");
+    private final ClassLoader classLoader = this.getClass().getClassLoader();
     private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
     private static ResourceBundle resourceBundle = ResourceBundle.getBundle("GuiLabels", GuiManager.getLocale());
     private final JFrame frame;
-    private Container contentPane;
     private Panel panel;
     private JTable table = null;
     private StreamTableModel tableModel = null;
@@ -75,7 +77,6 @@ public class GuiManager {
         }
         this.frame = new JFrame(resourceBundle.getString("LabWork8"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.contentPane = this.frame.getContentPane();
         frame.setResizable(true);
         frame.setVisible(true);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -103,7 +104,6 @@ public class GuiManager {
     }
 
     public void run(){
-        this.contentPane = this.frame.getContentPane();
         panel = new Panel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
@@ -120,7 +120,7 @@ public class GuiManager {
         JButton cartesianExecute = new JButton(resourceBundle.getString("Coordinates"));
 
 
-        new Timer(3000, (i) ->{
+        new Timer(500, (i) ->{
             this.timerTrigger();
         }).start();
 
@@ -150,7 +150,7 @@ public class GuiManager {
         JScrollPane tablePane = new JScrollPane(table);
         this.cartesianPanel = new CartesianPanel(client, user, this);
         JPanel cardPanel = new JPanel();
-        ImageIcon userIcon = new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\user.png")
+        ImageIcon userIcon = new ImageIcon(new ImageIcon(classLoader.getResource("icons/user.png"))
                 .getImage()
                 .getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING));
         JLabel userLabel = new JLabel(user.name());
@@ -196,27 +196,6 @@ public class GuiManager {
         return new ArrayList<>(response.getCollection());
     }
 
-    private Object[] createRow(StudyGroup studyGroup){
-        return new Object[]{
-                studyGroup.getId(),
-                studyGroup.getName(),
-                studyGroup.getCoordinates(),
-                dateFormat.format(studyGroup.getCreationDate()),
-                studyGroup.getStudentsCount(),
-                studyGroup.getExpelledStudents(),
-                studyGroup.getAverageMark(),
-                studyGroup.getFormOfEducation().toString(),
-                studyGroup.getGroupAdmin().getName(),
-                studyGroup.getGroupAdmin().getWeight(),
-                studyGroup.getGroupAdmin().getEyeColor(),
-                studyGroup.getGroupAdmin().getHairColor(),
-                studyGroup.getGroupAdmin().getNationality(),
-                studyGroup.getGroupAdmin().getLocation().getCoordinates(),
-                studyGroup.getGroupAdmin().getLocation().getName(),
-                studyGroup.getUserLogin()
-        };
-     }
-
     private JMenuBar createMenuBar(){
         int iconSize = 40;
 
@@ -251,46 +230,46 @@ public class GuiManager {
         language.addActionListener(new ChangeLanguageAction(user, client, this));
 
         //I hate swing :)
-        add.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\add.png")
+        //Wtf I need two Image Constructor for each icon I HATE THAT
+        add.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/add.png"))
                 .getImage()
                 .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        addIfMax.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\add_if_max.png")
+        addIfMax.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/add_if_max.png"))
                 .getImage()
                 .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        update.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\update.png")
+        update.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/update.png"))
                 .getImage()
                 .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        remove.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\remove.png")
+        remove.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/remove.png"))
                 .getImage()
                 .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        clear.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\clear.png")
+        clear.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/clear.png"))
                 .getImage()
                 .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        countByAverageMark.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\count_by_average_mark.png")
-                 .getImage()
-                 .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        countLessThanExpelled.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\count_less_than_expelled.png")
-                 .getImage()
-                 .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        exit.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\exit.png")
-                         .getImage()
-                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        info.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\info.png")
-                         .getImage()
-                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        removeAllByAverageMark.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\remove_all_by_average_mark.png")
-                         .getImage()
-                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        removeGreater.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\remove_greater.png")
-                         .getImage()
-                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        language.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\language.png")
-                         .getImage()
-                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-        executeScript.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\execute.png")
-                         .getImage()
-                         .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
-
+        countByAverageMark.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/count_by_average_mark.png"))
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        countLessThanExpelled.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/count_less_than_expelled.png"))
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        exit.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/exit.png"))
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        info.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/info.png"))
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        removeAllByAverageMark.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/remove_all_by_average_mark.png"))
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        removeGreater.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/remove_greater.png"))
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        language.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/language.png"))
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
+        executeScript.setIcon(new ImageIcon(new ImageIcon(classLoader.getResource("icons/execute.png"))
+                .getImage()
+                .getScaledInstance(iconSize, iconSize, Image.SCALE_AREA_AVERAGING)));
 
 
         actions.add(add);

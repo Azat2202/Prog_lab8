@@ -16,6 +16,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,7 @@ class CartesianPanel extends JPanel implements ActionListener {
 
     {
         try {
-            this.img = ImageIO.read(new File("C:\\Users\\azat2\\IdeaProjects\\Prog_lab8\\client\\icons\\tyler.jpg"));
+            this.img = ImageIO.read(getClass().getClassLoader().getResource("icons/tyler.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

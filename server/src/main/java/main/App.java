@@ -18,14 +18,14 @@ public class App extends Thread {
     public static final String HASHING_ALGORITHM = "SHA-384";
     public static final String DATABASE_URL = "jdbc:postgresql://localhost:1256/studs";
     public static final String DATABASE_URL_HELIOS = "jdbc:postgresql://pg:5432/studs";
-    public static final String DATABASE_CONFIG_PATH = "C:\\Users\\azat2\\IdeaProjects\\Prog_lab7\\server\\dbconfig.cfg";
+    public static final String DATABASE_CONFIG_PATH = App.class.getClassLoader().getResource("dbconfig.cfg").getPath();
 
     //--------------------------------------------------------------------------------------------------
 
     public static int PORT;
     public static final Logger rootLogger = LogManager.getLogger(App.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         rootLogger.info("--------------------------------------------------------------------");
         rootLogger.info("----------------------ЗАПУСК СЕРВЕРА--------------------------------");
         rootLogger.info("--------------------------------------------------------------------");
